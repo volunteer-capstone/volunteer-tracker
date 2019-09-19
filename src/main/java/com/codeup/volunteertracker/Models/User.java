@@ -1,9 +1,6 @@
 package com.codeup.volunteertracker.Models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -33,6 +30,23 @@ public class User {
 
     @Column
     private String photo;
+
+    @OneToMany(mappedBy = "user")
+    private long eventId;
+
+    public User() {
+    }
+
+    public User(String firstName, String lastName, String phoneNumber, String email, String password, long hours, boolean isOrganizer, String photo) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.password = password;
+        this.hours = hours;
+        this.isOrganizer = isOrganizer;
+        this.photo = photo;
+    }
 
     public long getId() {return id;}
 
