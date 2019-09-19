@@ -12,7 +12,7 @@ public class UserPosition implements Serializable {
 
     @Id
     @ManyToMany
-    private User user;
+    private com.codeup.volunteertracker.Models.User user;
 
     @Id
     @ManyToMany
@@ -26,11 +26,11 @@ public class UserPosition implements Serializable {
 //        this.isApproved = isApproved;
 //    }
 
-    public User getUser() {
+    public com.codeup.volunteertracker.Models.User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(com.codeup.volunteertracker.Models.User user) {
         this.user = user;
     }
 
