@@ -1,9 +1,8 @@
 package com.codeup.volunteertracker.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import com.codeup.volunteertracker.models.User;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Table(name="user_position")
@@ -11,26 +10,36 @@ import java.io.Serializable;
 public class UserPosition implements Serializable {
 
     @Id
-    @ManyToMany
-    private com.codeup.volunteertracker.Models.User user;
+    @GeneratedValue
+    private long id;
 
-    @Id
-    @ManyToMany
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+
+    @ManyToOne
+    @JoinColumn(name="position_id")
     private Position position;
 
+    @Column
     private boolean isApproved;
 
-//    public UserPosition(User user, Position position, boolean isApproved) {
-//        this.user = user;
-//        this.position = position;
-//        this.isApproved = isApproved;
-//    }
+    public UserPosition() {
+    }
 
-    public com.codeup.volunteertracker.Models.User getUser() {
+    public UserPosition(User user, Position position, boolean isApproved) {
+        this.user = user;
+        this.position = position;
+        this.isApproved = isApproved;
+    }
+
+    public User getUser() {
         return user;
     }
 
-    public void setUser(com.codeup.volunteertracker.Models.User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

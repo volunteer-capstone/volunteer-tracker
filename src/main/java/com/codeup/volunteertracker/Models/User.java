@@ -1,6 +1,10 @@
-package com.codeup.volunteertracker.Models;
+package com.codeup.volunteertracker.models;
+
+import com.codeup.volunteertracker.models.Event;
+import com.codeup.volunteertracker.models.UserPosition;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -31,13 +35,17 @@ public class User {
     @Column
     private String photo;
 
+    @OneToMany(cascade =CascadeType.ALL, mappedBy = "creator")
+    private List<Event> events;
+
+
     @OneToMany(mappedBy = "user")
-    private long eventId;
+    private List<UserPosition> userPosition;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String phoneNumber, String email, String password, long hours, boolean isOrganizer, String photo) {
+    public User(String firstName, String lastName, String phoneNumber, String email, String password, long hours, boolean isOrganizer, String photo, List<Event> events, List<UserPosition> userPosition) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -46,6 +54,8 @@ public class User {
         this.hours = hours;
         this.isOrganizer = isOrganizer;
         this.photo = photo;
+        this.events = events;
+        this.userPosition = userPosition;
     }
 
     public long getId() {return id;}
@@ -83,4 +93,20 @@ public class User {
     public String getPhoto() {return photo;}
 
     public void setPhoto(String photo) {this.photo = photo;}
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<UserPosition> getUserPosition() {
+        return userPosition;
+    }
+
+    public void setUserPosition(List<UserPosition> userPosition) {
+        this.userPosition = userPosition;
+    }
 }
