@@ -1,6 +1,6 @@
-package com.codeup.volunteertracker.Repositories;
+package com.codeup.volunteertracker.repositories;
 
-import com.codeup.volunteertracker.Models.User;
+import com.codeup.volunteertracker.models.Event;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

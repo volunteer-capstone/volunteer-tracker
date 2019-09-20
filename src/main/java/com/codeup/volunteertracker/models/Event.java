@@ -1,6 +1,8 @@
 package com.codeup.volunteertracker.models;
 
 import com.codeup.volunteertracker.models.User;
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -14,25 +16,30 @@ public class Event {
     private long id;
 
     @Column(nullable = false)
+    @NotBlank(message = "Please give your event a title")
     private String title;
 
     @Column(nullable = false, columnDefinition = "TEXT")
+    @NotBlank(message = "Please give your event a description")
     private String description;
 
     @Column(nullable = false)
+    @NotBlank(message = "Please enter a location for your event")
     private String location;
 
     @Column(nullable = false, columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
+    @NotBlank(message = "Enter a start time/date")
     private Date start;
 
    @Column(nullable = false, columnDefinition="DATETIME")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date stop;
+   @Temporal(TemporalType.TIMESTAMP)
+   @NotBlank(message = "Enter an end time/date")
+   private Date stop;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User  creator;
+    private User creator;
 
     @OneToMany(cascade =CascadeType.ALL, mappedBy = "event")
     private List <Position> positions;

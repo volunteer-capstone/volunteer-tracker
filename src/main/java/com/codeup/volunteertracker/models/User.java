@@ -2,25 +2,33 @@ package com.codeup.volunteertracker.models;
 
 import com.codeup.volunteertracker.models.Event;
 import com.codeup.volunteertracker.models.UserPosition;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id @GeneratedValue
     private long id;
 
     @Column (nullable = false)
+    @NotBlank(message = "Please enter your first name")
     private String firstName;
 
     @Column (nullable = false)
+    @NotBlank(message = "Please enter your last name")
     private String lastName;
 
     @Column (nullable = false, length = 20)
+    @NotBlank(message = "Please enter a phone number")
     private String phoneNumber;
 
     @Column (nullable = false)
+    @NotBlank(message = "Please enter an email")
+    @Email(message = "Email should be valid")
     private String email;
 
     @Column (nullable = false)
@@ -30,6 +38,7 @@ public class User {
     private long hours;
 
     @Column (nullable = false)
+    @NotBlank(message = "Please enter a password")
     private boolean isOrganizer;
 
     @Column
