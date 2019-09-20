@@ -2,8 +2,10 @@ package com.codeup.volunteertracker.models;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "positions")
@@ -36,17 +38,22 @@ public class Position {
     private Date end;
 
     @ManyToOne
-    private User user;
+    @JoinColumn(name = "event_id")
+    private Event event;
+
+    @OneToMany
+    private List<UserPosition> positionVolunteers;
 
     public Position(){}
 
-    public Position(String title, String description, int numNeeded, Date start, Date end, User user) {
+    public Position(String title, String description, int numNeeded, Date start, Date end, Event event, List<UserPosition> positionVolunteers) {
         this.title = title;
         this.description = description;
         this.numNeeded = numNeeded;
         this.start = start;
         this.end = end;
-        this.user = user;
+        this.event = event;
+        this.positionVolunteers = positionVolunteers;
     }
 
     public long getId() {
@@ -97,11 +104,19 @@ public class Position {
         this.end = end;
     }
 
-    public User getUser() {
-        return user;
+    public Event getEvent() {
+        return event;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public List<UserPosition> getPositionVolunteers() {
+        return positionVolunteers;
+    }
+
+    public void setPositionVolunteers(List<UserPosition> positionVolunteers) {
+        this.positionVolunteers = positionVolunteers;
     }
 }
