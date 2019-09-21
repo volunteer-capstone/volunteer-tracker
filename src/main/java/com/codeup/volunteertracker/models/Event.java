@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Table(name="events")
 @Entity
+@Table(name="events")
 public class Event {
 
     @Id
