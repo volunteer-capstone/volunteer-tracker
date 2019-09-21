@@ -26,6 +26,10 @@ public class User {
     @NotBlank(message = "Please enter a phone number")
     private String phoneNumber;
 
+    @Column(nullable = false, unique = true)
+    @NotBlank(message = "Please enter a username")
+    private String username;
+
     @Column (nullable = false, unique = true)
     @NotBlank(message = "Please enter an email")
     @Email(message = "Email should be valid")
@@ -54,10 +58,11 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String phoneNumber, String email, String password, long hours, boolean isOrganizer, String photo, List<Event> events, List<UserPosition> userPosition) {
+    public User(String firstName, String lastName, String phoneNumber, String username, String email, String password, long hours, boolean isOrganizer, String photo, List<Event> events, List<UserPosition> userPosition) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.hours = hours;
@@ -72,6 +77,7 @@ public class User {
         firstName = copy.firstName;
         lastName = copy.lastName;
         phoneNumber = copy.phoneNumber;
+        username = copy.username;
         email = copy.email;
         password = copy.password;
         hours = copy.hours;
@@ -97,6 +103,13 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {this.phoneNumber = phoneNumber;}
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
     public String getEmail() {return email;}
 
     public void setEmail(String email) {this.email = email;}
@@ -104,6 +117,7 @@ public class User {
     public String getPassword() {return password;}
 
     public void setPassword(String password) {this.password = password;}
+
 
     public long getHours() {return hours;}
 

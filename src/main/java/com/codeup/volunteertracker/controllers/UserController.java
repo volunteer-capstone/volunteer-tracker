@@ -29,11 +29,11 @@ public class UserController {
 
     @PostMapping("/register")
     public String registerUser(@Valid User registerUser, Errors validation, Model model) {
-        if(userRepo.countAllByEmail(registerUser.getEmail()) > 0) {
+        if(userRepo.countAllByEmailOrUsername(registerUser.getEmail(), registerUser.getUsername()) > 0) {
             validation.rejectValue(
-                    "email",
-                    "user.email",
-                    "That email is in use."
+                    "username",
+                    "user.username",
+                    "Invalid username and/or email."
             );
         }
         if (validation.hasErrors()) {
