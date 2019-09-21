@@ -36,13 +36,13 @@ public class User {
     private String email;
 
     @Column (nullable = false)
+    @NotBlank(message = "Please enter a password")
     private String password;
 
     @Column
     private long hours;
 
-    @Column (nullable = false)
-    @NotBlank(message = "Please enter a password")
+    @Column (nullable = true)
     private boolean isOrganizer;
 
     @Column
@@ -71,6 +71,7 @@ public class User {
         this.events = events;
         this.userPosition = userPosition;
     }
+
 
     public User(User copy) {
         id = copy.id; // This line is SUPER important! Many things won't work if it's absent
