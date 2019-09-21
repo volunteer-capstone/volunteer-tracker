@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
-//    int countAllByEmailOrUsername(String email, String username);
-    int countAllByEmail(String email);
+    int countAllByEmailOrUsername(String email, String username);
 }

@@ -35,6 +35,19 @@
 
         <div class="field">
             <div class="control">
+                <label for="username">Username</label>
+                <input id="username" class="input" th:field="*{username}" placeholder="Username" />
+                <div class="content">
+                    <div th:if="${#fields.hasErrors('username')}" class="notification is-warning">
+                        <a class="delete"></a>
+                        <strong th:errors="*{username}"></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
                 <label for="email">Email</label>
                 <input type="text" id="email" class="input" th:field="*{email}" placeholder="Email"/>
                 <div class="content">

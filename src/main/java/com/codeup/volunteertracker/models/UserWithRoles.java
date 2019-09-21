@@ -18,13 +18,6 @@ public class UserWithRoles extends User implements UserDetails {
         return AuthorityUtils.commaSeparatedStringToAuthorityList(roles);
     }
 
-//    Not sure why this has to be here or what to change the return to, didn't need this method in the springblog
-//    possibly because there isn't already a username deal in our model
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
