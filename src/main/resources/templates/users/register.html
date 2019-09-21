@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/header :: my-header('Register')" />
+</head>
+<body>
+<th:block th:replace="fragments/navbar :: bulma-navbar" />
+
+<div class="container">
+    <div class="content">
+        <h3>Make an account!</h3>
+    </div>
+
+    <form th:action="@{/register}" th:method="post" th:object="${user}">
+        <div class="field">
+            <div class="control">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" class="input" th:field="*{firstName}" placeholder="First Name" />
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" class="input" th:field="*{lastName}" placeholder="Last Name"/>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" id="phoneNumber" class="input" th:field="*{phoneNumber}" placeholder="Phone Number"/>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <label for="email">Email</label>
+                <input type="text" id="email" class="input" th:field="*{email}" placeholder="Email"/>
+                <div class="content">
+                    <div th:if="${#fields.hasErrors('email')}" class="notification is-warning">
+                        <a class="delete"></a>
+                        <strong th:errors="*{email}"></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="input" th:field="*{password}" placeholder="password"/>
+                <div class="content">
+                    <div th:if="${#fields.hasErrors('password')}" class="notification is-warning"><a class="delete"></a>
+                        <strong th:errors="*{password}"></strong>
+                    </div>
+                </div>
+                <div id="password2" class="content" style="display:none">
+                    <div class="notification is-warning"><a class="delete"></a>
+                        <strong>Password must be between 6 and 20 characters!</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <label for="passwordConfirm">Confirm Password</label>
+                <input type="password" id="passwordConfirm" class="input" placeholder="Confrim Password"/>
+                <div id="passwordConfirm2" class="content" style="display: none">
+                    <div class="notification is-warning"><a class="delete"></a>
+                        <strong>Passwords don't match!</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button id="register" class="button is-success">Register Now</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<footer>
+    <th:block th:replace="fragments/footer :: footer" />
+</footer>
+<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
+<script type="text/javascript" th:src="@{/js/passwordjs.js}"></script>
+</body>
+</html>
