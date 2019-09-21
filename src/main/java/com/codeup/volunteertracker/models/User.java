@@ -26,7 +26,7 @@ public class User {
     @NotBlank(message = "Please enter a phone number")
     private String phoneNumber;
 
-    @Column (nullable = false)
+    @Column (nullable = false, unique = true)
     @NotBlank(message = "Please enter an email")
     @Email(message = "Email should be valid")
     private String email;
@@ -65,6 +65,20 @@ public class User {
         this.photo = photo;
         this.events = events;
         this.userPosition = userPosition;
+    }
+
+    public User(User copy) {
+        id = copy.id; // This line is SUPER important! Many things won't work if it's absent
+        firstName = copy.firstName;
+        lastName = copy.lastName;
+        phoneNumber = copy.phoneNumber;
+        email = copy.email;
+        password = copy.password;
+        hours = copy.hours;
+        isOrganizer = copy.isOrganizer;
+        photo = copy.photo;
+        events = copy.events;
+        userPosition = copy.userPosition;
     }
 
     public long getId() {return id;}
