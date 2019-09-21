@@ -6,7 +6,14 @@
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
-<h1>THIS IS THE EVENT PAGE</h1>
+<h1>THIS IS THE EVENT LIST  PAGE</h1>
+
+<div>
+    <div th:each="event : ${events}">
+        <a th:href="@{/events/{id}(id=${event.id})}"><h3 th:text="${event.title}"></h3></a>
+        <h3 th:text="${event.start}"></h3>
+    </div>
+</div>
 
 <footer>
     <th:block th:replace="fragments/footer :: footer" />
