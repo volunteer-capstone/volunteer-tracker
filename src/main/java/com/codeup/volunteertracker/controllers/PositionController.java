@@ -7,6 +7,8 @@ import com.codeup.volunteertracker.repositories.PositionRepository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 public class PositionController {
 
     private final PositionRepository positionDao;
@@ -32,7 +34,7 @@ public class PositionController {
     public String createPosition(@ModelAttribute Position position, @ModelAttribute Event event){
         position.setEvent(event);
         Position savePosition = positionDao.save(position);
-        return "redirect:/events/{id}";
+        return "redirect:/events/" + savePosition.getId();
     }
 
     @GetMapping("/events/positions/edit/{id}")
@@ -41,9 +43,33 @@ public class PositionController {
         return "positions/edit";
     }
 
+    @PostMapping("/events/positions/edit/{id}")
+    public String editPosition(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="description") String description, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="start") Date start, @RequestParam(name="end") Date end, Model viewModel) {
+        Position editedPosition = positionDao.findOne(id);
+        editedPosition.setTitle(title);
+        editedPosition.setDescription(description);
+        editedPosition.setNumNeeded(numNeeded);
+        editedPosition.setStart(start);
+        editedPosition.setEnd(end);
+        positionDao.save(editedPosition);
+        long eventId = positionDao.positionEventId(id);
+        return "redirect:/events/" + eventId;
+    }
 
-//    @PostMapping("/events/positions/edit/{id}")
-//    public String editPosition(@PathVariable, long id, @RequestParam(name="title"), String title, @RequestParam(name="description") String description, @RequestParam(name="numNeeded") long numNeeded, @RequestParam(name="start") Datetime start, @RequestParam(name="end") DateTime end) {
-//
-//    }
+    // unsure if this will work appropriately
+    @GetMapping("/events/positions/delete/{id}")
+    public String deletePosition(@PathVariable long id){
+        Position toDelete = positionDao.findOne(id);
+        long eventId = toDelete.getEvent().getId();
+        return "redirect:/events/" + eventId;
+    }
+
+    @PostMapping("/events/positions/delete/{id}")
+    public String afterDelete(@PathVariable long id){
+        Position toDelete = positionDao.findOne(id);
+        long eventId =toDelete.getEvent().getId();
+        positionDao.delete(id);
+        return "redirect:/events/" + eventId ;
+    }
+
 }
