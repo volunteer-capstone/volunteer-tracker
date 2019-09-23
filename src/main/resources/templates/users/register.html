@@ -62,7 +62,7 @@
         <div class="field">
             <div class="control">
                 <label for="password">Password</label>
-                <input type="password" id="password" class="input" th:field="*{password}" placeholder="password"/>
+                <input type="password" id="password" class="input" th:field="*{password}" placeholder="Password"/>
                 <div class="content">
                     <div th:if="${#fields.hasErrors('password')}" class="notification is-warning"><a class="delete"></a>
                         <strong th:errors="*{password}"></strong>
@@ -79,7 +79,7 @@
         <div class="field">
             <div class="control">
                 <label for="passwordConfirm">Confirm Password</label>
-                <input type="password" id="passwordConfirm" class="input" placeholder="Confrim Password"/>
+                <input type="password" id="passwordConfirm" class="input" placeholder="Confirm Password"/>
                 <div id="passwordConfirm2" class="content" style="display: none">
                     <div class="notification is-warning"><a class="delete"></a>
                         <strong>Passwords don't match!</strong>
@@ -90,7 +90,8 @@
 
         <div class="field">
             <div class="control">
-                <button id="register" class="button is-success">Register Now</button>
+                <button id="registerDisabled" class="button is-success" disabled="disabled">Register Now</button>
+                <button id="register" class="button is-success" style="display: none">Register Now</button>
             </div>
         </div>
 
