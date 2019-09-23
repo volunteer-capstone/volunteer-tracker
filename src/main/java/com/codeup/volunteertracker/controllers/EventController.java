@@ -24,6 +24,8 @@ public class EventController {
         this.userDao = userRepository;
     }
 
+//NONE TESTED YET
+
     @GetMapping("/events")
     public String eventIndex(Model viewModel){
         Iterable<Event> events = eventDao.findAll();
