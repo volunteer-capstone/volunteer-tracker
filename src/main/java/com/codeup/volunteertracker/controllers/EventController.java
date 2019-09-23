@@ -2,6 +2,7 @@ package com.codeup.volunteertracker.controllers;
 
 
 import com.codeup.volunteertracker.models.Event;
+import com.codeup.volunteertracker.models.User;
 import com.codeup.volunteertracker.repositories.EventRepository;
 import com.codeup.volunteertracker.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,6 @@ public class EventController {
 
     @GetMapping("/events")
     public String eventIndex(Model viewModel){
-//        code to iterate event list will go here
         Iterable<Event> events = eventDao.findAll();
         viewModel.addAttribute("events", events);
         return "events/index";
@@ -34,9 +34,12 @@ public class EventController {
 
     @GetMapping("/events/{id}")
     public String showClickedEvent(@PathVariable long id, Model viewModel){
-//        code to show individual event will go here
         Event event = eventDao.findOne(id);
         viewModel.addAttribute("event", event);
+        long userId = eventDao.eventCreatorId(id);
+        System.out.println(userId);
+        User user = userDao.findOne(userId);
+        viewModel.addAttribute("user", user);
         return "events/show";
     }
 }
