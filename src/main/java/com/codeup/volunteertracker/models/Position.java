@@ -1,6 +1,7 @@
 package com.codeup.volunteertracker.models;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 import javax.persistence.*;
@@ -29,12 +30,10 @@ public class Position {
 
     @Column(nullable = false, columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
-    @NotBlank(message = "Enter a start time/date")
     private Date start;
 
     @Column(nullable = false, columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
-    @NotBlank(message = "Enter an end time/date")
     private Date end;
 
     @ManyToOne
