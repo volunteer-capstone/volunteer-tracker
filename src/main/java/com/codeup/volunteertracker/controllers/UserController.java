@@ -2,11 +2,13 @@ package com.codeup.volunteertracker.controllers;
 
 import com.codeup.volunteertracker.models.User;
 import com.codeup.volunteertracker.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -46,6 +48,20 @@ public class UserController {
             userRepo.save(registerUser);
             return "redirect:/login";
         }
+    }
+
+    @GetMapping("/users/{id}/profile")
+
+
+    public String show(@PathVariable long id, Model viewModel) {
+//
+//        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        long usId = userSession.getId();
+
+        User user = userRepo.findOne(id);
+        viewModel.addAttribute("user", user);
+
+        return "users/view";
     }
 
 
