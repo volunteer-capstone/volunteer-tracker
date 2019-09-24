@@ -26,7 +26,7 @@ public class PositionController {
         viewModel.addAttribute("position", new Position());
         Event event = eventDao.findOne(id);
         viewModel.addAttribute("event", event);
-        return "/position/create";
+        return "events/create-position";
     }
 
     // UNTESTED-- create
@@ -34,7 +34,7 @@ public class PositionController {
     public String createPosition(@ModelAttribute Position position, @ModelAttribute Event event){
         position.setEvent(event);
         Position savePosition = positionDao.save(position);
-        return "redirect:/events/" + savePosition.getId();
+        return "redirect:/events/" + savePosition.getEvent().getId();
     }
 
 //    UNTESTED -- EDIT

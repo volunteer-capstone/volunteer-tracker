@@ -6,11 +6,11 @@
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
-<form th:action="@{/events/create}" th:method="post" th:object="${event}">
+<form th:action="@{/events/{id}/create-position(id=${event.id})}" th:method="post" th:object="${position}">
     <div class="field">
         <div class="control">
-            <label for="title">Event Name:</label>
-            <input type="text" id="title" class="input" th:field="*{title}" placeholder="Event Name" />
+            <label for="title">Position Name:</label>
+            <input type="text" id="title" class="input" th:field="*{title}" placeholder="Position Name" />
         </div>
     </div>
 
@@ -24,16 +24,16 @@
 
     <div class="field">
         <div class="control">
-            <label for="stop">End Date and Time:</label>
-            <input type="text" id="stop" class="input" th:field="*{stop}"/>
+            <label for="end">End Date and Time:</label>
+            <input type="text" id="end" class="input" th:field="*{end}"/>
         </div>
     </div>
 
     <!--    NEED TO FIND WAY TO INPUT LOCATION STRING FROM MAPBOX HERE WITH GEOLOCATION TO STORE TO DATABASE-->
     <div class="field">
         <div class="control">
-            <label for="location">Location:</label>
-            <input id="location" class="input" th:field="*{location}" placeholder="location" />
+            <label for="numNeeded">Number of Volunteers Needed:</label>
+            <input id="numNeeded" class="input" th:field="*{numNeeded}" placeholder="numNeeded" />
         </div>
     </div>
 
@@ -46,6 +46,7 @@
 
     <div class="field">
         <div class="control">
+            <input type="hidden" name="bookId" th:value="${event.id}" />
             <button id="create-event" class="button is-success" style="display: none"><a th:href="@{/events/{id}/create-position(id=*{id})}"></a> </button>
         </div>
     </div>

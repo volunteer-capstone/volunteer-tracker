@@ -6,11 +6,11 @@
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
-<form th:action="@{/events/create}" th:method="post" th:object="${event}">
+<form th:action="@{/events/create}" th:method="post">
 <div class="field">
     <div class="control">
         <label for="title">Event Name:</label>
-        <input type="text" id="title" class="input" th:field="*{title}" placeholder="Event Name" />
+        <input type="text" id="title" class="input" placeholder="Event Name" />
     </div>
 </div>
 
@@ -18,14 +18,14 @@
 <div class="field">
     <div class="control">
         <label for="start">Start Date and Time:</label>
-        <input type="text" id="start" class="input" th:field="*{start}"/>
+        <input type="datetime-local" id="start" class="input"/>
     </div>
 </div>
 
 <div class="field">
     <div class="control">
         <label for="stop">End Date and Time:</label>
-        <input type="text" id="stop" class="input" th:field="*{stop}"/>
+        <input type="datetime-local" id="stop" class="input"/>
     </div>
 </div>
 
@@ -33,20 +33,22 @@
 <div class="field">
     <div class="control">
         <label for="location">Location:</label>
-        <input id="location" class="input" th:field="*{location}" placeholder="location" />
+        <input id="location" class="input" placeholder="location" />
     </div>
 </div>
 
 <div class="field">
     <div class="control">
         <label for="description">Description:</label>
-        <input type="text" id="description" class="input" th:field="*{description}" placeholder="description"/>
+        <input id="description" type="text" class="input" placeholder="description"/>
     </div>
 </div>
 
 <div class="field">
     <div class="control">
-        <button id="create-event" class="button is-success" style="display: none"><a th:href="@{/events/{id}/create-position(id=*{id})}"></a> </button>
+        <input type="hidden" name="bookId" th:value="${event.id}" />
+<!--        <button id="create-eventDisabled" class="button is-success" disabled="disabled">Next→</button>-->
+        <button id="create-event" class="button is-success">Next→</button>
     </div>
 </div>
 
@@ -54,6 +56,6 @@
 <footer>
     <th:block th:replace="fragments/footer :: footer" />
 </footer>
-<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
+<!--<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>-->
 </body>
 </html>
