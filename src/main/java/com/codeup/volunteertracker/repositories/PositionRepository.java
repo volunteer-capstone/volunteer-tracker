@@ -12,5 +12,4 @@ public interface PositionRepository extends CrudRepository<Position, Long> {
     long positionEventId(long id);
 
 
-
 }
