@@ -17,18 +17,6 @@
 <p>Is Organizer: 				<span th:text="${user.isOrganizer()}"></span></p>
 <p><a href="" class="pastEvents">Past Events</a>&emsp;<a href="" class="plannedEvents">Planned Events</a></p>
 <hr/>
-<h4 th:if="">Events:</h4>
-<div th:each="event: ${user.getUserEvents()}">
-	<br/>
-	<p th:text="*{event.title}"></p>
-	<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
-		<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>
-		<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
-		<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p>
-	</div>
-	<hr/>
-</div>
-
 <h4>Events:</h4>
 <div th:each="event: ${user.getUserEvents()}">
 	<br/>
@@ -40,8 +28,19 @@
 	</div>
 	<hr/>
 </div>
+
+<!--<h4>Events:</h4>-->
+<!--<div th:each="event: ${user.getUserEvents()}">-->
+<!--	<br/>-->
+<!--	<p th:text="*{event.title}"></p>-->
+<!--	<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">-->
+<!--		<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>-->
+<!--		<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>-->
+<!--		<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p>-->
+<!--	</div>-->
+<!--	<hr/>-->
+<!--</div>-->
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script>
-</script>
+<script></script>
 </html>
