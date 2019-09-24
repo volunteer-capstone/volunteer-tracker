@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/header :: my-header('All Events')" />
+</head>
+<body>
+<th:block th:replace="fragments/navbar :: bulma-navbar" />
+
+<form th:action="@{/events/create}" th:method="post" th:object="${event}">
+<div class="field">
+    <div class="control">
+        <label for="title">Event Name:</label>
+        <input type="text" id="title" class="input" th:field="*{title}" placeholder="Event Name" />
+    </div>
+</div>
+
+<!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
+<div class="field">
+    <div class="control">
+        <label for="start">Start Date and Time:</label>
+        <input type="text" id="start" class="input" th:field="*{start}"/>
+    </div>
+</div>
+
+<div class="field">
+    <div class="control">
+        <label for="stop">End Date and Time:</label>
+        <input type="text" id="stop" class="input" th:field="*{stop}"/>
+    </div>
+</div>
+
+<!--    NEED TO FIND WAY TO INPUT LOCATION STRING FROM MAPBOX HERE WITH GEOLOCATION TO STORE TO DATABASE-->
+<div class="field">
+    <div class="control">
+        <label for="location">Location:</label>
+        <input id="location" class="input" th:field="*{location}" placeholder="location" />
+    </div>
+</div>
+
+<div class="field">
+    <div class="control">
+        <label for="description">Description:</label>
+        <input type="text" id="description" class="input" th:field="*{description}" placeholder="description"/>
+    </div>
+</div>
+
+<div class="field">
+    <div class="control">
+        <button id="create-event" class="button is-success" style="display: none">Next</button>
+    </div>
+</div>
+
+</form>
+<footer>
+    <th:block th:replace="fragments/footer :: footer" />
+</footer>
+<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
+</body>
+</html>
