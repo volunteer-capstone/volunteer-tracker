@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/header :: my-header('All Events')" />
+</head>
+<body>
+<th:block th:replace="fragments/navbar :: bulma-navbar" />
+
+<form th:action="@{/events/create}" th:method="post">
+<div class="field">
+    <div class="control">
+        <label for="title">Event Name:</label>
+        <input type="text"  name="title" id="title" class="input" placeholder="Event Name" />
+    </div>
+</div>
+
+<!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
+<div class="field">
+    <div class="control">
+        <label for="start">Start Date and Time:</label>
+        <input type="datetime-local" name="start" id="start" class="input"/>
+    </div>
+</div>
+
+<div class="field">
+    <div class="control">
+        <label for="stop">End Date and Time:</label>
+        <input type="datetime-local" name="stop" id="stop" class="input"/>
+    </div>
+</div>
+
+<!--    NEED TO FIND WAY TO INPUT LOCATION STRING FROM MAPBOX HERE WITH GEOLOCATION TO STORE TO DATABASE-->
+<div class="field">
+    <div class="control">
+        <label for="location">Location:</label>
+        <input id="location" type="text" name="location" class="input" placeholder="location" />
+    </div>
+</div>
+
+<div class="field">
+    <div class="control">
+        <label for="description">Description:</label>
+        <input id="description" name="description" type="text" class="input" placeholder="description"/>
+    </div>
+</div>
+
+<div class="field">
+    <div class="control">
+        <input type="hidden" name="bookId" th:value="${event.id}" />
+<!--        <button id="create-eventDisabled" class="button is-success" disabled="disabled">Next→</button>-->
+        <button id="create-event" class="button is-success">Next→</button>
+    </div>
+</div>
+
+</form>
+<footer>
+    <th:block th:replace="fragments/footer :: footer" />
+</footer>
+<!--<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>-->
+</body>
+</html>
