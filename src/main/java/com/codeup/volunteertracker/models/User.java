@@ -43,7 +43,7 @@ public class User {
     @Column
     private long hours;
 
-    @Column (nullable = true)
+    @Column
     private boolean isOrganizer;
 
     @Column
