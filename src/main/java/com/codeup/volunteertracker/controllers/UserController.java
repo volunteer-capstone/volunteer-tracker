@@ -21,6 +21,7 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    //    CREATE USER
     @GetMapping("/register")
     public String viewRegister(Model model) {
         model.addAttribute("user", new User());
@@ -48,6 +49,8 @@ public class UserController {
         }
     }
 
+//    EDIT USER
 
 
+//  DELETE USER
 }
