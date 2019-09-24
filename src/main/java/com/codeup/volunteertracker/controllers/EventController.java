@@ -89,4 +89,5 @@ public class EventController {
     public String afterDelete(){
         return "redirect:/events";
     }
+
 }
