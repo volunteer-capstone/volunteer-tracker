@@ -8,7 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
+
+import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -52,6 +56,19 @@ public class UserController {
         }
     }
 
+      @GetMapping("/users/{id}/profile")
+    public String show(@PathVariable long id, Model viewModel) {
+//
+//        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        long usId = userSession.getId();
+
+        User user = userRepo.findOne(id);
+        viewModel.addAttribute("user", user);
+
+        return "users/view";
+    }
+  
+  
 //    EDIT USER
     @GetMapping("/profile/edit")
     public String editProfile(Model viewModel){
@@ -76,6 +93,9 @@ public class UserController {
         User editedUser = userRepo.save(user);
         return "redirect:/login?logout";
     }
+
+
+
 
 //  DELETE USER
 

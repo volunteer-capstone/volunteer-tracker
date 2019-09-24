@@ -35,7 +35,7 @@
                             <i class="fas fa-sign-in-alt"></i>
                         </span>
                     </a>
-                    <a sec:authorize="isAuthenticated()" th:href="@{/users/profile}" class="button is-primary">View Profile
+                    <a sec:authorize="isAuthenticated()" th:href="@{/users/{id}/profile(id=${#authentication.principal.id})}" class="button is-primary">View Profile
                     <span class="icon">
                         <i class="fas fa-kiwi-bird"></i>
                     </span></a>
