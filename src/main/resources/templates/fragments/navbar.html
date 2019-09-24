@@ -19,7 +19,7 @@
         <div class="navbar-start">
             <a href="/" class="navbar-item">Home</a>
             <a href="/events" class="navbar-item">View All Events</a>
-            <a href="/events/create" class="navbar-item">Create An Event</a>
+            <a sec:authorize="isAuthenticated()" href="/events/create" class="navbar-item">Create An Event</a>
         </div>
 
         <div class="navbar-end">
@@ -35,7 +35,7 @@
                             <i class="fas fa-sign-in-alt"></i>
                         </span>
                     </a>
-                    <a sec:authorize="isAuthenticated()" th:href="@{/users/profile}" class="button is-primary">View Profile
+                    <a sec:authorize="isAuthenticated()" th:href="@{/users/{id}/profile(id=${#authentication.principal.id})}" class="button is-primary">View Profile
                     <span class="icon">
                         <i class="fas fa-kiwi-bird"></i>
                     </span></a>

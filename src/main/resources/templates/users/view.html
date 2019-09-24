@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="fragments/header :: my-header('Register')" />
+</head>
+<body>
+<th:block th:replace="fragments/navbar :: bulma-navbar" />
+
+<h4>This is your profile:</h4>
+<p>User id: <span th:text="${user.id}"></span></p>
+<p>Name: <span th:text="${user.getFirstName()}"></span> <span th:text="${user.getLastName()}"></span></p>
+<p>Username: <span th:text="${user.getUsername()}"></span></p>
+<p>Email: <span th:text="${user.getEmail()}"></span></p>
+<p>Phone Number: <span th:text="${user.getPhoneNumber()}"></span></p>
+<p>Number of Hours Volunteered: <span th:text="${user.getHours()}"></span></p>
+<p>Is Organizer: <span th:text="${user.isOrganizer()}"></span></p>
+<p>Positions:
+	<span th:text="${user.getUserPosition()}"></span>
+</p>
+</body>
+</html>
