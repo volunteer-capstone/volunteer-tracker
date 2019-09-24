@@ -7,6 +7,8 @@ import com.codeup.volunteertracker.repositories.PositionRepository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PositionController {
@@ -26,16 +28,19 @@ public class PositionController {
         viewModel.addAttribute("position", new Position());
         Event event = eventDao.findOne(id);
         viewModel.addAttribute("event", event);
-        return "/position/create";
+        return "events/create-position";
     }
 
-    // UNTESTED-- create
-    @PostMapping("/events/{id}/create-position")
-    public String createPosition(@ModelAttribute Position position, @ModelAttribute Event event){
-        position.setEvent(event);
-        Position savePosition = positionDao.save(position);
-        return "redirect:/events/" + savePosition.getId();
-    }
+//    // UNTESTED-- create
+//    @PostMapping("/events/{id}/create-position")
+//    public String createPosition(@ModelAttribute Position position, @ModelAttribute Event event){
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+//        Date localTimeObj1= df.parse(start);
+//        Date localTimeObj2 = df.parse(end);
+//        position.setEvent(event);
+//        Position savePosition = positionDao.save(position);
+//        return "redirect:/events/" + savePosition.getEvent().getId();
+//    }
 
 //    UNTESTED -- EDIT
     @GetMapping("/events/positions/edit/{id}")

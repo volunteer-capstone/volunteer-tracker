@@ -7,10 +7,16 @@ import com.codeup.volunteertracker.models.User;
 import com.codeup.volunteertracker.repositories.EventRepository;
 import com.codeup.volunteertracker.repositories.PositionRepository;
 import com.codeup.volunteertracker.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -54,13 +60,35 @@ public class EventController {
     @GetMapping("/events/create")
     public String createEvent(Model viewModel){
         viewModel.addAttribute("event", new Event());
-        return "events/create";
+        return "events/create-event";
     }
 
     @PostMapping("/events/create")
-    public String createEvent(@ModelAttribute Event event){
+    public String createEvent(@RequestParam(name="location") String location, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description) throws ParseException {
+//        DateTimeFormat formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+//        Date localTimeObj1 = Date.parse(start, formatter);
+//        LocalDateTime localTimeObj2 = LocalDateTime.parse(stop, formatter);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        Date localTimeObj1= df.parse(start);
+        Date localTimeObj2 = df.parse(stop);
+        Event event = new Event();
+        event.setId(event.getId());
+        event.setStart(localTimeObj1);
+        event.setStop(localTimeObj2);
+        event.setDescription(description);
+        event.setLocation(location);
+        event.setTitle(title);
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        event.setCreator(userSession);
         Event createEvent = eventDao.save(event);
-        return "events/create";
+        System.out.println(createEvent.getStart());
+        System.out.println(createEvent.getStart());
+        System.out.println(createEvent.getStop());
+        System.out.println(createEvent.getDescription());
+        System.out.println(createEvent.getTitle());
+        System.out.println(createEvent.getLocation());
+        System.out.println(description);
+        return "redirect:/events";
     }
 
 //    EDIT EVENT
@@ -70,16 +98,16 @@ public class EventController {
         return "events/edit";
     }
 
-    @PostMapping("/events/edit/{id}")
-    public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") Date start, @RequestParam(name="stop") Date stop, @RequestParam(name="location") String location, @RequestParam(name="description") String description){
-        Event editedEvent = eventDao.findOne(id);
-        editedEvent.setTitle(title);
-        editedEvent.setStart(start);
-        editedEvent.setStop(stop);
-        editedEvent.setLocation(location);
-        editedEvent.setDescription(description);
-        return "redirect:/events/" + id;
-    }
+//    @PostMapping("/events/edit/{id}")
+//    public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") Date start, @RequestParam(name="stop") Date stop, @RequestParam(name="location") String location, @RequestParam(name="description") String description){
+//        Event editedEvent = eventDao.findOne(id);
+//        editedEvent.setTitle(title);
+//        editedEvent.setStart(start);
+//        editedEvent.setStop(stop);
+//        editedEvent.setLocation(location);
+//        editedEvent.setDescription(description);
+//        return "redirect:/events/" + id;
+//    }
 
 //    DELETE EVENT
     @GetMapping("/events/delete/{id}")

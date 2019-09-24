@@ -16,4 +16,5 @@ public interface PositionRepository extends JpaRepository<Position, Long> {
 
     List<Position> findByEvent_Id(Long eventId);
 
+
 }

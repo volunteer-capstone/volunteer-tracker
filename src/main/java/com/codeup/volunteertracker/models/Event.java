@@ -2,8 +2,11 @@ package com.codeup.volunteertracker.models;
 
 import com.codeup.volunteertracker.models.User;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+
 import java.util.Date;
 import java.util.List;
 
@@ -29,12 +32,10 @@ public class Event {
 
     @Column(nullable = false, columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
-    @NotBlank(message = "Enter a start time/date")
     private Date start;
 
    @Column(nullable = false, columnDefinition="DATETIME")
    @Temporal(TemporalType.TIMESTAMP)
-   @NotBlank(message = "Enter an end time/date")
    private Date stop;
 
     @ManyToOne
