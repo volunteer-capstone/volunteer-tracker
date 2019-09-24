@@ -13,6 +13,8 @@
 <p>Email: <span th:text="${user.getEmail()}"></span></p>
 <p>Phone Number: <span th:text="${user.getPhoneNumber()}"></span></p>
 <p>Number of Hours Volunteered: <span th:text="${user.getHours()}"></span></p>
+<p>test:</p>
+<p th:text="${user.addHours()}"></p>
 <p>Is Organizer: <span th:text="${user.isOrganizer()}"></span></p>
 
 <hr/>
@@ -21,7 +23,7 @@
 	<br/>
 		<p th:text="*{event.title}"></p>
 		<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
-			<p th:text="*{pos.title}"></p>
+			<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p>
 		</div>
 		<hr/>
 	</div>
