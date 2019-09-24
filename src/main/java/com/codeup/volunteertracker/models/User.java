@@ -6,8 +6,13 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "users")
@@ -180,5 +185,22 @@ public class User {
             }
         }
         return positions;
+    }
+
+    public long addHours() {
+        List<UserPosition> posList = userPosition;
+        long totalHours = 0;
+        for (int i = 0; i < posList.size(); i++) {
+
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+            Date firstDate = posList.get(i).getPosition().getStart();
+            Date secondDate = posList.get(i).getPosition().getEnd();
+
+            long diffInMillis = Math.abs(secondDate.getTime() - firstDate.getTime());
+            long diff = TimeUnit.HOURS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+
+            totalHours += diff;
+        }
+        return totalHours;
     }
 }
