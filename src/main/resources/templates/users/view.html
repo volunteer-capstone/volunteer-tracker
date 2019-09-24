@@ -6,47 +6,42 @@
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
-<!-- <h3>This is your profile:</h3>
-<p>User id: <span th:text="${user.id}"></span></p>
-<p>Name: <span th:text="${user.getFirstName()}"></span> <span th:text="${user.getLastName()}"></span></p>
-<p>Username: <span th:text="${user.getUsername()}"></span></p>
-<p>Email: <span th:text="${user.getEmail()}"></span></p>
-<p>Phone Number: <span th:text="${user.getPhoneNumber()}"></span></p>
+<h3>This is your profile:</h3>
+<p>User id: 					<span th:text="${user.id}"></span></p>
+<p>Name: 						<span th:text="${user.getFirstName()}"></span> <span th:text="${user.getLastName()}"></span></p>
+<p>Username: 					<span th:text="${user.getUsername()}"></span></p>
+<p>Email: 						<span th:text="${user.getEmail()}"></span></p>
+<p>Phone Number: 				<span th:text="${user.getPhoneNumber()}"></span></p>
 <p>Number of Hours Volunteered: <span th:text="${user.getHours()}"></span></p>
-<p>test:</p>
-<p th:text="${user.addHours()}"></p>
-<p>Is Organizer: <span th:text="${user.isOrganizer()}"></span></p>
-
+<p>Number of Hours Planned: 	<span th:text="${user.addHours()}"></span></p>
+<p>Is Organizer: 				<span th:text="${user.isOrganizer()}"></span></p>
+<p><a href="" class="pastEvents">Past Events</a>&emsp;<a href="" class="plannedEvents">Planned Events</a></p>
 <hr/>
-<h4>Events:</h4>
-	<div th:each="event: ${user.getUserEvents()}">
+<h4 th:if="">Events:</h4>
+<div th:each="event: ${user.getUserEvents()}">
 	<br/>
-		<p th:text="*{event.title}"></p>
-		<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
-			<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p> -->
-      
-<div class="container">
-	<div class="content">
-	<h3>This is your profile:</h3>
-	<p>User id: <span th:text="${user.id}"></span></p>
-	<p>Name: <span th:text="${user.getFirstName()}"></span> <span th:text="${user.getLastName()}"></span></p>
-	<p>Username: <span th:text="${user.getUsername()}"></span></p>
-	<p>Email: <span th:text="${user.getEmail()}"></span></p>
-	<p>Phone Number: <span th:text="${user.getPhoneNumber()}"></span></p>
-	<p>Number of Hours Volunteered: <span th:text="${user.getHours()}"></span></p>
-	<p>Is Organizer: <span th:text="${user.isOrganizer()}"></span></p>
-
+	<p th:text="*{event.title}"></p>
+	<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
+		<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>
+		<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
+		<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p>
+	</div>
 	<hr/>
-	<h4>Events:</h4>
-		<div th:each="event: ${user.getUserEvents()}">
-		<br/>
-			<p th:text="*{event.title}"></p>
-			<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
-				<p th:text="*{pos.title}"></p>
-			</div>
-			<hr/>
-		</div>
 </div>
+
+<h4>Events:</h4>
+<div th:each="event: ${user.getUserEvents()}">
+	<br/>
+	<p th:text="*{event.title}"></p>
+	<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
+		<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>
+		<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
+		<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p>
+	</div>
+	<hr/>
 </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>
+</script>
 </html>
