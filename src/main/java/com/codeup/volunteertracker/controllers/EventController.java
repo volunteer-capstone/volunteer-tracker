@@ -2,8 +2,10 @@ package com.codeup.volunteertracker.controllers;
 
 
 import com.codeup.volunteertracker.models.Event;
+import com.codeup.volunteertracker.models.Position;
 import com.codeup.volunteertracker.models.User;
 import com.codeup.volunteertracker.repositories.EventRepository;
+import com.codeup.volunteertracker.repositories.PositionRepository;
 import com.codeup.volunteertracker.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class EventController {
@@ -24,10 +27,12 @@ public class EventController {
 //    starting dependency injection.....
     private final EventRepository eventDao;
     private final UserRepository userDao;
+    private final PositionRepository positionDao;
 
-    public EventController(EventRepository eventRepository, UserRepository userRepository){
+    public EventController(EventRepository eventRepository, UserRepository userRepository, PositionRepository positionDao){
         this.eventDao= eventRepository;
         this.userDao = userRepository;
+        this.positionDao = positionDao;
     }
 
 //NONE TESTED YET
@@ -116,6 +121,17 @@ public class EventController {
     @PostMapping("/events/delete/{id}")
     public String afterDelete(){
         return "redirect:/events";
+    }
+
+//    Approve hours
+    @GetMapping("/events/approve/{id}")
+    public String showApprovePage(@PathVariable long id, Model model) {
+        Event event = eventDao.findOne(id);
+        List<Position> positions = event.getPositions();
+
+        model.addAttribute("event", eventDao.findOne(id));
+        model.addAttribute("positions", positions);
+        return "events/approveHours";
     }
 
 }

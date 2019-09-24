@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -42,7 +43,7 @@ public class User {
     @Column
     private long hours;
 
-    @Column (nullable = true)
+    @Column
     private boolean isOrganizer;
 
     @Column
@@ -146,5 +147,38 @@ public class User {
 
     public void setUserPosition(List<UserPosition> userPosition) {
         this.userPosition = userPosition;
+    }
+
+//    public List<String> getUserPositionTitles() {
+//        List<UserPosition> posList = userPosition;
+//        List<String> positions = new ArrayList<>();
+//        for (int i = 0; i < posList.size(); i++) {
+//            positions.add(posList.get(i).getPosition().getTitle());
+//        }
+//        return positions;
+//    }
+
+    public List<Event> getUserEvents() {
+
+        List<UserPosition> posList = userPosition;
+        List<Event> events = new ArrayList<>();
+        for (int i = 0; i < posList.size(); i++) {
+            Event nextEvent = (posList.get(i).getPosition().getEvent());
+            if (!events.contains(nextEvent)) {
+                events.add(posList.get(i).getPosition().getEvent());
+            }
+        }
+        return events;
+    }
+
+    public List<Position> getUserPositionTitlesByEventId(Long id) {
+        List<UserPosition> posList = userPosition;
+        List<Position> positions = new ArrayList<>();
+        for (int i = 0; i < posList.size(); i++) {
+            if (posList.get(i).getPosition().getEvent().getId() == id) {
+                positions.add(posList.get(i).getPosition());
+            }
+        }
+        return positions;
     }
 }
