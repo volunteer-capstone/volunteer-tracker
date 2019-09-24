@@ -42,4 +42,6 @@ public class EventController {
         viewModel.addAttribute("user", user);
         return "events/show";
     }
+
+
 }
