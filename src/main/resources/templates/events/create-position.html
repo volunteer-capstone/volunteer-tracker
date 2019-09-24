@@ -6,52 +6,53 @@
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
-<form th:action="@{/events/{id}/create-position(id=${event.id})}" th:method="post" th:object="${position}">
-    <div class="field">
-        <div class="control">
-            <label for="title">Position Name:</label>
-            <input type="text" id="title" class="input" th:field="*{title}" placeholder="Position Name" />
-        </div>
-    </div>
+<h1>CREATE YOUR POSITIONS HERE!</h1>
+<!--<form th:action="@{/events/{id}/create-position(id=${event.id})}" th:method="post" th:object="${position}">-->
+<!--    <div class="field">-->
+<!--        <div class="control">-->
+<!--            <label for="title">Position Name:</label>-->
+<!--            <input type="text" id="title" class="input" th:field="*{title}" placeholder="Position Name" />-->
+<!--        </div>-->
+<!--    </div>-->
 
-    <!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
-    <div class="field">
-        <div class="control">
-            <label for="start">Start Date and Time:</label>
-            <input type="text" id="start" class="input" th:field="*{start}"/>
-        </div>
-    </div>
+<!--    &lt;!&ndash;    NEED TO FIND FORM FOR DATE TIME STAMP INPUT&ndash;&gt;-->
+<!--    <div class="field">-->
+<!--        <div class="control">-->
+<!--            <label for="start">Start Date and Time:</label>-->
+<!--            <input type="text" id="start" class="input" th:field="*{start}"/>-->
+<!--        </div>-->
+<!--    </div>-->
 
-    <div class="field">
-        <div class="control">
-            <label for="end">End Date and Time:</label>
-            <input type="text" id="end" class="input" th:field="*{end}"/>
-        </div>
-    </div>
+<!--    <div class="field">-->
+<!--        <div class="control">-->
+<!--            <label for="end">End Date and Time:</label>-->
+<!--            <input type="text" id="end" class="input" th:field="*{end}"/>-->
+<!--        </div>-->
+<!--    </div>-->
 
-    <!--    NEED TO FIND WAY TO INPUT LOCATION STRING FROM MAPBOX HERE WITH GEOLOCATION TO STORE TO DATABASE-->
-    <div class="field">
-        <div class="control">
-            <label for="numNeeded">Number of Volunteers Needed:</label>
-            <input id="numNeeded" class="input" th:field="*{numNeeded}" placeholder="numNeeded" />
-        </div>
-    </div>
+<!--    &lt;!&ndash;    NEED TO FIND WAY TO INPUT LOCATION STRING FROM MAPBOX HERE WITH GEOLOCATION TO STORE TO DATABASE&ndash;&gt;-->
+<!--    <div class="field">-->
+<!--        <div class="control">-->
+<!--            <label for="numNeeded">Number of Volunteers Needed:</label>-->
+<!--            <input id="numNeeded" class="input" th:field="*{numNeeded}" placeholder="numNeeded" />-->
+<!--        </div>-->
+<!--    </div>-->
 
-    <div class="field">
-        <div class="control">
-            <label for="description">Description:</label>
-            <input type="text" id="description" class="input" th:field="*{description}" placeholder="description"/>
-        </div>
-    </div>
+<!--    <div class="field">-->
+<!--        <div class="control">-->
+<!--            <label for="description">Description:</label>-->
+<!--            <input type="text" id="description" class="input" th:field="*{description}" placeholder="description"/>-->
+<!--        </div>-->
+<!--    </div>-->
 
-    <div class="field">
-        <div class="control">
-            <input type="hidden" name="bookId" th:value="${event.id}" />
-            <button id="create-event" class="button is-success" style="display: none"><a th:href="@{/events/{id}/create-position(id=*{id})}"></a> </button>
-        </div>
-    </div>
+<!--    <div class="field">-->
+<!--        <div class="control">-->
+<!--            <input type="hidden" name="bookId" th:value="${event.id}" />-->
+<!--            <button id="create-event" class="button is-success" style="display: none"><a th:href="@{/events/{id}/create-position(id=*{id})}"></a> </button>-->
+<!--        </div>-->
+<!--    </div>-->
 
-</form>
+<!--</form>-->
 <footer>
     <th:block th:replace="fragments/footer :: footer" />
 </footer>

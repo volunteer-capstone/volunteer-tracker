@@ -30,14 +30,10 @@ public class Position {
 
     @Column(nullable = false, columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
-    @NotBlank(message = "Enter a start time/date")
-    @DateTimeFormat(pattern = "yyyy-mm-dd hh:mm")
     private Date start;
 
     @Column(nullable = false, columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
-    @NotBlank(message = "Enter an end time/date")
-    @DateTimeFormat(pattern = "yyyy-mm-dd hh:mm")
     private Date end;
 
     @ManyToOne

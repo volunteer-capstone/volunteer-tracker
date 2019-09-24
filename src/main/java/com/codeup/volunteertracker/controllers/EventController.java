@@ -5,10 +5,14 @@ import com.codeup.volunteertracker.models.Event;
 import com.codeup.volunteertracker.models.User;
 import com.codeup.volunteertracker.repositories.EventRepository;
 import com.codeup.volunteertracker.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -55,15 +59,22 @@ public class EventController {
     }
 
     @PostMapping("/events/create")
-    public String createEvent(@ModelAttribute Event event,@RequestParam(name="description") String description, @RequestParam(name="location") String location, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
-        LocalDateTime localTimeObj1 = LocalDateTime.parse(start, formatter);
-        LocalDateTime localTimeObj2 = LocalDateTime.parse(stop, formatter);
+    public String createEvent(@RequestParam(name="location") String location, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description) throws ParseException {
+//        DateTimeFormat formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+//        Date localTimeObj1 = Date.parse(start, formatter);
+//        LocalDateTime localTimeObj2 = LocalDateTime.parse(stop, formatter);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        Date localTimeObj1= df.parse(start);
+        Date localTimeObj2 = df.parse(stop);
+        Event event = new Event();
+        event.setId(event.getId());
         event.setStart(localTimeObj1);
         event.setStop(localTimeObj2);
         event.setDescription(description);
         event.setLocation(location);
         event.setTitle(title);
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        event.setCreator(userSession);
         Event createEvent = eventDao.save(event);
         System.out.println(createEvent.getStart());
         System.out.println(createEvent.getStart());
@@ -71,7 +82,8 @@ public class EventController {
         System.out.println(createEvent.getDescription());
         System.out.println(createEvent.getTitle());
         System.out.println(createEvent.getLocation());
-        return "redirect:/events/{id}/create-position";
+        System.out.println(description);
+        return "redirect:/events";
     }
 
 //    EDIT EVENT

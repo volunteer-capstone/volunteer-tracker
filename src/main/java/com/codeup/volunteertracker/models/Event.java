@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+
 import java.util.Date;
 import java.util.List;
 
@@ -30,16 +31,12 @@ public class Event {
     private String location;
 
     @Column(nullable = false, columnDefinition="DATETIME")
-//    @Temporal(TemporalType.TIMESTAMP)
-    @NotBlank(message = "Enter a start time/date")
-    @DateTimeFormat(pattern = "MM-dd-yyy HH:mm")
-    private LocalDateTime start;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date start;
 
    @Column(nullable = false, columnDefinition="DATETIME")
-//   @Temporal(TemporalType.TIMESTAMP)
-   @NotBlank(message = "Enter an end time/date")
-   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-   private LocalDateTime stop;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date stop;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -51,7 +48,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String description, String location, LocalDateTime start, LocalDateTime stop, User creator, List<Position> positions) {
+    public Event(String title, String description, String location, Date start, Date stop, User creator, List<Position> positions) {
         this.title = title;
         this.description = description;
         this.location = location;
@@ -93,19 +90,19 @@ public class Event {
         this.location = location;
     }
 
-    public LocalDateTime getStart() {
+    public Date getStart() {
         return start;
     }
 
-    public void setStart(LocalDateTime start) {
+    public void setStart(Date start) {
         this.start = start;
     }
 
-    public LocalDateTime getStop() {
+    public Date getStop() {
         return stop;
     }
 
-    public void setStop(LocalDateTime stop) {
+    public void setStop(Date stop) {
         this.stop = stop;
     }
 
