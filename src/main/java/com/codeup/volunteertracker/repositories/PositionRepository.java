@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PositionRepository extends JpaRepository<Position, Long> {
+public interface PositionRepository extends CrudRepository<Position, Long> {
 
     @Query(value ="select event_id from volunteer_db.positions where id = ?", nativeQuery = true)
     long positionEventId(long id);
