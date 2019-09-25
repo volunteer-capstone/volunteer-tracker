@@ -1,4 +1,9 @@
 package com.codeup.volunteertracker.repositories;
 
-public interface UserPositionRepository {
+import com.codeup.volunteertracker.models.UserPosition;
+import org.springframework.data.repository.CrudRepository;
+
+public interface UserPositionRepository extends CrudRepository<UserPosition, Long>{
+
+
 }

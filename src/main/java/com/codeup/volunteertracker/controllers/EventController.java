@@ -88,7 +88,7 @@ public class EventController {
         System.out.println(createEvent.getTitle());
         System.out.println(createEvent.getLocation());
         System.out.println(description);
-        return "redirect:/events";
+        return "redirect:/events/{id}/create-position";
     }
 
 //    EDIT EVENT
