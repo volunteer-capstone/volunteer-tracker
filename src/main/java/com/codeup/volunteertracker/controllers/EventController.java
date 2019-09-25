@@ -15,11 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class EventController {
@@ -49,7 +46,9 @@ public class EventController {
     public String showClickedEvent(@PathVariable long id, Model viewModel){
         Event event = eventDao.findOne(id);
         viewModel.addAttribute("event", event);
-        long userId = eventDao.eventCreatorId(id);
+        System.out.println(event.getId());
+        System.out.println(event.getCreator().getUsername());
+        long userId = event.getCreator().getId();
         System.out.println(userId);
         User user = userDao.findOne(userId);
         viewModel.addAttribute("user", user);
@@ -65,9 +64,6 @@ public class EventController {
 
     @PostMapping("/events/create")
     public String createEvent(@RequestParam(name="location") String location, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description) throws ParseException {
-//        DateTimeFormat formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-//        Date localTimeObj1 = Date.parse(start, formatter);
-//        LocalDateTime localTimeObj2 = LocalDateTime.parse(stop, formatter);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         Date localTimeObj1= df.parse(start);
         Date localTimeObj2 = df.parse(stop);

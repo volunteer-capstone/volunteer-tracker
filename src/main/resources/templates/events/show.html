@@ -10,8 +10,8 @@
 
 <h3>Event ID:  <span th:text="${event.id}"></span></h3>
 <h3 th:text="${event.title}"></h3>
-<h4 th:datetime-local="${event.start}"></h4>
-<h4 th:datetime-local="${event.stop}"></h4>
+<h4 th:text="${event.start}"></h4>
+<h4 th:text="${event.stop}"></h4>
 <h4 th:text="${event.location}"></h4>
 <p th:text="${event.description}"></p>
 <h3>Organizer Contact Information:</h3>
@@ -20,6 +20,7 @@
 <h5 th:text="${user.getEmail()}"></h5>
 <h5 th:text="${user.getPhoneNumber()}"></h5>
 
+<button><a th:href="@{/events/{id}/create-position(id=${event.id})}">Add Positions</a></button>
 
 
 <footer>

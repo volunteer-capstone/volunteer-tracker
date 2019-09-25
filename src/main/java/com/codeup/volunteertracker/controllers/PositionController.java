@@ -8,6 +8,7 @@ import com.codeup.volunteertracker.repositories.EventRepository;
 import com.codeup.volunteertracker.repositories.PositionRepository;
 import com.codeup.volunteertracker.repositories.UserPositionRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+@Controller
 public class PositionController {
 
     private final PositionRepository positionDao;
@@ -35,29 +38,32 @@ public class PositionController {
         viewModel.addAttribute("position", new Position());
         Event event = eventDao.findOne(id);
         viewModel.addAttribute("event", event);
-        UserPosition userPosition = new UserPosition();
-        viewModel.addAttribute("userPosition", userPosition);
         return "events/create-position";
     }
 
     // UNTESTED-- create(go back and wrap create event and post with try catch for the date parse)
     @PostMapping("events/{id}/create-position")
-    public String createPosition(@PathVariable long id, @ModelAttribute Event event, @ModelAttribute UserPosition userPosition, @RequestParam(name="description") String description, @RequestParam(name="start") String start, @RequestParam(name="end") String end, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="title") String title) throws ParseException {
+    public String createPosition(@PathVariable long id, @RequestParam(name="description") String description, @RequestParam(name="start") String start, @RequestParam(name="end") String end, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="title") String title) throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-        Date localTimeObj1= df.parse(start);
-        Date localTimeObj2 = df.parse(end);
+        Date starttime= df.parse(start);
+        Date endtime = df.parse(end);
+        System.out.println("positions info:");
         Position position = new Position();
-        position.setEvent(event);
+        System.out.println(description);
         position.setDescription(description);
-        position.setStart(localTimeObj1);
-        position.setEnd(localTimeObj2);
+        position.setStart(starttime);
+        position.setEnd(endtime);
         position.setNumNeeded(numNeeded);
         position.setTitle(title);
+        Event event = eventDao.findOne(id);
+        position.setEvent(event);
         Position savePosition = positionDao.save(position);
-        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        userPosition.setPosition(savePosition);
-        userPosition.setUser(userSession);
-        UserPosition saveUserPosition = userPositionDao.save(userPosition);
+        System.out.println(savePosition.getEvent());
+//        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        userPosition.setPosition(savePosition);
+//        userPosition.setUser(userSession);
+//        UserPosition saveUserPosition = userPositionDao.save(userPosition);
+//        System.out.println(savePosition.getEvent().getId());
         return "redirect:/events/" + savePosition.getEvent().getId();
     }
 

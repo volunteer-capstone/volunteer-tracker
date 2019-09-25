@@ -20,14 +20,14 @@
     <div class="field">
         <div class="control">
             <label for="start">Start Date and Time:</label>
-            <input type="text" id="start" class="input" name="start"/>
+            <input type="datetime-local" id="start" class="input" name="start"/>
         </div>
     </div>
 
     <div class="field">
         <div class="control">
             <label for="end">End Date and Time:</label>
-            <input type="text" id="end" class="input" name="end"/>
+            <input type="datetime-local" id="end" class="input" name="end"/>
         </div>
     </div>
 
@@ -35,7 +35,7 @@
     <div class="field">
         <div class="control">
             <label for="numNeeded">Number of Volunteers Needed:</label>
-            <input id="numNeeded" class="input" name="numNeeded" placeholder="numNeeded" />
+            <input id="numNeeded" type="number" class="input" name="numNeeded" placeholder="numNeeded" />
         </div>
     </div>
 
@@ -49,7 +49,7 @@
     <div class="field">
         <div class="control">
             <input type="hidden" name="eventId" th:value="${event.id}" />
-            <button id="create-event" class="button is-success" style="display: none"><a th:href="@{/events/{id}/create-position(id=*{id})}"></a> </button>
+            <button id="create-event" class="button is-success">Create Position</button>
         </div>
     </div>
 
