@@ -79,7 +79,8 @@ public class EventController {
         event.setLocation(location);
         event.setTitle(title);
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        event.setCreator(userSession);
+        User user = userDao.findOne(userSession.getId());
+        event.setCreator(user);
         Event createEvent = eventDao.save(event);
         System.out.println(createEvent.getStart());
         System.out.println(createEvent.getStart());
@@ -87,8 +88,8 @@ public class EventController {
         System.out.println(createEvent.getDescription());
         System.out.println(createEvent.getTitle());
         System.out.println(createEvent.getLocation());
-        System.out.println(description);
-        return "redirect:/events/{id}/create-position";
+        System.out.println(createEvent.getId());
+        return "redirect:/events/" + createEvent.getId() + "/create-position";
     }
 
 //    EDIT EVENT

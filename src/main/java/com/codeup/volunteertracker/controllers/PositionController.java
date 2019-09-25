@@ -30,7 +30,7 @@ public class PositionController {
 
 //    UNTESTED-- create
     //will have to pass event id as a hidden attribute
-    @GetMapping("/events/{id}/create-position")
+    @GetMapping("events/{id}/create-position")
     public String createPosition(Model viewModel, @PathVariable long id){
         viewModel.addAttribute("position", new Position());
         Event event = eventDao.findOne(id);
@@ -41,7 +41,7 @@ public class PositionController {
     }
 
     // UNTESTED-- create(go back and wrap create event and post with try catch for the date parse)
-    @PostMapping("/events/{id}/create-position")
+    @PostMapping("events/{id}/create-position")
     public String createPosition(@PathVariable long id, @ModelAttribute Event event, @ModelAttribute UserPosition userPosition, @RequestParam(name="description") String description, @RequestParam(name="start") String start, @RequestParam(name="end") String end, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="title") String title) throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         Date localTimeObj1= df.parse(start);
