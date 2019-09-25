@@ -23,10 +23,10 @@ public class MailgunService {
     public static JsonNode sendSimpleMessage() throws UnirestException {
         HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/mg.pathofthevolunteer.com/messages")
                 .basicAuth("api", "7a4eefc9b94e02c666fee2b50ff1199b-baa55c84-c14827be")
-                .field("from", "Excited User <USER@YOURDOMAIN.COM>")
+                .field("from", "Tester for Path of the Volunteer <USER@YOURDOMAIN.COM>")
                 .field("to", "brandiclinard021911@gmail.com")
-                .field("subject", "hello")
-                .field("text", "testing")
+                .field("subject", "Testing Mailgun email service")
+                .field("text", "This is an email test for path of the volunteer.")
                 .asJson();
 
         return request.getBody();
