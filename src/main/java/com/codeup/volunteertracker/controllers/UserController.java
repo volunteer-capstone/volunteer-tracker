@@ -3,11 +3,13 @@ package com.codeup.volunteertracker.controllers;
 import com.codeup.volunteertracker.models.User;
 import com.codeup.volunteertracker.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -73,25 +75,38 @@ public class UserController {
     @GetMapping("/profile/edit")
     public String editProfile(Model viewModel){
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        viewModel.addAttribute("user", userSession.getId());
-        return "redirect:/login?logout";
+        long id = userSession.getId();
+//        User user = userRepo.findOne(id);
+        viewModel.addAttribute("user", userSession);
+        return "users/edit";
     }
 
 //    WILL HAVE TO GO BACK AND ADD ABILITY TO EDIT PHOTO
     @PostMapping("/profile/edit")
-    public String editProfile(@ModelAttribute User user, @RequestParam(name="email") String email, @RequestParam(name="firstName") String firstName, @RequestParam(name="lastName") String lastName, @RequestParam(name="phoneNumber") String phoneNumber, @RequestParam(name="userName") String userName){
+    public String editProfile(@ModelAttribute User user, @RequestParam(name="email") String email, @RequestParam(name="firstName") String firstName, @RequestParam(name="lastName") String lastName, @RequestParam(name="phoneNumber") String phoneNumber, @RequestParam(name="username") String username){
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setId(userSession.getId());
-        String hash = passwordEncoder.encode(user.getPassword());
-        user.setPassword(hash);
-        user.setEmail(email);
-        user.setHours(userSession.getHours());
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setPhoneNumber(phoneNumber);
-        user.setUsername(userName);
-        User editedUser = userRepo.save(user);
-        return "redirect:/login?logout";
+//        System.out.println(userSession.getPassword());
+//        System.out.println(user.getPassword());
+//        String hash = passwordEncoder.encode(user.getPassword());
+//        System.out.println(hash);
+//        System.out.println(BCrypt.checkpw(user.getPassword(),userSession.getPassword()));
+//        System.out.println(hash.matches(userSession.getPassword()));
+
+//        user.setPassword(hash);
+        if (BCrypt.checkpw(user.getPassword(),userSession.getPassword())) {
+            user.setEmail(email);
+            user.setHours(userSession.getHours());
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setPhoneNumber(phoneNumber);
+            user.setUsername(username);
+            user.setPassword(userSession.getPassword());
+            User editedUser = userRepo.save(user);
+            return "redirect:/users/" + user.getId() + "/profile";
+        } else {
+            return "redirect:/profile/edit";
+        }
     }
 
 

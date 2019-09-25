@@ -6,7 +6,7 @@
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
-<h3>This is your profile:</h3>
+<h3>This is your profile: &emsp;<a th:href="@{/profile/edit}">Edit</a></h3>
 <p>User id: 					<span th:text="${user.id}"></span></p>
 <p>Name: 						<span th:text="${user.getFirstName()}"></span> <span th:text="${user.getLastName()}"></span></p>
 <p>Username: 					<span th:text="${user.getUsername()}"></span></p>
@@ -15,32 +15,45 @@
 <p>Number of Hours Volunteered: <span th:text="${user.getHours()}"></span></p>
 <p>Number of Hours Planned: 	<span th:text="${user.addHours()}"></span></p>
 <p>Is Organizer: 				<span th:text="${user.isOrganizer()}"></span></p>
-<p><a href="" class="pastEvents">Past Events</a>&emsp;<a href="" class="plannedEvents">Planned Events</a></p>
+<p><a class="pastEvents">Past Events</a>&emsp;<a class="plannedEvents">Planned Events</a></p>
 <hr/>
 <h4>Events:</h4>
-<div th:each="event: ${user.getUserEvents()}">
+<div th:each="event: ${user.getUserEvents()}" class="pastEventDiv">
+	<div th:if="*{event.getStart().before(execInfo.now)}">
 	<br/>
-	<p th:text="*{event.title}"></p>
-	<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
-		<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>
-		<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
-		<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p>
+		<p th:text="*{event.title}"></p>
+		<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
+			<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>
+			<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
+			<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p>
+		</div>
+		<hr/>
 	</div>
-	<hr/>
 </div>
 
-<!--<h4>Events:</h4>-->
-<!--<div th:each="event: ${user.getUserEvents()}">-->
-<!--	<br/>-->
-<!--	<p th:text="*{event.title}"></p>-->
-<!--	<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">-->
-<!--		<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>-->
-<!--		<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>-->
-<!--		<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p>-->
-<!--	</div>-->
-<!--	<hr/>-->
-<!--</div>-->
+<div th:each="event: ${user.getUserEvents()}" class="plannedEventDiv" style="display: none">
+	<div th:if="*{event.getStart().after(execInfo.now)}">
+	<br/>
+		<p th:text="*{event.title}"></p>
+		<p>~These are the planned events~</p>
+		<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
+			<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>
+			<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
+			<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p>
+		</div>
+		<hr/>
+	</div>
+</div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script></script>
+<script>
+	$('.pastEvents').on('click', function () {
+        $('.pastEventDiv').css('display', 'inline');
+        $('.plannedEventDiv').css('display', 'none');
+    });
+    $('.plannedEvents').on('click', function () {
+        $('.pastEventDiv').css('display', 'none');
+        $('.plannedEventDiv').css('display', 'inline');
+    });
+</script>
 </html>
