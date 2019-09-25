@@ -21,8 +21,12 @@ function passCheck() {
     if (password.length < 6 || password.length > 20 || passwordConfirm.value !== password) {
         document.querySelector('#registerDisabled').style.display = "inline";
         document.querySelector('#register').style.display = "none";
+        document.querySelector('#editDisabled').style.display = "inline";
+        document.querySelector('#edit').style.display = "none";
     } else {
         document.querySelector('#registerDisabled').style.display = "none";
         document.querySelector('#register').style.display = "inline";
+        document.querySelector('#editDisabled').style.display = "none";
+        document.querySelector('#edit').style.display = "inline";
     }
 }
