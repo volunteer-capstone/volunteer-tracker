@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class TwilioService {
     // Find your Account Sid and Token at twilio.com/user/account
-    public static final String ACCOUNT_SID = "AC4c785c0ddfbe4f35486902bcf9ed9a88";
-    public static final String AUTH_TOKEN = "ebc9ba8e0953e821460daf2f324b98b6";
+
 
 
 
