@@ -6,7 +6,7 @@
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
-<form th:action="@{/events/create}" th:method="post">
+<form th:action="@{'/events/create'}" th:method="post">
 <div class="field">
     <div class="control">
         <label for="title">Event Name:</label>
@@ -46,7 +46,7 @@
 
 <div class="field">
     <div class="control">
-        <input type="hidden" name="bookId" th:value="${event.id}" />
+        <input type="hidden" name="eventId" th:value="${event.id}" />
 <!--        <button id="create-eventDisabled" class="button is-success" disabled="disabled">Next→</button>-->
         <button id="create-event" class="button is-success">Next→</button>
     </div>

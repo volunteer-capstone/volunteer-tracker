@@ -25,7 +25,7 @@ public class Position {
     private String description;
 
     @Column(nullable = false)
-    @NotBlank(message = "Please enter how many are needed for this position")
+//    @NotBlank(message = "Please enter how many are needed for this position")
     private int numNeeded;
 
     @Column(nullable = false, columnDefinition="DATETIME")
