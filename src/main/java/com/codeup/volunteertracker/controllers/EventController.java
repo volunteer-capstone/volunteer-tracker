@@ -99,19 +99,25 @@ public class EventController {
         return "events/edit-event";
     }
 
+    //might need to surround parse with try/catch
     @PostMapping("/events/edit/{id}")
-    public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") Date start, @RequestParam(name="stop") Date stop, @RequestParam(name="location") String location, @RequestParam(name="description") String description){
+    public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") String start, @RequestParam(name="stop") String stop, @RequestParam(name="location") String location, @RequestParam(name="description") String description) throws ParseException {
         Event editedEvent = eventDao.findOne(id);
         System.out.println(title);
         System.out.println(start);
         System.out.println(stop);
         System.out.println(location);
         System.out.println(description);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        Date newStart = df.parse(start);
+        Date newStop = df.parse(stop);
+        editedEvent.setId(id);
         editedEvent.setTitle(title);
-        editedEvent.setStart(start);
-        editedEvent.setStop(stop);
+        editedEvent.setStart(newStart);
+        editedEvent.setStop(newStop);
         editedEvent.setLocation(location);
         editedEvent.setDescription(description);
+        Event saveEvent = eventDao.save(editedEvent);
         return "redirect:/events/" + id;
     }
 
