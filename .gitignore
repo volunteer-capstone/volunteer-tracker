@@ -4,7 +4,7 @@ target/
 !**/src/main/**
 !**/src/test/**
 src/main/resources/application.properties
-src/main/java/come/codeup/volunteertracker/services/Secret.java
+src/main/java/com/codeup/volunteertracker/services/Secret.java
 
 ### STS ###
 .apt_generated
