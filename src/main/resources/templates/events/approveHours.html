@@ -18,18 +18,62 @@
     </div>
     <hr/>
 
-    <th:block th:each="position : ${positions}">
-        <div class="columns">
-            <div class="column" th:text="${position.title}"></div>
-            <div class="column" th:text="${position.start}"></div>
-            <div class="column" th:text="${position.end}"></div>
-            <div class="column" th:text="${position.getPositionVolunteers()}"></div>
+    <form th:action="@{/approve}" th:media="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Position</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Signed up Users</th>
+                <th>
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" onclick="checkAll(this)" />
+                                Approve all hours
+                            </label>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="position : ${volunteers.keySet()}">
+            <tr>
+                <td th:text="${position.title}"></td>
+                <td th:text="${position.start}"></td>
+                <td th:text="${position.end}"></td>
+                <th:block th:each="userPosition : ${volunteers.get(position)}">
+                    <td th:text="${userPosition.getUser().getUsername()}"></td>
+                </th:block>
+
+                <td>
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input name="check" type="checkbox"/>
+                                Approve
+                            </label>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-success">Submit Hours</button>
+            </div>
         </div>
-    </th:block>
+    </form>
 </div>
 
 <footer>
     <th:block th:replace="fragments/footer :: footer" />
 </footer>
+<script th:src="@{/js/selectAlljs.js}"></script>
 </body>
 </html>

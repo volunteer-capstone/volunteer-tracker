@@ -14,11 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class EventController {
@@ -160,11 +160,22 @@ public class EventController {
     @GetMapping("/events/approve/{id}")
     public String showApprovePage(@PathVariable long id, Model model) {
         Event event = eventDao.findOne(id);
-        List<Position> positions = event.getPositions();
+        model.addAttribute("event", event);
+        List<Position> positions = positionDao.findByEvent_Id(id);
 
-        model.addAttribute("event", eventDao.findOne(id));
-        model.addAttribute("positions", positions);
+        Map<Position, List> volunteers = new HashMap<>();
+        for(Position position : positions) {
+            List<UserPosition> userPositions = userPositionDao.findAllByPosition(position);
+            volunteers.put(position, userPositions);
+        }
+        model.addAttribute("volunteers", volunteers);
         return "events/approveHours";
+    }
+
+    @PostMapping("/approve")
+    public String submitHours() {
+
+        return "redirect:/events";
     }
 
 }

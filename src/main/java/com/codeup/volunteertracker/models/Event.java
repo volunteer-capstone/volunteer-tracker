@@ -145,4 +145,5 @@ public class Event {
     public void setAddress(String address) {
         this.address = address;
     }
+
 }
