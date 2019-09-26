@@ -4,8 +4,10 @@ package com.codeup.volunteertracker.controllers;
 import com.codeup.volunteertracker.models.Event;
 import com.codeup.volunteertracker.models.Position;
 import com.codeup.volunteertracker.models.User;
+import com.codeup.volunteertracker.models.UserPosition;
 import com.codeup.volunteertracker.repositories.EventRepository;
 import com.codeup.volunteertracker.repositories.PositionRepository;
+import com.codeup.volunteertracker.repositories.UserPositionRepository;
 import com.codeup.volunteertracker.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -25,11 +27,13 @@ public class EventController {
     private final EventRepository eventDao;
     private final UserRepository userDao;
     private final PositionRepository positionDao;
+    private final UserPositionRepository userPositionDao;
 
-    public EventController(EventRepository eventRepository, UserRepository userRepository, PositionRepository positionDao){
+    public EventController(EventRepository eventRepository, UserRepository userRepository, PositionRepository positionDao, UserPositionRepository userPositionRepository){
         this.eventDao= eventRepository;
         this.userDao = userRepository;
         this.positionDao = positionDao;
+        this.userPositionDao = userPositionRepository;
     }
 
 //NONE TESTED YET
@@ -111,7 +115,18 @@ public class EventController {
     public String deleteEvent(@PathVariable long id) {
         Event toDelete = eventDao.findOne(id);
         long eventId = toDelete.getId();
-        eventDao.delete(id);
+        List<Position> positions = positionDao.findByEvent_Id(eventId);
+        System.out.println(positions);
+        for ( Position position : positions) {
+            long positionId = position.getId();
+            List<UserPosition> userPositions = userPositionDao.findByPosition_Id(positionId);
+            for (UserPosition userPosition : userPositions){
+                long userPositionId = userPosition.getId();
+                userPositionDao.delete(userPositionId);
+            }
+            positionDao.delete(positionId);
+        }
+        eventDao.delete(eventId);
         return "redirect:/events";
     }
 
