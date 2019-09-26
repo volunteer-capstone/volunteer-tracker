@@ -96,19 +96,24 @@ public class EventController {
     @GetMapping("/events/edit/{id}")
     public String editEvent(@PathVariable long id, Model viewModel){
         viewModel.addAttribute("event", eventDao.findOne(id));
-        return "events/edit";
+        return "events/edit-event";
     }
 
-//    @PostMapping("/events/edit/{id}")
-//    public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") Date start, @RequestParam(name="stop") Date stop, @RequestParam(name="location") String location, @RequestParam(name="description") String description){
-//        Event editedEvent = eventDao.findOne(id);
-//        editedEvent.setTitle(title);
-//        editedEvent.setStart(start);
-//        editedEvent.setStop(stop);
-//        editedEvent.setLocation(location);
-//        editedEvent.setDescription(description);
-//        return "redirect:/events/" + id;
-//    }
+    @PostMapping("/events/edit/{id}")
+    public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") Date start, @RequestParam(name="stop") Date stop, @RequestParam(name="location") String location, @RequestParam(name="description") String description){
+        Event editedEvent = eventDao.findOne(id);
+        System.out.println(title);
+        System.out.println(start);
+        System.out.println(stop);
+        System.out.println(location);
+        System.out.println(description);
+        editedEvent.setTitle(title);
+        editedEvent.setStart(start);
+        editedEvent.setStop(stop);
+        editedEvent.setLocation(location);
+        editedEvent.setDescription(description);
+        return "redirect:/events/" + id;
+    }
 
 //    DELETE EVENT
     @GetMapping("/events/delete/{id}")
