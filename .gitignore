@@ -4,7 +4,7 @@ target/
 !**/src/main/**
 !**/src/test/**
 src/main/resources/application.properties
-src/main/java/com.codeup.volunteertracker/PasswordAccess
+
 
 ### STS ###
 .apt_generated
