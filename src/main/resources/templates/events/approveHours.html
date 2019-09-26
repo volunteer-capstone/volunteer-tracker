@@ -15,6 +15,16 @@
         <div class="column" th:text="${event.title}"></div>
         <div class="column" th:text="${event.start}"></div>
         <div class="column" th:text="${event.stop}"></div>
+        <div class="column">
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        <input type="checkbox" onclick="checkAll(this)" />
+                        Approve all hours
+                    </label>
+                </div>
+            </div>
+        </div>
     </div>
     <hr/>
 
@@ -24,6 +34,16 @@
             <div class="column" th:text="${position.start}"></div>
             <div class="column" th:text="${position.end}"></div>
             <div class="column" th:text="${position.getPositionVolunteers()}"></div>
+            <div class="column">
+                <div class="field">
+                    <div class="control">
+                        <label class="checkbox">
+                            <input name="check" type="checkbox"/>
+                            Approve
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
     </th:block>
 </div>
@@ -31,5 +51,6 @@
 <footer>
     <th:block th:replace="fragments/footer :: footer" />
 </footer>
+<script th:src="@{/js/selectAlljs.js}"></script>
 </body>
 </html>

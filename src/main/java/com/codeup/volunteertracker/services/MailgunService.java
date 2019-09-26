@@ -20,7 +20,7 @@ public class MailgunService extends Secret {
     @PostMapping("/email")
     public static JsonNode sendSimpleMessage() throws UnirestException {
         HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/mg.pathofthevolunteer.com/messages")
-                .basicAuth("api", PASSWORD)
+//                .basicAuth("api", PASSWORD)
                 .field("from", "Tester for Path of the Volunteer <USER@YOURDOMAIN.COM>")
                 .field("to", "brandiclinard021911@gmail.com")
                 .field("subject", "Testing Mailgun email service")
