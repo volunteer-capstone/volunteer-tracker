@@ -60,12 +60,15 @@ public class UserController {
 
       @GetMapping("/users/{id}/profile")
     public String show(@PathVariable long id, Model viewModel) {
-//
+
 //        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        long usId = userSession.getId();
 
         User user = userRepo.findOne(id);
         viewModel.addAttribute("user", user);
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long userId = userSession.getId();
+        viewModel.addAttribute("userId", userId);
 
         return "users/view";
     }
