@@ -66,9 +66,15 @@ public class UserController {
 
         User user = userRepo.findOne(id);
         viewModel.addAttribute("user", user);
-        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        long userId = userSession.getId();
-        viewModel.addAttribute("userId", userId);
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
+            String userId = "";
+            viewModel.addAttribute("userId", userId);
+        } else {
+            User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            long userId = userSession.getId();
+            viewModel.addAttribute("userId", userId);
+        }
 
         return "users/view";
     }

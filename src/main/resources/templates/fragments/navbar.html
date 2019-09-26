@@ -19,7 +19,7 @@
         <div class="navbar-start">
             <a href="/" class="navbar-item">Home</a>
             <a href="/events" class="navbar-item">View All Events</a>
-            <a sec:authorize="isAuthenticated()" href="/events/create" class="navbar-item">Create An Event</a>
+            <a sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().isOrganizer()} == true" href="/events/create" class="navbar-item">Create An Event</a>
         </div>
 
         <div class="navbar-end">
