@@ -177,6 +177,7 @@ public class User {
     }
 
     public List<Position> getUserPositionTitlesByEventId(Long id) {
+
         List<UserPosition> posList = userPosition;
         List<Position> positions = new ArrayList<>();
         for (int i = 0; i < posList.size(); i++) {
@@ -186,6 +187,7 @@ public class User {
         }
         return positions;
     }
+
 
     public long addHours() {
         List<UserPosition> posList = userPosition;
