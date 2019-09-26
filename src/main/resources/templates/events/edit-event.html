@@ -32,12 +32,19 @@
         </div>
     </div>
 
-    <!--    NEED TO FIND WAY TO INPUT LOCATION STRING FROM MAPBOX HERE WITH GEOLOCATION TO STORE TO DATABASE-->
+    <!--    NEED TO FIND WAY TO INPUT ADDRESS  STRING FROM MAPBOX HERE WITH GEOLOCATION TO STORE TO DATABASE-->
     <div class="field">
         <div class="control">
             <h3>Current Location: <span th:text="${event.location}"></span></h3>
             <label for="location">Location:</label>
             <input id="location" type="text" name="location" class="input" placeholder="location" />
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <h3>Current Location: <span th:text="${event.address}"></span></h3>
+            <label for="address">Address:</label>
+            <input id="address" type="text" name="address" class="input" placeholder="address" />
         </div>
     </div>
     <div class="field">

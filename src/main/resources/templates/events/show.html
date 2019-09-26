@@ -14,6 +14,7 @@
 <h4 th:text="${event.stop}"></h4>
 <h4 th:text="${event.location}"></h4>
 <p th:text="${event.description}"></p>
+<img th:src="@{${event.photo}}" alt="event photo"/>
 <h3>Organizer Contact Information:</h3>
 <h5 th:text="${event.getCreator().getFirstName()}"></h5>
 <h5 th:text="${event.getCreator().getLastName()}"></h5>
