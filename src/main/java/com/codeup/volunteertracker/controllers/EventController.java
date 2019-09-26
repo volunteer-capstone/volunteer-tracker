@@ -36,8 +36,7 @@ public class EventController {
         this.userPositionDao = userPositionRepository;
     }
 
-//NONE TESTED YET
-
+// LIST OF EVENTS
     @GetMapping("/events")
     public String eventIndex(Model viewModel){
         Iterable<Event> events = eventDao.findAll();
@@ -45,17 +44,15 @@ public class EventController {
         return "events/index";
     }
 
-
+// SHOW INDIVIDUAL EVENT
     @GetMapping("/events/{id}")
     public String showClickedEvent(@PathVariable long id, Model viewModel){
         Event event = eventDao.findOne(id);
         viewModel.addAttribute("event", event);
         System.out.println(event.getId());
         System.out.println(event.getCreator().getUsername());
-        long userId = event.getCreator().getId();
-        System.out.println(userId);
-        User user = userDao.findOne(userId);
-        viewModel.addAttribute("user", user);
+
+
         return "events/show";
     }
 
