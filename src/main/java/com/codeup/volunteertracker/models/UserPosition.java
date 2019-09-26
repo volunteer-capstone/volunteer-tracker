@@ -58,4 +58,12 @@ public class UserPosition implements Serializable {
     public void setApproved(boolean approved) {
         isApproved = approved;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }
