@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <th:block th:replace="fragments/header :: my-header('Event Information')" />
 </head>
@@ -15,16 +15,16 @@
 <h4 th:text="${event.location}"></h4>
 <p th:text="${event.description}"></p>
 <h3>Organizer Contact Information:</h3>
-<h5 th:text="${user.getFirstName()}"></h5>
-<h5 th:text="${user.getLastName()}"></h5>
-<h5 th:text="${user.getEmail()}"></h5>
-<h5 th:text="${user.getPhoneNumber()}"></h5>
+<h5 th:text="${event.getCreator().getFirstName()}"></h5>
+<h5 th:text="${event.getCreator().getLastName()}"></h5>
+<h5 th:text="${event.getCreator().getEmail()}"></h5>
+<h5 th:text="${event.getCreator().getPhoneNumber()}"></h5>
 
-<button><a th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a></button>
-<button><a th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a></button>
-<button><a th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></button>
-
-<!--<button><a th:href="@{/email}">Test email</a></button>-->
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/email}">Email All Volunteers</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/text}">Text Message All Volunteers</a></button>
 
 
 <footer>
