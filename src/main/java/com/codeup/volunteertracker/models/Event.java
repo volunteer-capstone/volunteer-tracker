@@ -26,9 +26,12 @@ public class Event {
     @NotBlank(message = "Please give your event a description")
     private String description;
 
-    @Column(nullable = false)
     @NotBlank(message = "Please enter a location for your event")
     private String location;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Please enter an address for your event.")
+    private String address;
 
     @Column(nullable = false, columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
@@ -37,6 +40,9 @@ public class Event {
    @Column(nullable = false, columnDefinition="DATETIME")
    @Temporal(TemporalType.TIMESTAMP)
    private Date stop;
+
+   @Column( columnDefinition = "TEXT")
+   private String photo;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -48,7 +54,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String description, String location, Date start, Date stop, User creator, List<Position> positions) {
+    public Event(String title, String description, String location, Date start, Date stop, User creator, List<Position> positions, String photo, String address) {
         this.title = title;
         this.description = description;
         this.location = location;
@@ -56,6 +62,8 @@ public class Event {
         this.stop = stop;
         this.creator = creator;
         this.positions= positions;
+        this.photo= photo;
+        this.address = address;
     }
 
     public long getId() {
@@ -122,5 +130,20 @@ public class Event {
         this.positions = positions;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
 }

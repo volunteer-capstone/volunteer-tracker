@@ -75,7 +75,7 @@ public class EventController {
     }
 
     @PostMapping("/events/create")
-    public String createEvent(@RequestParam(name="location") String location, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description) throws ParseException {
+    public String createEvent(@RequestParam(name="location") String location, @RequestParam(name="address") String address, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description) throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         Date localTimeObj1= df.parse(start);
         Date localTimeObj2 = df.parse(stop);
@@ -85,6 +85,7 @@ public class EventController {
         event.setStop(localTimeObj2);
         event.setDescription(description);
         event.setLocation(location);
+        event.setAddress(address);
         event.setTitle(title);
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userDao.findOne(userSession.getId());
@@ -109,7 +110,7 @@ public class EventController {
 
     //might need to surround parse with try/catch
     @PostMapping("/events/edit/{id}")
-    public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") String start, @RequestParam(name="stop") String stop, @RequestParam(name="location") String location, @RequestParam(name="description") String description) throws ParseException {
+    public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") String start, @RequestParam(name="stop") String stop, @RequestParam(name="location") String location, @RequestParam(name="address") String address,@RequestParam(name="description") String description) throws ParseException {
         Event editedEvent = eventDao.findOne(id);
         System.out.println(title);
         System.out.println(start);
@@ -124,6 +125,7 @@ public class EventController {
         editedEvent.setStart(newStart);
         editedEvent.setStop(newStop);
         editedEvent.setLocation(location);
+        editedEvent.setAddress(address);
         editedEvent.setDescription(description);
         Event saveEvent = eventDao.save(editedEvent);
         return "redirect:/events/" + id;
