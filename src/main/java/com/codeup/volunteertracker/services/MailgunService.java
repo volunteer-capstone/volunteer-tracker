@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class MailgunService {
+public class MailgunService extends Access {
 
     @GetMapping("/email")
     public static String email(){
@@ -20,7 +20,7 @@ public class MailgunService {
     @PostMapping("/email")
     public static JsonNode sendSimpleMessage() throws UnirestException {
         HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/mg.pathofthevolunteer.com/messages")
-                .basicAuth("api", "7a4eefc9b94e02c666fee2b50ff1199b-baa55c84-c14827be")
+                .basicAuth("api", PASSWORD)
                 .field("from", "Tester for Path of the Volunteer <USER@YOURDOMAIN.COM>")
                 .field("to", "brandiclinard021911@gmail.com")
                 .field("subject", "Testing Mailgun email service")
