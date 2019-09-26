@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class MailgunService extends Access {
+public class MailgunService extends Secret {
 
     @GetMapping("/email")
     public static String email(){
