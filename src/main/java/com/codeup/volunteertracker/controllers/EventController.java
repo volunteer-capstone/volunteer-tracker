@@ -49,8 +49,19 @@ public class EventController {
     public String showClickedEvent(@PathVariable long id, Model viewModel){
         Event event = eventDao.findOne(id);
         viewModel.addAttribute("event", event);
-        System.out.println(event.getId());
-        System.out.println(event.getCreator().getUsername());
+
+        User eventUser = event.getCreator();
+
+        viewModel.addAttribute("eventUser", eventUser);
+
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
+            String userId = "";
+            viewModel.addAttribute("userId", userId);
+        } else {
+            User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            long userId = userSession.getId();
+            viewModel.addAttribute("userId", userId);
+        }
 
 
         return "events/show";

@@ -20,11 +20,11 @@
 <h5 th:text="${event.getCreator().getEmail()}"></h5>
 <h5 th:text="${event.getCreator().getPhoneNumber()}"></h5>
 
-<button sec:authorize="isAuthenticated()" th:if=" ${#authentication.getPrincipal().isOrganizer()} == true"><a th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a></button>
-<button sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().isOrganizer()} == true"><a th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a></button>
-<button sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().isOrganizer()} == true"><a th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></button>
-
-<!--<button><a th:href="@{/email}">Test email</a></button>-->
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/email}">Email All Volunteers</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/text}">Text Message All Volunteers</a></button>
 
 
 <footer>
