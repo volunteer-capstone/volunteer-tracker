@@ -35,6 +35,7 @@
     <h3 th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></h3>
     <h3 th:text="${position.numNeeded}"></h3>
     <h3 th:text="${position.description}"></h3>
+    <button sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})"><a th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a></button>
     <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a></button>
     <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/positions/delete/{id}(id = ${position.id})}">Delete Position</a></button>
 </div>

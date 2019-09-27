@@ -71,7 +71,7 @@ public class PositionController {
         Event event = eventDao.findOne(eventId);
         viewModel.addAttribute("event", event);
         return "events/edit-position";
-    }
+   }
 
 //    NEED TO SURROUND DF WITH TRY CATCH
     @PostMapping("/events/positions/edit/{id}")
@@ -90,12 +90,11 @@ public class PositionController {
         return "redirect:/events/" + eventId;
     }
 
-//    UNTESTED -- DELETE
-    // unsure if this will work appropriately
+// Delete
     @GetMapping("/events/positions/delete/{id}")
     public String deletePosition(@PathVariable long id){
         Position toDelete = positionDao.findOne(id);
-        List<UserPosition> userPositions = userPositionDao.findByPosition_Id(toDelete.getId());
+        List<UserPosition> userPositions = userPositionDao.findAllByPosition_Id(toDelete.getId());
         for (UserPosition userPosition : userPositions){
             long userPositionId = userPosition.getId();
             userPositionDao.delete(userPositionId);
@@ -105,7 +104,6 @@ public class PositionController {
         return "redirect:/events/" + eventId;
     }
 
-//    UNTESTED -- DELETE
     @PostMapping("/events/positions/delete/{id}")
     public String afterDelete(@PathVariable long id){
         Position toDelete = positionDao.findOne(id);
@@ -113,5 +111,30 @@ public class PositionController {
         positionDao.delete(id);
         return "redirect:/events/" + eventId ;
     }
+
+    //volunteer signup
+    @GetMapping("/events/positions/{id}/volunteer")
+    public String volunteer(@PathVariable long id){
+        UserPosition userPosition = new UserPosition();
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Position position = positionDao.findOne(id);
+        userPosition.setUser(userSession);
+        userPosition.setPosition(position);
+        userPositionDao.save(userPosition);
+
+        long eventId = positionDao.positionEventId(position.getId());
+        System.out.println("eventId:" + eventId);
+        System.out.println("positionId" + position.getId());
+
+        return "redirect:/users/" + userSession.getId() + "/profile";
+    }
+
+    @PostMapping("/events/positions/{id}/volunteer")
+    public String volunteerSignup(@PathVariable long id){
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return "redirect:/users/" + userSession.getId() + "/profile";
+    }
+
 
 }
