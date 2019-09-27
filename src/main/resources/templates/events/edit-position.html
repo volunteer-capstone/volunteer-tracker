@@ -6,18 +6,13 @@
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
-<h1>CREATE YOUR POSITIONS HERE!</h1>
+<h1>EDIT YOUR POSITIONS HERE!</h1>
 
-<h3 th:text="${event.title}"></h3>
-<h3 th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')}"></h3>
-<h3 th:text="${#dates.format(event.stop, 'MMM-dd-yyyy HH:mm')}"></h3>
-
-
-
-<form th:action="@{/events/{id}/create-position(id=${event.id})}" th:method="post">
+<form th:action="@{/events/positions/edit/{id}(id=${position.id})}" th:method="post">
     <div class="field">
         <div class="control">
-            <label for="title">Position Name:</label>
+            <h3>Current Position Name: <span th:text="${position.title}"></span></h3>
+            <label for="title">New Position Name:</label>
             <input type="text" id="title" class="input" name="title" placeholder="Position Name" />
         </div>
     </div>
@@ -25,6 +20,7 @@
     <!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
     <div class="field">
         <div class="control">
+            <h3>Current Position Start Date and Time: <span th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></span></h3>
             <label for="start">Start Date and Time:</label>
             <input type="datetime-local" id="start" class="input" name="start"/>
         </div>
@@ -32,6 +28,7 @@
 
     <div class="field">
         <div class="control">
+            <h3>Current Position End Date and Time: <span th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></span></h3>
             <label for="end">End Date and Time:</label>
             <input type="datetime-local" id="end" class="input" name="end"/>
         </div>
@@ -40,6 +37,7 @@
     <!--    NEED TO FIND WAY TO INPUT LOCATION STRING FROM MAPBOX HERE WITH GEOLOCATION TO STORE TO DATABASE-->
     <div class="field">
         <div class="control">
+            <h3>Current Number of Volunteers Needed: <span th:text="${position.numNeeded}"></span></h3>
             <label for="numNeeded">Number of Volunteers Needed:</label>
             <input id="numNeeded" type="number" class="input" name="numNeeded" placeholder="numNeeded" />
         </div>
@@ -47,6 +45,7 @@
 
     <div class="field">
         <div class="control">
+            <h3>Current Position Description: <span th:text="${position.description}"></span></h3>
             <label for="description">Description:</label>
             <input type="text" id="description" class="input" name="description" placeholder="description"/>
         </div>
@@ -54,8 +53,8 @@
 
     <div class="field">
         <div class="control">
-            <input type="hidden" name="eventId" th:value="${event.id}" />
-            <button id="create-event" class="button is-success">Create Position</button>
+<!--            <input type="hidden" name="eventId" th:value="${event.id}" />-->
+            <button id="create-event" class="button is-success">Submit Changes</button>
         </div>
     </div>
 

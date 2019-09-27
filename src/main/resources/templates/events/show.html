@@ -1,30 +1,91 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <th:block th:replace="fragments/header :: my-header('Event Information')" />
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
-<h1>THIS IS THE INDIVIDUAL EVENT PAGE</h1>
+<div class="container">
+    <div class="columns">
+        <div class="column">
+            <div class="content">
+                <!--<h3>Event ID:  <span th:text="${event.id}"></span></h3>-->
+                <h4 th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')}"></h4>
+                <h4 th:text="${#dates.format(event.stop, 'MMM-dd-yyyy HH:mm')}"></h4>
+                <h4 id="location" th:text="${event.location}"></h4>
+                <div id="map"></div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="content">
+                <h1 th:text="${event.title}"></h1>
+                <img th:src="@{${event.photo}}" alt="event photo"/>
+            </div>
+        </div>
+        <div class="column">
+            <div class="content">
+                <p th:text="${event.description}"></p>
+                <h3>Organizer Contact Information:</h3>
+                <h5 th:text="${event.getCreator().getFirstName()}"></h5>
+                <h5 th:text="${event.getCreator().getLastName()}"></h5>
+                <h5 th:text="${event.getCreator().getEmail()}"></h5>
+                <h5 th:text="${event.getCreator().getPhoneNumber()}"></h5>
+            </div>
+        </div>
+    </div>
 
-<h3>Event ID:  <span th:text="${event.id}"></span></h3>
-<h3 th:text="${event.title}"></h3>
-<h4 th:datetime-local="${event.start}"></h4>
-<h4 th:datetime-local="${event.stop}"></h4>
-<h4 th:text="${event.location}"></h4>
-<p th:text="${event.description}"></p>
+        <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a></th:block>
+        <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a></th:block>
+        <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></th:block>
+        <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/events/approve/{id}(id=${event.id})}">Approve Volunteer Hours</a></th:block>
+        <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/text}">Text Message All Volunteers</a></th:block>
+
+    <div class="content">
+        <h3>Volunteer Positions:</h3>
+        <div th:each="position: ${positions}">
+            <h6 th:text="${position.title}"></h6>
+            <h6 th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></h6>
+            <h6 th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></h6>
+            <h6 th:text="${position.numNeeded}"></h6>
+            <h6 th:text="${position.description}"></h6>
+            <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})"><a class="button is-primary" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a></th:block>
+            <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-warning" th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a></th:block>
+            <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-danger" th:href="@{/events/positions/delete/{id}(id = ${position.id})}">Delete Position</a></th:block>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer" />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+<script th:src="@{/js/key.js}"></script>
+<script th:src="@{/js/mapbox-geocode-utils.js}"></script>
 <h3>Organizer Contact Information:</h3>
-<h5 th:text="${user.getFirstName()}"></h5>
-<h5 th:text="${user.getLastName()}"></h5>
-<h5 th:text="${user.getEmail()}"></h5>
-<h5 th:text="${user.getPhoneNumber()}"></h5>
+<h5 th:text="${event.getCreator().getFirstName()}"></h5>
+<h5 th:text="${event.getCreator().getLastName()}"></h5>
+<h5 th:text="${event.getCreator().getEmail()}"></h5>
+<h5 th:text="${event.getCreator().getPhoneNumber()}"></h5>
+
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/approve/{id}(id=${event.id})}">Approve Volunteer Hours</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/text}">Text Message All Volunteers</a></button>
 
 
+<h1>Volunteer Positions:</h1>
+<div th:each="position: ${positions}">
+    <h3 th:text="${position.title}"></h3>
+    <h3 th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></h3>
+    <h3 th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></h3>
+    <h3 th:text="${position.numNeeded}"></h3>
+    <h3 th:text="${position.description}"></h3>
+    <button sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})"><a th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a></button>
+    <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a></button>
+    <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/positions/delete/{id}(id = ${position.id})}">Delete Position</a></button>
+</div>
 
-<footer>
-    <th:block th:replace="fragments/footer :: footer" />
-</footer>
+<th:block th:replace="fragments/footer :: footer" />
 <script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
 </body>
 </html>

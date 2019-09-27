@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:replace="fragments/header :: my-header('Path of the Volunteer')" />
-
+    <th:block th:replace="fragments/header :: my-header('Event Information')" />
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
-<div class="container">
-    <div class="content">
-        <h1>THIS IS THE HOME PAGE :)</h1>
-    </div>
-</div>
+<h1>THIS IS THE INDIVIDUAL EVENT PAGE</h1>
 
+<form th:action="@{/text}" th:method="post">
 
+<button type="submit">Send text</button>
+
+</form>
 <th:block th:replace="fragments/footer :: footer" />
 <script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
 </body>
