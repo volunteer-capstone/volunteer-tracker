@@ -18,7 +18,7 @@
     <!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
     <div class="field">
         <div class="control">
-            <h3>Current Start Date and Time: <span th:text="${event.start}"></span></h3>
+            <h3>Current Start Date and Time: <span th:text="${#dates.format(event.start, 'dd-MMM-yyyy HH:mm')}"></span></h3>
             <label for="start">Start Date and Time:</label>
             <input type="datetime-local" name="start" id="start" class="input"/>
         </div>
@@ -26,7 +26,7 @@
 
     <div class="field">
         <div class="control">
-            <h3>Current End Date and Time: <span th:text="${event.stop}"></span></h3>
+            <h3>Current End Date and Time: <span th:text="${#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></span></h3>
             <label for="stop">End Date and Time:</label>
             <input type="datetime-local" name="stop" id="stop" class="input"/>
         </div>
