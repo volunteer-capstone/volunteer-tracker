@@ -41,6 +41,8 @@ public class EventController {
     public String eventIndex(Model viewModel){
         Iterable<Event> events = eventDao.findAll();
         viewModel.addAttribute("events", events);
+        List<Position> positions = positionDao.findAll();
+        viewModel.addAttribute("positions", positions);
         return "events/index";
     }
 
