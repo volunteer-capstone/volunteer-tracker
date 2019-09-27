@@ -7,6 +7,8 @@
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
 <div class="container">
+
+    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
     <div class="content">
         <h3>Approve hours for <span th:text="${event.title}"></span></h3>
     </div>
@@ -71,8 +73,15 @@
             </div>
         </div>
     </form>
-</div>
+    </th:block>
 
+    <th:block th:if="(${eventUser.id} != ${userId}) and (${eventUser.isOrganizer()} == false)">
+        <div class="content">
+            <h3>You did <strong>NOT</strong> create this event and cannot update hours.</h3>
+        </div>
+    </th:block>
+
+</div>
 <footer>
     <th:block th:replace="fragments/footer :: footer" />
 </footer>

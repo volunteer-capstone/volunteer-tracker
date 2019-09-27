@@ -161,6 +161,19 @@ public class EventController {
     public String showApprovePage(@PathVariable long id, Model model) {
         Event event = eventDao.findOne(id);
         model.addAttribute("event", event);
+        User eventUser = event.getCreator();
+
+        model.addAttribute("eventUser", eventUser);
+
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
+            String userId = "";
+            model.addAttribute("userId", userId);
+        } else {
+            User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            long userId = userSession.getId();
+            model.addAttribute("userId", userId);
+        }
+
         List<Position> positions = positionDao.findByEvent_Id(id);
         Map<Position, List> volunteers = new HashMap<>();
         for(Position position : positions) {
