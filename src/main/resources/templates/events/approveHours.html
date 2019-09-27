@@ -10,11 +10,13 @@
     <div class="content">
         <h3>Approve hours for <span th:text="${event.title}"></span></h3>
     </div>
+    <form th:action="@{/events/approve}" th:method="post">
 
     <div class="columns is-mobile">
         <div class="column" th:text="${event.title}"></div>
         <div class="column" th:text="${#dates.format(event.start, 'dd-MMM-yyyy HH:mm')}"></div>
         <div class="column" th:text="${#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></div>
+        <input type="hidden" name="eventId" th:value="${event.id}"/>
     </div>
     <hr/>
 
@@ -44,27 +46,25 @@
                 <td th:text="${position.title}"></td>
                 <td th:text="${#dates.format(position.start, 'dd-MMM-yyyy HH:mm')}"></td>
                 <td th:text="${#dates.format(position.end, 'dd-MMM-yyyy HH:mm')}"></td>
-                <td th:text="${event.posHours(position.start, position.end)}"></td>
+                <td id="hours" th:text="${event.posHours(position.start, position.end)}"></td>
                 <th:block th:each="userPosition : ${volunteers.get(position)}">
                     <td th:text="${userPosition.getUser().getUsername()}"></td>
-                </th:block>
-
-                <td>
-                    <div class="field">
-                        <div class="control">
-                            <label class="checkbox">
-                                <input name="check" type="checkbox"/>
-                                Approve
-                            </label>
+                    <td>
+                        <div class="field">
+                            <div class="control">
+                                <label class="checkbox">
+                                    <input id="check" name="check" th:value="${userPosition.getId()}" type="checkbox"/>
+                                    Approve
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                </td>
+                    </td>
+                </th:block>
             </tr>
         </th:block>
         </tbody>
     </table>
 
-    <form th:action="@{/events/approvehour}" th:media="post">
         <div class="field">
             <div class="control">
                 <button class="button is-link">Submit Hours</button>

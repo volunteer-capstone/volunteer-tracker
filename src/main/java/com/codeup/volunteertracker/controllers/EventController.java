@@ -171,9 +171,23 @@ public class EventController {
         return "events/approveHours";
     }
 
-    @PostMapping("/events/approvehour")
-    public String submitHours() {
+    @PostMapping("/events/approve")
+    public String submitHours(@RequestParam(name = "check", defaultValue = "off") long[] isApproved,
+                              @RequestParam(name = "eventId") long eventId) {
+        Event event = eventDao.findOne(eventId);
+        for(long userPos : isApproved) {
+            UserPosition userPosition = userPositionDao.findOne(userPos);
+            userPosition.setApproved(true);
+            userPositionDao.save(userPosition);
 
+            Position position = positionDao.findOne(userPosition.getPosition().getId());
+            long shiftHours = event.posHours(position.getStart(),position.getEnd());
+
+            User user = userDao.findOne(userPosition.getUser().getId());
+            long currentHours = user.getHours();
+            user.setHours(currentHours+shiftHours);
+            userDao.save(user);
+        }
         return "redirect:/events";
     }
 
