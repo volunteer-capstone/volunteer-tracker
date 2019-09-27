@@ -1,35 +1,89 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:replace="fragments/header :: my-header('Please Login')" />
+    <th:block th:replace="fragments/header :: my-header('Approve Hours')" />
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
 <div class="container">
+
+    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
     <div class="content">
         <h3>Approve hours for <span th:text="${event.title}"></span></h3>
     </div>
+    <form th:action="@{/events/approve}" th:method="post">
 
-    <div class="columns">
+    <div class="columns is-mobile">
         <div class="column" th:text="${event.title}"></div>
-        <div class="column" th:text="${event.start}"></div>
-        <div class="column" th:text="${event.stop}"></div>
+        <div class="column" th:text="${#dates.format(event.start, 'dd-MMM-yyyy HH:mm')}"></div>
+        <div class="column" th:text="${#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></div>
+        <input type="hidden" name="eventId" th:value="${event.id}"/>
     </div>
     <hr/>
 
-    <th:block th:each="position : ${positions}">
-        <div class="columns">
-            <div class="column" th:text="${position.title}"></div>
-            <div class="column" th:text="${position.start}"></div>
-            <div class="column" th:text="${position.end}"></div>
-            <div class="column" th:text="${position.getPositionVolunteers()}"></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Position</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Total Hours</th>
+                <th>Signed up Users</th>
+                <th>
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" onclick="checkAll(this)" />
+                                Approve all hours
+                            </label>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="position : ${volunteers.keySet()}">
+            <tr>
+                <td th:text="${position.title}"></td>
+                <td th:text="${#dates.format(position.start, 'dd-MMM-yyyy HH:mm')}"></td>
+                <td th:text="${#dates.format(position.end, 'dd-MMM-yyyy HH:mm')}"></td>
+                <td id="hours" th:text="${event.posHours(position.start, position.end)}"></td>
+                <th:block th:each="userPosition : ${volunteers.get(position)}">
+                    <td th:text="${userPosition.getUser().getUsername()}"></td>
+                    <td>
+                        <div class="field">
+                            <div class="control">
+                                <label class="checkbox">
+                                    <input id="check" name="check" th:value="${userPosition.getId()}" type="checkbox"/>
+                                    Approve
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                </th:block>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-link">Submit Hours</button>
+            </div>
+        </div>
+    </form>
+    </th:block>
+
+    <th:block th:if="(${eventUser.id} != ${userId}) and (${eventUser.isOrganizer()} == false)">
+        <div class="content">
+            <h3>You did <strong>NOT</strong> create this event and cannot update hours.</h3>
         </div>
     </th:block>
+
 </div>
 
-<footer>
-    <th:block th:replace="fragments/footer :: footer" />
-</footer>
+<th:block th:replace="fragments/footer :: footer" />
+<script th:src="@{/js/selectAlljs.js}"></script>
 </body>
 </html>

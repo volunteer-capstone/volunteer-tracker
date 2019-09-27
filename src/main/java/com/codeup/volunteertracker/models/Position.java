@@ -1,9 +1,6 @@
 package com.codeup.volunteertracker.models;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
-
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +22,7 @@ public class Position {
     private String description;
 
     @Column(nullable = false)
-    @NotBlank(message = "Please enter how many are needed for this position")
+//    @NotBlank(message = "Please enter how many are needed for this position")
     private int numNeeded;
 
     @Column(nullable = false, columnDefinition="DATETIME")

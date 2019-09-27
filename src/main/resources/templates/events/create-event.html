@@ -6,7 +6,7 @@
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
-<form th:action="@{/events/create}" th:method="post">
+<form th:action="@{'/events/create'}" th:method="post">
 <div class="field">
     <div class="control">
         <label for="title">Event Name:</label>
@@ -29,13 +29,20 @@
     </div>
 </div>
 
-<!--    NEED TO FIND WAY TO INPUT LOCATION STRING FROM MAPBOX HERE WITH GEOLOCATION TO STORE TO DATABASE-->
+<!--    NEED TO FIND WAY TO INPUT ADDRESS  STRING FROM MAPBOX HERE WITH GEOLOCATION TO STORE TO DATABASE-->
 <div class="field">
     <div class="control">
         <label for="location">Location:</label>
         <input id="location" type="text" name="location" class="input" placeholder="location" />
     </div>
 </div>
+
+    <div class="field">
+        <div class="control">
+            <label for="address">Address::</label>
+            <input id="address" type="text" name="address" class="input" placeholder="address" />
+        </div>
+    </div>
 
 <div class="field">
     <div class="control">
@@ -46,16 +53,14 @@
 
 <div class="field">
     <div class="control">
-        <input type="hidden" name="bookId" th:value="${event.id}" />
+        <input type="hidden" name="eventId" th:value="${event.id}" />
 <!--        <button id="create-eventDisabled" class="button is-success" disabled="disabled">Next→</button>-->
         <button id="create-event" class="button is-success">Next→</button>
     </div>
 </div>
 
 </form>
-<footer>
-    <th:block th:replace="fragments/footer :: footer" />
-</footer>
+<th:block th:replace="fragments/footer :: footer" />
 <!--<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>-->
 </body>
 </html>

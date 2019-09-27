@@ -6,6 +6,8 @@
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
+<div class="container">
+	<div class="content">
 <h3 th:if="${user.id} == ${userId}">This is your profile: &emsp;<a th:href="@{/profile/edit}">Edit</a></h3>
 <h3 th:unless="${user.id} == ${userId}" th:text="'This is '+${user.getUsername()}+'\'s profile: '"></h3>
 <p>Name: 						<span th:text="${user.getFirstName()}"></span> <span th:text="${user.getLastName()}"></span></p>
@@ -31,7 +33,7 @@
 		<hr/>
 	</div>
 </div>
-
+	</div>
 <div th:each="event: ${user.getUserEvents()}" class="plannedEventDiv" style="display: none">
 	<div th:if="*{event.getStart().after(execInfo.now)}">
 	<br/>
@@ -73,8 +75,10 @@
 		<hr/>
 	</div>
 </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer" />
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script>
 	$('.pastEvents').on('click', function () {
         $('.pastEventDiv').css('display', 'inline');

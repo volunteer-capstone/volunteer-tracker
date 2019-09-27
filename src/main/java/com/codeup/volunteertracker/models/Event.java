@@ -1,14 +1,10 @@
 package com.codeup.volunteertracker.models;
 
-import com.codeup.volunteertracker.models.User;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
-
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name="events")
@@ -26,9 +22,12 @@ public class Event {
     @NotBlank(message = "Please give your event a description")
     private String description;
 
-    @Column(nullable = false)
     @NotBlank(message = "Please enter a location for your event")
     private String location;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Please enter an address for your event.")
+    private String address;
 
     @Column(nullable = false, columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
@@ -37,6 +36,9 @@ public class Event {
    @Column(nullable = false, columnDefinition="DATETIME")
    @Temporal(TemporalType.TIMESTAMP)
    private Date stop;
+
+   @Column( columnDefinition = "TEXT")
+   private String photo;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -48,7 +50,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String description, String location, Date start, Date stop, User creator, List<Position> positions) {
+    public Event(String title, String description, String location, Date start, Date stop, User creator, List<Position> positions, String photo, String address) {
         this.title = title;
         this.description = description;
         this.location = location;
@@ -56,6 +58,8 @@ public class Event {
         this.stop = stop;
         this.creator = creator;
         this.positions= positions;
+        this.photo= photo;
+        this.address = address;
     }
 
     public long getId() {
@@ -121,4 +125,29 @@ public class Event {
     public void setPositions(List<Position> positions) {
         this.positions = positions;
     }
+
+    public long posHours(Date start, Date end) {
+        long totalHours = 0;
+        long diffInMillis = Math.abs(end.getTime() - start.getTime());
+        long diff = TimeUnit.HOURS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+        totalHours = diff;
+        return totalHours;
+    }
+  
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
 }

@@ -1,3 +1,4 @@
+"use strict";
 let passwordConfirm = document.querySelector('#passwordConfirm');
 let password = document.querySelector('#password');
 
