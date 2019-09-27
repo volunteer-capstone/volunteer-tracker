@@ -27,10 +27,7 @@
 <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/email}">Email All Volunteers</a></button>
 <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/text}">Text Message All Volunteers</a></button>
 
-
-<footer>
-    <th:block th:replace="fragments/footer :: footer" />
-</footer>
+<th:block th:replace="fragments/footer :: footer" />
 <script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
 </body>
 </html>
