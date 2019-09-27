@@ -36,8 +36,7 @@ public class EventController {
         this.userPositionDao = userPositionRepository;
     }
 
-//NONE TESTED YET
-
+// LIST OF EVENTS
     @GetMapping("/events")
     public String eventIndex(Model viewModel){
         Iterable<Event> events = eventDao.findAll();
@@ -45,17 +44,26 @@ public class EventController {
         return "events/index";
     }
 
-
+// SHOW INDIVIDUAL EVENT
     @GetMapping("/events/{id}")
     public String showClickedEvent(@PathVariable long id, Model viewModel){
         Event event = eventDao.findOne(id);
         viewModel.addAttribute("event", event);
-        System.out.println(event.getId());
-        System.out.println(event.getCreator().getUsername());
-        long userId = event.getCreator().getId();
-        System.out.println(userId);
-        User user = userDao.findOne(userId);
-        viewModel.addAttribute("user", user);
+
+        User eventUser = event.getCreator();
+
+        viewModel.addAttribute("eventUser", eventUser);
+
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
+            String userId = "";
+            viewModel.addAttribute("userId", userId);
+        } else {
+            User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            long userId = userSession.getId();
+            viewModel.addAttribute("userId", userId);
+        }
+
+
         return "events/show";
     }
 
@@ -67,7 +75,7 @@ public class EventController {
     }
 
     @PostMapping("/events/create")
-    public String createEvent(@RequestParam(name="location") String location, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description) throws ParseException {
+    public String createEvent(@RequestParam(name="location") String location, @RequestParam(name="address") String address, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description) throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         Date localTimeObj1= df.parse(start);
         Date localTimeObj2 = df.parse(stop);
@@ -77,6 +85,7 @@ public class EventController {
         event.setStop(localTimeObj2);
         event.setDescription(description);
         event.setLocation(location);
+        event.setAddress(address);
         event.setTitle(title);
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userDao.findOne(userSession.getId());
@@ -101,7 +110,7 @@ public class EventController {
 
     //might need to surround parse with try/catch
     @PostMapping("/events/edit/{id}")
-    public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") String start, @RequestParam(name="stop") String stop, @RequestParam(name="location") String location, @RequestParam(name="description") String description) throws ParseException {
+    public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") String start, @RequestParam(name="stop") String stop, @RequestParam(name="location") String location, @RequestParam(name="address") String address,@RequestParam(name="description") String description) throws ParseException {
         Event editedEvent = eventDao.findOne(id);
         System.out.println(title);
         System.out.println(start);
@@ -116,6 +125,7 @@ public class EventController {
         editedEvent.setStart(newStart);
         editedEvent.setStop(newStop);
         editedEvent.setLocation(location);
+        editedEvent.setAddress(address);
         editedEvent.setDescription(description);
         Event saveEvent = eventDao.save(editedEvent);
         return "redirect:/events/" + id;
