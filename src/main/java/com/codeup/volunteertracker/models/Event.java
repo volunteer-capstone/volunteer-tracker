@@ -136,6 +136,7 @@ public class Event {
         }
         return totalHours;
     }
+  
     public String getPhoto() {
         return photo;
     }
