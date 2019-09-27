@@ -9,8 +9,8 @@
 <h1>CREATE YOUR POSITIONS HERE!</h1>
 
 <h3 th:text="${event.title}"></h3>
-<h3 th:text="${#dates.format(event.start, 'dd-MMM-yyyy HH:mm')}"></h3>
-<h3 th:text="${#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></h3>
+<h3 th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')}"></h3>
+<h3 th:text="${#dates.format(event.stop, 'MMM-dd-yyyy HH:mm')}"></h3>
 
 
 

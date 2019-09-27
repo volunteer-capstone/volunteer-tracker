@@ -66,6 +66,9 @@ public class EventController {
         Iterable<Position> positions = event.getPositions();
         viewModel.addAttribute("positions", positions);
 
+        Iterable<UserPosition> userPositions = userPositionDao.findAll();
+        viewModel.addAttribute("userPositions", userPositions);
+
         return "events/show";
     }
 
@@ -142,7 +145,7 @@ public class EventController {
         System.out.println(positions);
         for ( Position position : positions) {
             long positionId = position.getId();
-            List<UserPosition> userPositions = userPositionDao.findByPosition_Id(positionId);
+            List<UserPosition> userPositions = userPositionDao.findAllByPosition_Id(positionId);
             for (UserPosition userPosition : userPositions){
                 long userPositionId = userPosition.getId();
                 userPositionDao.delete(userPositionId);
