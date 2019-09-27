@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/header :: my-header('Volunteer Contact Info')" />
+</head>
+<body>
+<th:block th:replace="fragments/navbar :: bulma-navbar" />
+
+<div class="container">
+    <div class="content">
+        <h3>Approve hours for <span th:text="${event.title}"></span></h3>
+    </div>
+
+    <div class="columns">
+        <div class="column" th:text="${event.title}"></div>
+        <div class="column" th:text="${#dates.format(event.start, 'dd-MMM-yyyy HH:mm')}"></div>
+        <div class="column" th:text="${#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></div>
+    </div>
+    <hr/>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Position</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Total Hours</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="position : ${volunteers.keySet()}">
+            <tr>
+                <td th:text="${position.title}"></td>
+                <td th:text="${#dates.format(position.start, 'dd-MMM-yyyy HH:mm')}"></td>
+                <td th:text="${#dates.format(position.end, 'dd-MMM-yyyy HH:mm')}"></td>
+                <td th:text="${event.posHours(position.start, position.end)}"></td>
+            </tr>
+                <th:block th:each="userPosition : ${volunteers.get(position)}">
+            <tr>
+                <td></td>
+                <td><strong>Volunteer</strong></td>
+                <td th:text="${userPosition.getUser().getUsername()}"></td>
+                <td th:text="${userPosition.getUser().getEmail()}"></td>
+                <td th:text="${userPosition.getUser().getPhoneNumber()}"></td>
+            </tr>
+                </th:block>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <th:block th:replace="fragments/footer :: footer" />
+</footer>
+</body>
+</html>
