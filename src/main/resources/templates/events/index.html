@@ -7,10 +7,20 @@
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
 <div class="container">
-    <h1>THIS IS THE EVENT LIST  PAGE</h1>
-    <div th:each="event : ${events}">
-        <a th:href="@{/events/{id}(id=${event.id})}"><h3 th:text="${event.title}"></h3></a>
-        <h3 th:text="${event.start}"></h3>
+    <h1>THIS IS THE EVENT LIST PAGE</h1>
+
+    <label for="search">search</label>
+    <input id="search" type="text" onkeyup="searchEvents()" placeholder="Enter event title" />
+
+    <div class="eventDiv">
+        <div th:each="event : ${events}" class="event">
+            <div th:class="${event.getTitle()}">
+                <a th:href="@{/events/{id}(id=${event.id})}"><h3 th:text="${event.title}"></h3></a>
+                <p th:if="${event.getTitle().contains('h')}" class="event-title">this has h in it</p>
+                <h3 th:text="*{#dates.format(event.start, 'MMM d, yyyy H:mm')}"></h3>
+                <p th:text="${event.getTitle()}"></p>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -18,5 +28,25 @@
     <th:block th:replace="fragments/footer :: footer" />
 </footer>
 <script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>
+    var input = 'rextdrcfvgjhbkjn';
+
+    function searchEvents() {
+        var eventList = document.getElementsByClassName("event");
+        console.log(eventList);
+
+        for (let i = 0; eventList.length > i; i++) {
+            input = $('#search').val();
+                if ($(eventList[i]).children().attr("class").indexOf(input) > -1) {
+                    $(eventList[i]).css("display", "inline")
+                } else {
+                    $(eventList[i]).css("display", "none")
+                }
+        }
+    }
+
+
+</script>
 </body>
 </html>
