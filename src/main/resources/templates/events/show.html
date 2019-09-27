@@ -36,6 +36,7 @@
     <h3 th:text="${position.numNeeded}"></h3>
     <h3 th:text="${position.description}"></h3>
     <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a></button>
+    <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/positions/delete/{id}(id = ${position.id})}">Delete Position</a></button>
 </div>
 
 

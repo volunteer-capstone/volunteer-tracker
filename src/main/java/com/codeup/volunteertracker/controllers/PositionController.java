@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 @Controller
@@ -94,7 +95,13 @@ public class PositionController {
     @GetMapping("/events/positions/delete/{id}")
     public String deletePosition(@PathVariable long id){
         Position toDelete = positionDao.findOne(id);
+        List<UserPosition> userPositions = userPositionDao.findByPosition_Id(toDelete.getId());
+        for (UserPosition userPosition : userPositions){
+            long userPositionId = userPosition.getId();
+            userPositionDao.delete(userPositionId);
+        }
         long eventId = toDelete.getEvent().getId();
+        positionDao.delete(toDelete);
         return "redirect:/events/" + eventId;
     }
 
