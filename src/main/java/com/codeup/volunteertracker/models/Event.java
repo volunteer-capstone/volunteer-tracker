@@ -127,13 +127,10 @@ public class Event {
     }
 
     public long posHours(Date start, Date end) {
-        List<Position> posList = positions;
         long totalHours = 0;
-        for (int i = 0; i < posList.size(); i++) {
-            long diffInMillis = Math.abs(end.getTime() - start.getTime());
-            long diff = TimeUnit.HOURS.convert(diffInMillis, TimeUnit.MILLISECONDS);
-            totalHours = diff;
-        }
+        long diffInMillis = Math.abs(end.getTime() - start.getTime());
+        long diff = TimeUnit.HOURS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+        totalHours = diff;
         return totalHours;
     }
   
