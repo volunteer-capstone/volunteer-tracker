@@ -8,13 +8,14 @@
 
 <h1>THIS IS THE INDIVIDUAL EVENT PAGE</h1>
 
-<h3>Event ID:  <span th:text="${event.id}"></span></h3>
-<h3 th:text="${event.title}"></h3>
-<h4 th:text="${event.start}"></h4>
-<h4 th:text="${event.stop}"></h4>
+<!--<h3>Event ID:  <span th:text="${event.id}"></span></h3>-->
+<h1 th:text="${event.title}"></h1>
+<h4 th:text="${#dates.format(event.start, 'dd-MMM-yyyy HH:mm')}"></h4>
+<h4 th:text="${#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></h4>
 <h4 th:text="${event.location}"></h4>
 <p th:text="${event.description}"></p>
 <img th:src="@{${event.photo}}" alt="event photo"/>
+
 <h3>Organizer Contact Information:</h3>
 <h5 th:text="${event.getCreator().getFirstName()}"></h5>
 <h5 th:text="${event.getCreator().getLastName()}"></h5>
@@ -26,6 +27,17 @@
 <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></button>
 <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/email}">Email All Volunteers</a></button>
 <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/text}">Text Message All Volunteers</a></button>
+
+<h1>Volunteer Positions:</h1>
+<div th:each="position: ${positions}">
+    <h3 th:text="${position.title}"></h3>
+    <h3 th:text="${#dates.format(position.start, 'dd-MMM-yyyy HH:mm')}"></h3>
+    <h3 th:text="${#dates.format(position.end, 'dd-MMM-yyyy HH:mm')}"></h3>
+    <h3 th:text="${position.numNeeded}"></h3>
+    <h3 th:text="${position.description}"></h3>
+    <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a></button>
+</div>
+
 
 
 <footer>

@@ -63,6 +63,8 @@ public class EventController {
             viewModel.addAttribute("userId", userId);
         }
 
+        Iterable<Position> positions = event.getPositions();
+        viewModel.addAttribute("positions", positions);
 
         return "events/show";
     }
