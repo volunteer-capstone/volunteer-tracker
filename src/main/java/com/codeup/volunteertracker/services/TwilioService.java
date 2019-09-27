@@ -31,7 +31,7 @@ public class TwilioService{
     public String testing(){
         Twilio.init(twilioAccountSid, twilioKey);
 
-        Message message = Message.creator(new PhoneNumber("+12542319966"),
+        Message message = Message.creator(new PhoneNumber("+19097444101"),
                 new PhoneNumber("+12543122613"),
                 "This message is to test path of the volunteer twilio service.").create();
 
