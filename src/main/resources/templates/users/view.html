@@ -27,7 +27,7 @@
 		<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
 			<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>
 			<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
-			<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p>
+			<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
 		</div>
 		<p th:if="(${user.id} == ${userId}) and (${user.isOrganizer()} == true)"><a>Email all volunteers</a>&emsp;<a>Text all volunteers</a>&emsp;<a>Approve hours</a></p>
 		<hr/>
@@ -42,8 +42,8 @@
 		<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
 			<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>
 			<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
-			<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p>
-		</div>
+			<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>		</div>
+		<p th:if="(${user.id} == ${userId}) and (${user.isOrganizer()} == true)"><a>Email all volunteers</a>&emsp;<a>Text all volunteers</a>&emsp;<a>Approve hours</a></p>
 		<hr/>
 	</div>
 </div>
@@ -56,8 +56,8 @@
 		<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
 			<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>
 			<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
-			<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p>
-		</div>
+			<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>		</div>
+		<p th:if="(${user.id} == ${userId}) and (${user.isOrganizer()} == true)"><a>Email all volunteers</a>&emsp;<a>Text all volunteers</a>&emsp;<a>Approve hours</a></p>
 		<hr/>
 	</div>
 </div>
@@ -70,12 +70,13 @@
 		<div th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
 			<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>
 			<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
-			<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{pos.start} + ' End: ' + *{pos.end}"></p>
-		</div>
+			<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>		</div>
+		<p th:if="(${user.id} == ${userId}) and (${user.isOrganizer()} == true)"><a>Email all volunteers</a>&emsp;<a>Text all volunteers</a>&emsp;<a>Approve hours</a></p>
 		<hr/>
 	</div>
 </div>
 </div>
+
 <th:block th:replace="fragments/footer :: footer" />
 </body>
 <script>

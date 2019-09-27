@@ -199,10 +199,10 @@ public class User {
             Date secondDate = posList.get(i).getPosition().getEnd();
 
             long diffInMillis = Math.abs(secondDate.getTime() - firstDate.getTime());
-            long diff = TimeUnit.HOURS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+            long diff = TimeUnit.MINUTES.convert(diffInMillis, TimeUnit.MILLISECONDS);
 
             totalHours += diff;
         }
-        return totalHours;
+        return (totalHours/60);
     }
 }
