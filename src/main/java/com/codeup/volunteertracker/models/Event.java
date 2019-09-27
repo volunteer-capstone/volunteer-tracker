@@ -1,14 +1,10 @@
 package com.codeup.volunteertracker.models;
 
-import com.codeup.volunteertracker.models.User;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
-
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name="events")
@@ -130,6 +126,16 @@ public class Event {
         this.positions = positions;
     }
 
+    public long posHours(Date start, Date end) {
+        List<Position> posList = positions;
+        long totalHours = 0;
+        for (int i = 0; i < posList.size(); i++) {
+            long diffInMillis = Math.abs(end.getTime() - start.getTime());
+            long diff = TimeUnit.HOURS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+            totalHours = diff;
+        }
+        return totalHours;
+    }
     public String getPhoto() {
         return photo;
     }

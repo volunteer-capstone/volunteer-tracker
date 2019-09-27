@@ -162,7 +162,6 @@ public class EventController {
         Event event = eventDao.findOne(id);
         model.addAttribute("event", event);
         List<Position> positions = positionDao.findByEvent_Id(id);
-
         Map<Position, List> volunteers = new HashMap<>();
         for(Position position : positions) {
             List<UserPosition> userPositions = userPositionDao.findAllByPosition(position);
@@ -172,10 +171,24 @@ public class EventController {
         return "events/approveHours";
     }
 
-    @PostMapping("/approve")
+    @PostMapping("/events/approvehour")
     public String submitHours() {
 
         return "redirect:/events";
     }
 
+//    Volunteer contact info
+    @GetMapping("/events/volunteers/{id}")
+    public String showVolunteersPage(@PathVariable long id, Model model) {
+        Event event = eventDao.findOne(id);
+        model.addAttribute("event", event);
+        List<Position> positions = positionDao.findByEvent_Id(id);
+        Map<Position, List> volunteers = new HashMap<>();
+        for(Position position : positions) {
+            List<UserPosition> userPositions = userPositionDao.findAllByPosition(position);
+            volunteers.put(position, userPositions);
+        }
+        model.addAttribute("volunteers", volunteers);
+        return "events/volunteerInfo";
+    }
 }
