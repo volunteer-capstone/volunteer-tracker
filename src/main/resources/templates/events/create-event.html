@@ -11,60 +11,61 @@
 
 <div class="container">
 
-<form th:action="@{'/events/create'}" th:method="post">
-<div class="field">
-    <div class="control">
-        <label for="title">Event Name:</label>
-        <input type="text"  name="title" id="title" class="input" placeholder="Event Name" />
+    <form th:action="@{'/events/create'}" th:method="post">
+    <div class="field">
+        <label class="label" for="title">Event Name:</label>
+        <div class="control">
+            <input type="text"  name="title" id="title" class="input" placeholder="Event Name" />
+        </div>
     </div>
-</div>
 
-<!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
-<div class="field">
-    <div class="control">
-        <label for="start">Start Date and Time:</label>
-        <input type="datetime-local" name="start" id="start" class="input"/>
+    <!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
+    <div class="field">
+        <label class="label" for="start">Start Date and Time:</label>
+        <div class="control">
+            <input type="datetime-local" name="start" id="start" class="input"/>
+        </div>
     </div>
-</div>
-
-<div class="field">
-    <div class="control">
-        <label for="stop">End Date and Time:</label>
-        <input type="datetime-local" name="stop" id="stop" class="input"/>
-    </div>
-</div>
-
-<div class="field">
-    <div class="control">
-        <label for="location">Location:</label>
-        <input id="location" type="text" name="location" class="input" placeholder="location" />
-    </div>
-</div>
 
     <div class="field">
+        <label class="label" for="stop">End Date and Time:</label>
         <div class="control">
-            <label for="address">Address:</label>
+            <input type="datetime-local" name="stop" id="stop" class="input"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label" for="location">Location:</label>
+        <div class="control">
+            <input id="location" type="text" name="location" class="input" placeholder="location" />
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label" for="address">Address:</label>
+        <div class="control">
             <div id='geocoder' class='geocoder'></div>
         </div>
     </div>
 
-<div class="field">
-    <div class="control">
-        <label for="description">Description:</label>
-        <input id="description" name="description" type="text" class="input" placeholder="description"/>
+    <div class="field">
+        <label class="label" for="description">Description:</label>
+        <div class="control">
+            <input id="description" name="description" type="text" class="input" placeholder="description"/>
+        </div>
     </div>
+
+    <div class="field">
+        <div class="control">
+            <input type="hidden" name="eventId" th:value="${event.id}" />
+    <!--        <button id="create-eventDisabled" class="button is-success" disabled="disabled">Next→</button>-->
+            <button id="create-event" class="button is-success">Next<span class="icon"><i class="far fa-hand-point-right"></i></span></button>
+        </div>
+    </div>
+
+    </form>
 </div>
 
-<div class="field">
-    <div class="control">
-        <input type="hidden" name="eventId" th:value="${event.id}" />
-<!--        <button id="create-eventDisabled" class="button is-success" disabled="disabled">Next→</button>-->
-        <button id="create-event" class="button is-success">Next<span class="icon"><i class="far fa-hand-point-right"></i></span></button>
-    </div>
-</div>
-
-</form>
-</div>
 <div id="map"></div>
 <th:block th:replace="fragments/footer :: footer" />
 <!--<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>-->
