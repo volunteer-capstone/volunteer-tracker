@@ -19,11 +19,15 @@
 		<p th:if="${user.organizer}"><strong>Organizer</strong></p>
 
 <!--		MAKE THIS BIT VISIBLE ONLY TO SIGNED IN ORGANIZERS-->
-		<p th:unless="${user.organizer} and (${user.id} != ${userId}) and (${userId} != 'anonymousUser')">Would you like to make this user an Organizer? Click	</p>
+		<th:block th:unless="${user.organizer} and (${user.id} != ${userId}) and (${userId} != 'anonymousUser')"><p>Would you like to make this user an Organizer? Click	</p>
 		<form th:action="@{/profile/organizer/{id}(id=${user.id})}" th:method="post">
-			<button class="button">Here</button>
+			<div class="field">
+				<div class="control">
+					<button class="button">Here</button>
+				</div>
+			</div>
 		</form>
-
+		</th:block>
 
 	</div>
 
