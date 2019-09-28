@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-	<th:block th:replace="fragments/header :: my-header(${user.getUsername()+'''s Profile'})" />
+	<th:block th:replace="fragments/header :: my-header(${user.username+'''s Profile'})" />
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
@@ -9,22 +9,30 @@
 <div class="container">
 	<div class="content">
 		<h3 th:if="${user.id} == ${userId}">This is your profile: &emsp;<a class="button is-info" th:href="@{/profile/edit}">Edit</a></h3>
-		<h3 th:unless="${user.id} == ${userId}" th:text="'This is '+${user.getUsername()}+'\'s profile: '"></h3>
-		<p>Name: 						<span th:text="${user.getFirstName()}"></span> <span th:text="${user.getLastName()}"></span></p>
-		<p>Username: 					<span th:text="${user.getUsername()}"></span></p>
-		<p>Email: 						<span th:text="${user.getEmail()}"></span></p>
-		<p>Phone Number: 				<span th:text="${user.getPhoneNumber()}"></span></p>
-		<p>Number of Hours Volunteered: <span th:text="${user.getHours()}"></span></p>
+		<h3 th:unless="${user.id} == ${userId}" th:text="'This is '+${user.username}+'\'s profile: '"></h3>
+		<p>Name: 						<span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></p>
+		<p>Username: 					<span th:text="${user.username}"></span></p>
+		<p>Email: 						<span th:text="${user.email}"></span></p>
+		<p>Phone Number: 				<span th:text="${user.phoneNumber}"></span></p>
+		<p>Number of Hours Volunteered: <span th:text="${user.hours}"></span></p>
 		<p>Number of Hours Planned: 	<span th:text="${user.addHours()}"></span></p>
-		<p th:if="${user.isOrganizer()}"><strong>Organizer</strong></p>
+		<p th:if="${user.organizer}"><strong>Organizer</strong></p>
+
+<!--		MAKE THIS BIT VISIBLE ONLY TO SIGNED IN ORGANIZERS-->
+		<p th:unless="${user.organizer} and (${user.id} != ${userId}) and (${userId} != 'anonymousUser')">Would you like to make this user an Organizer? Click	</p>
+		<form th:action="@{/profile/organizer/{id}(id=${user.id})}" th:method="post">
+			<button class="button">Here</button>
+		</form>
+
+
 	</div>
 
 	<div class="tabs is-toggle">
 		<ul>
 			<li class="tab"><a class="pastEvents">Past Events</a></li>
 			<li class="tab"><a class="plannedEvents">Planned Events</a></li>
-			<li class="tab"><a th:if="${user.isOrganizer()}" class="pastEventsCreated">Past Events Created</a></li>
-			<li class="tab"><a th:if="${user.isOrganizer()}" class="plannedEventsCreated">Planned Events Created</a></li>
+			<li class="tab"><a th:if="${user.organizer}" class="pastEventsCreated">Past Events Created</a></li>
+			<li class="tab"><a th:if="${user.organizer}" class="plannedEventsCreated">Planned Events Created</a></li>
 		</ul>
 	</div>
 <hr/>
@@ -39,7 +47,7 @@
 				<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
 				<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
 			</th:block>
-			<th:block th:if="(${user.id} == ${userId}) and (${user.isOrganizer()} == true)">
+			<th:block th:if="(${user.id} == ${userId}) and (${user.organizer} == true)">
 				<div class="field is-grouped">
 					<div class="control">
 						<a class="button is-small is-info">Email all volunteers</a>
@@ -65,7 +73,7 @@
 				<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
 				<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
 			</th:block>
-			<th:block th:if="(${user.id} == ${userId}) and (${user.isOrganizer()} == true)">
+			<th:block th:if="(${user.id} == ${userId}) and (${user.organizer} == true)">
 				<div class="field is-grouped">
 					<div class="control">
 						<a class="button is-small is-info">Email all volunteers</a>
@@ -92,7 +100,7 @@
 				<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
 				<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
 			</th:block>
-			<th:block th:if="(${user.id} == ${userId}) and (${user.isOrganizer()} == true)">
+			<th:block th:if="(${user.id} == ${userId}) and (${user.organizer} == true)">
 				<div class="field is-grouped">
 					<div class="control">
 						<a class="button is-small is-info">Email all volunteers</a>
@@ -119,7 +127,7 @@
 				<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
 				<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
 			</th:block>
-			<th:block th:if="(${user.id} == ${userId}) and (${user.isOrganizer()} == true)">
+			<th:block th:if="(${user.id} == ${userId}) and (${user.organizer} == true)">
 				<div class="field is-grouped">
 					<div class="control">
 						<a class="button is-small is-info">Email all volunteers</a>

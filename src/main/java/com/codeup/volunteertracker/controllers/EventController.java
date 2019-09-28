@@ -98,13 +98,6 @@ public class EventController {
         User user = userDao.findOne(userSession.getId());
         event.setCreator(user);
         Event createEvent = eventDao.save(event);
-        System.out.println(createEvent.getStart());
-        System.out.println(createEvent.getStart());
-        System.out.println(createEvent.getStop());
-        System.out.println(createEvent.getDescription());
-        System.out.println(createEvent.getTitle());
-        System.out.println(createEvent.getLocation());
-        System.out.println(createEvent.getId());
         return "redirect:/events/" + createEvent.getId() + "/create-position";
     }
 
@@ -134,7 +127,7 @@ public class EventController {
         editedEvent.setLocation(location);
         editedEvent.setAddress(address);
         editedEvent.setDescription(description);
-        Event saveEvent = eventDao.save(editedEvent);
+        eventDao.save(editedEvent);
         return "redirect:/events/" + id;
     }
 
