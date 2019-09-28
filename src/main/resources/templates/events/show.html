@@ -60,31 +60,6 @@
     </div>
 </div>
 
-<h3>Organizer Contact Information:</h3>
-<h5 th:text="${event.getCreator().getFirstName()}"></h5>
-<h5 th:text="${event.getCreator().getLastName()}"></h5>
-<h5 th:text="${event.getCreator().getEmail()}"></h5>
-<h5 th:text="${event.getCreator().getPhoneNumber()}"></h5>
-
-<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a></button>
-<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a></button>
-<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></button>
-<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/approve/{id}(id=${event.id})}">Approve Volunteer Hours</a></button>
-<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/text}">Text Message All Volunteers</a></button>
-
-
-<h1>Volunteer Positions:</h1>
-<div th:each="position: ${positions}">
-    <h3 th:text="${position.title}"></h3>
-    <h3 th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></h3>
-    <h3 th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></h3>
-    <h3 th:text="${position.numNeeded}"></h3>
-    <h3 th:text="${position.description}"></h3>
-    <button sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})"><a th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a></button>
-    <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a></button>
-    <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/positions/delete/{id}(id = ${position.id})}">Delete Position</a></button>
-</div>
-
 <th:block th:replace="fragments/footer :: footer" />
 <script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
