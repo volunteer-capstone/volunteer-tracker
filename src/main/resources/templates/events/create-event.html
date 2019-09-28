@@ -11,11 +11,17 @@
 
 <div class="container">
 
-    <form th:action="@{'/events/create'}" th:method="post">
+    <form th:action="@{'/events/create'}" th:method="post" th:object="${event}">
     <div class="field">
         <label class="label" for="title">Event Name:</label>
         <div class="control">
             <input type="text"  name="title" id="title" class="input" placeholder="Event Name" />
+            <div class="content">
+                <div th:if="${#fields.hasErrors('title')}" class="notification is-warning">
+                    <a class="delete"></a>
+                    <strong th:errors="*{title}"></strong>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -24,6 +30,12 @@
         <label class="label" for="start">Start Date and Time:</label>
         <div class="control">
             <input type="datetime-local" name="start" id="start" class="input"/>
+            <div class="content">
+                <div th:if="${#fields.hasErrors('start')}" class="notification is-warning">
+                    <a class="delete"></a>
+                    <strong th:errors="*{start}"></strong>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -31,6 +43,12 @@
         <label class="label" for="stop">End Date and Time:</label>
         <div class="control">
             <input type="datetime-local" name="stop" id="stop" class="input"/>
+            <div class="content">
+                <div th:if="${#fields.hasErrors('stop')}" class="notification is-warning">
+                    <a class="delete"></a>
+                    <strong th:errors="*{stop}"></strong>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -38,6 +56,12 @@
         <label class="label" for="location">Location:</label>
         <div class="control">
             <input id="location" type="text" name="location" class="input" placeholder="location" />
+            <div class="content">
+                <div th:if="${#fields.hasErrors('location')}" class="notification is-warning">
+                    <a class="delete"></a>
+                    <strong th:errors="*{location}"></strong>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -45,6 +69,12 @@
         <label class="label" for="address">Address:</label>
         <div class="control">
             <div id='geocoder' class='geocoder'></div>
+            <div class="content">
+                <div th:if="${#fields.hasErrors('address')}" class="notification is-warning">
+                    <a class="delete"></a>
+                    <strong th:errors="*{address}"></strong>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -52,6 +82,12 @@
         <label class="label" for="description">Description:</label>
         <div class="control">
             <input id="description" name="description" type="text" class="input" placeholder="description"/>
+            <div class="content">
+                <div th:if="${#fields.hasErrors('description')}" class="notification is-warning">
+                    <a class="delete"></a>
+                    <strong th:errors="*{description}"></strong>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -68,7 +104,7 @@
 
 <div id="map"></div>
 <th:block th:replace="fragments/footer :: footer" />
-<!--<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>-->
+<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
 <script th:src="@{/js/key.js}"></script>
