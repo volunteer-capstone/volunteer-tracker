@@ -2,6 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <th:block th:replace="fragments/header :: my-header('Event Information')" />
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.css' rel='stylesheet'/>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
+    <link rel="stylesheet" th:href="@{/css/mapcss.css}" />
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
@@ -13,7 +16,8 @@
                 <!--<h3>Event ID:  <span th:text="${event.id}"></span></h3>-->
                 <h4 th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')}"></h4>
                 <h4 th:text="${#dates.format(event.stop, 'MMM-dd-yyyy HH:mm')}"></h4>
-                <h4 id="location" th:text="${event.location}"></h4>
+                <h4 th:text="${event.location}"></h4>
+                <h4 id="address" th:text="${event.address}"></h4>
                 <div id="map"></div>
             </div>
         </div>
@@ -56,10 +60,6 @@
     </div>
 </div>
 
-<th:block th:replace="fragments/footer :: footer" />
-<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
-<script th:src="@{/js/key.js}"></script>
-<script th:src="@{/js/mapbox-geocode-utils.js}"></script>
 <h3>Organizer Contact Information:</h3>
 <h5 th:text="${event.getCreator().getFirstName()}"></h5>
 <h5 th:text="${event.getCreator().getLastName()}"></h5>
@@ -87,5 +87,10 @@
 
 <th:block th:replace="fragments/footer :: footer" />
 <script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
+<script th:src="@{/js/key.js}"></script>
+<script th:src="@{/js/mapbox-geocoder-utils.js}"></script>
+<script th:src="@{/js/mapjs.js}"></script>
 </body>
 </html>
