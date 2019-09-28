@@ -31,10 +31,11 @@
             <div class="content">
                 <p th:text="${event.description}"></p>
                 <h3>Organizer Contact Information:</h3>
-                <h5 th:text="${event.getCreator().getFirstName()}"></h5>
-                <h5 th:text="${event.getCreator().getLastName()}"></h5>
-                <h5 th:text="${event.getCreator().getEmail()}"></h5>
-                <h5 th:text="${event.getCreator().getPhoneNumber()}"></h5>
+                <h5 th:text="${event.creator.firstName}"></h5>
+                <h5 th:text="${event.creator.lastName}"></h5>
+                <h5 th:text="${event.creator.email}"></h5>
+                <h5 th:text="${event.creator.phoneNumber}"></h5>
+                <a class="button is-light" th:href="@{/users/{id}/profile(id=${event.creator.id})}">View Profile</a>
             </div>
         </div>
     </div>
