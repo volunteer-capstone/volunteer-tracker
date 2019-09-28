@@ -12,21 +12,44 @@
     <label for="search">search</label>
     <input id="search" type="text" onkeyup="searchEvents()" placeholder="Enter event title" />
 
-    <div class="eventDiv">
-        <div th:each="event : ${events}" class="event">
-            <div th:class="${event.getTitle()}">
-                <a th:href="@{/events/{id}(id=${event.id})}"><h3 th:text="${event.title}"></h3></a>
-                <p th:if="${event.getTitle().contains('h')}" class="event-title">this has h in it</p>
-                <h3 th:text="*{#dates.format(event.start, 'MMM d, yyyy H:mm')}"></h3>
-                <p th:text="${event.getTitle()}"></p>
+    <div class="columns is-multiline is-mobile eventDiv">
+        <th:block th:each="event : ${events}" >
+            <div class="column is-one-third event">
+                <div th:class="${event.title}">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title is-centered" th:text="${event.title}"></p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                            <p th:text="*{#dates.format(event.start, 'MMM d, yyyy H:mm')}"></p>
+                            <p th:text="${event.address}"></p>
+                            <p th:text="${event.description}"></p>
+                        </div>
+                    </div>
+                    <footer class="card-footer">
+                        <a class="card-footer-item" th:href="@{/events/{id}(id=${event.id})}">View Event!</a>
+                    </footer>
+                </div>
+                </div>
             </div>
-        </div>
+        </th:block>
     </div>
+
+<!--    <div class="eventDiv">-->
+<!--        <div th:each="event : ${events}" class="event">-->
+<!--            <div th:class="${event.getTitle()}">-->
+<!--                <a th:href="@{/events/{id}(id=${event.id})}"><h3 th:text="${event.title}"></h3></a>-->
+<!--                <p th:if="${event.getTitle().contains('h')}" class="event-title">this has h in it</p>-->
+<!--                <h3 th:text="*{#dates.format(event.start, 'MMM d, yyyy H:mm')}"></h3>-->
+<!--                <p th:text="${event.getTitle()}"></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 </div>
 
 <th:block th:replace="fragments/footer :: footer" />
 <script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script>
     var input = 'rextdrcfvgjhbkjn';
 
@@ -43,8 +66,6 @@
                 }
         }
     }
-
-
 </script>
 </body>
 </html>
