@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+<th:block th:fragment="filestack">
+    <script src="/js/keys.js"></script>
+    <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+    <script>
+        // Set up the picker
+        // var client = filestack.init("api key");
+        // var options = {
+        //     onUploadDone: updateForm,
+        //     maxSize: 10 * 1024 * 1024,
+        //     accept: 'image/*',
+        //     uploadInBackground: false
+        // };
+        // var picker = client.picker(options);
+        // // Get references to the DOM elements
+        // var form = document.getElementById('reg');
+        // var fileInput = document.getElementById('fileupload');
+        // var btn = document.getElementById('picker');
+        // var nameBox = document.getElementById('nameBox');
+        // // Add our event listeners
+        // btn.addEventListener('click', function (e) {
+        //     e.preventDefault();
+        //     picker.open();
+        // });
+        // // Helper to overwrite the field input value
+        // var photos = [];
+        // function updateForm (result) {
+        //     var fileData = result.filesUploaded[0];
+        //     photos.push(fileData.url);
+        //     fileInput.value = photos.join('-');
+        //     // Some ugly DOM code to show some data.
+        //     var name = document.createTextNode('Selected: ' + fileData.filename);
+        //     nameBox.appendChild(name);
+        // }
+
+        const client = filestack.init(api key);
+        client.picker().open();
+    </script>
+</th:block>
+
+</body>
+</html>

@@ -82,7 +82,7 @@ public class EventController {
     }
 
     @PostMapping("/events/create")
-    public String createEvent(@RequestParam(name="location") String location, @RequestParam(name="address") String address, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description) throws ParseException {
+    public String createEvent(@RequestParam(name="location") String location, @RequestParam(name="address") String address, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description, @RequestParam(name="photo") String photo) throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         Date localTimeObj1= df.parse(start);
         Date localTimeObj2 = df.parse(stop);
@@ -94,6 +94,7 @@ public class EventController {
         event.setLocation(location);
         event.setAddress(address);
         event.setTitle(title);
+        event.setPhoto(photo);
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userDao.findOne(userSession.getId());
         event.setCreator(user);
@@ -105,6 +106,8 @@ public class EventController {
         System.out.println(createEvent.getTitle());
         System.out.println(createEvent.getLocation());
         System.out.println(createEvent.getId());
+        System.out.println(photo);
+        System.out.println(createEvent.getPhoto());
         return "redirect:/events/" + createEvent.getId() + "/create-position";
     }
 
