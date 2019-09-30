@@ -12,15 +12,18 @@ import com.codeup.volunteertracker.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class EventController {
@@ -59,13 +62,10 @@ public class EventController {
     public String showClickedEvent(@PathVariable long id, Model viewModel){
         Event event = eventDao.findOne(id);
         viewModel.addAttribute("event", event);
-
         User eventUser = event.getCreator();
-
         viewModel.addAttribute("eventUser", eventUser);
-
-        long userId = 0;
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
+            String userId = "";
             viewModel.addAttribute("userId", userId);
         } else {
             User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -73,7 +73,7 @@ public class EventController {
 
             List<UserPosition> userPos = currentUser.getUserPosition();
             viewModel.addAttribute("userPos", userPos);
-
+            long userId = userSession.getId();
             viewModel.addAttribute("userId", userId);
         }
 
