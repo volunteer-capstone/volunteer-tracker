@@ -10,8 +10,10 @@ import com.codeup.volunteertracker.repositories.UserPositionRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,23 +44,22 @@ public class PositionController {
 
     //  create(go back and wrap create event and post with try catch for the date parse)
     @PostMapping("events/{id}/create-position")
-    public String createPosition(@PathVariable long id, @RequestParam(name="description") String description, @RequestParam(name="start") String start, @RequestParam(name="end") String end, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="title") String title) throws ParseException {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-        Date starttime= df.parse(start);
-        Date endtime = df.parse(end);
-        System.out.println("positions info:");
-        Position position = new Position();
-        System.out.println(description);
-        position.setDescription(description);
-        position.setStart(starttime);
-        position.setEnd(endtime);
-        position.setNumNeeded(numNeeded);
-        position.setTitle(title);
-        Event event = eventDao.findOne(id);
-        position.setEvent(event);
-        Position savePosition = positionDao.save(position);
-        System.out.println(savePosition.getEvent());
-        return "redirect:/events/" + savePosition.getEvent().getId();
+    public String createPosition(
+            @PathVariable long id, @RequestParam(name="description") String description, @RequestParam(name="start") String start, @RequestParam(name="end") String end, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="title") String title) throws ParseException {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            Date starttime = df.parse(start);
+            Date endtime = df.parse(end);
+            Position position = new Position();
+            position.setDescription(description);
+            position.setStart(starttime);
+            position.setEnd(endtime);
+            position.setNumNeeded(numNeeded);
+            position.setTitle(title);
+            Event event = eventDao.findOne(id);
+            position.setEvent(event);
+            Position savePosition = positionDao.save(position);
+            return "redirect:/events/" + savePosition.getEvent().getId();
+
     }
 
     // EDIT POSITION
@@ -66,12 +67,13 @@ public class PositionController {
    public String editPosition(@PathVariable long id, Model viewModel){
         Position position = positionDao.findOne(id);
         viewModel.addAttribute("position", position);
-        System.out.println(position.getTitle());
         long eventId = positionDao.positionEventId(position.getId());
         Event event = eventDao.findOne(eventId);
         viewModel.addAttribute("event", event);
         return "events/edit-position";
    }
+
+
 
 //    NEED TO SURROUND DF WITH TRY CATCH
     @PostMapping("/events/positions/edit/{id}")
@@ -120,11 +122,10 @@ public class PositionController {
         Position position = positionDao.findOne(id);
         userPosition.setUser(userSession);
         userPosition.setPosition(position);
+        position.setNumNeeded(position.getNumNeeded() - 1);
         userPositionDao.save(userPosition);
 
         long eventId = positionDao.positionEventId(position.getId());
-        System.out.println("eventId:" + eventId);
-        System.out.println("positionId" + position.getId());
 
         return "redirect:/users/" + userSession.getId() + "/profile";
     }

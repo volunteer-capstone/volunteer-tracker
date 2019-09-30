@@ -66,7 +66,6 @@ public class UserController {
 
         User user = userRepo.findOne(id);
         viewModel.addAttribute("user", user);
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
             String userId = "";
             viewModel.addAttribute("userId", userId);
@@ -92,15 +91,9 @@ public class UserController {
 
 //    WILL HAVE TO GO BACK AND ADD ABILITY TO EDIT PHOTO
     @PostMapping("/profile/edit")
-    public String editProfile(@ModelAttribute User user, @RequestParam(name="email") String email, @RequestParam(name="firstName") String firstName, @RequestParam(name="lastName") String lastName, @RequestParam(name="phoneNumber") String phoneNumber, @RequestParam(name="username") String username){
+    public String editProfile(@ModelAttribute User user, @RequestParam(name="email") String email, @RequestParam(name="firstName") String firstName, @RequestParam(name="lastName") String lastName, @RequestParam(name="phoneNumber") String phoneNumber, @RequestParam(name="username") String username, @RequestParam(name="file") String photo, @RequestParam(name="bio") String bio){
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setId(userSession.getId());
-//        System.out.println(userSession.getPassword());
-//        System.out.println(user.getPassword());
-//        String hash = passwordEncoder.encode(user.getPassword());
-//        System.out.println(hash);
-//        System.out.println(BCrypt.checkpw(user.getPassword(),userSession.getPassword()));
-//        System.out.println(hash.matches(userSession.getPassword()));
 
 //        user.setPassword(hash);
         if (BCrypt.checkpw(user.getPassword(),userSession.getPassword())) {
@@ -111,15 +104,14 @@ public class UserController {
             user.setPhoneNumber(phoneNumber);
             user.setUsername(username);
             user.setPassword(userSession.getPassword());
+            user.setPhoto(photo);
+            user.setBio(bio);
             User editedUser = userRepo.save(user);
             return "redirect:/users/" + user.getId() + "/profile";
         } else {
             return "redirect:/profile/edit";
         }
     }
-
-
-
 
 //  DELETE USER
 
@@ -131,5 +123,14 @@ public class UserController {
         userRepo.delete(userId);
 
         return "redirect:/login";
+    }
+
+//    MAKE USER AN ORGANIZER
+    @PostMapping("profile/organizer/{id}")
+    public String makeOrganizer(@PathVariable long id) {
+        User user = userRepo.findOne(id);
+        user.setOrganizer(true);
+        userRepo.save(user);
+        return "redirect:/users/"+ user.getId() + "/profile";
     }
 }

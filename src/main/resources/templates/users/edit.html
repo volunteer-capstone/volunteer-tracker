@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<th:block th:replace="fragments/header :: my-header('Edit your account')" />
+	<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
@@ -11,30 +13,32 @@
 		<h3>Edit your account!</h3>
 	</div>
 
+
+
 	<form th:action="@{/profile/edit}" th:method="post" th:object="${user}">
 		<div class="field">
-			<label for="firstName">First Name</label>
+			<label class="label" for="firstName">First Name</label>
 			<div class="control">
 				<input type="text" id="firstName" class="input" th:field="*{firstName}" placeholder="First Name" />
 			</div>
 		</div>
 
 		<div class="field">
-			<label for="lastName">Last Name</label>
+			<label class="label" for="lastName">Last Name</label>
 			<div class="control">
 				<input type="text" id="lastName" class="input" th:field="*{lastName}" placeholder="Last Name"/>
 			</div>
 		</div>
 
 		<div class="field">
-			<label for="phoneNumber">Phone Number</label>
+			<label class="label" for="phoneNumber">Phone Number</label>
 			<div class="control">
 				<input type="text" id="phoneNumber" class="input" th:field="*{phoneNumber}" placeholder="Phone Number"/>
 			</div>
 		</div>
 
 		<div class="field">
-			<label for="username">Username</label>
+			<label class="label" for="username">Username</label>
 			<div class="control">
 				<input id="username" class="input" th:field="*{username}" placeholder="Username" />
 				<div class="content">
@@ -47,7 +51,7 @@
 		</div>
 
 		<div class="field">
-			<label for="email">Email</label>
+			<label class="label" for="email">Email</label>
 			<div class="control">
 				<input type="text" id="email" class="input" th:field="*{email}" placeholder="Email"/>
 				<div class="content">
@@ -59,8 +63,10 @@
 			</div>
 		</div>
 
+
+
 		<div class="field">
-			<label for="password">Password</label>
+			<label class="label" for="password">Password</label>
 			<div class="control">
 				<input type="password" id="password" class="input" th:field="*{password}" placeholder="Password"/>
 				<div class="content">
@@ -76,6 +82,13 @@
 			</div>
 		</div>
 
+		<div class="field">
+			<label class="label" for="bio">Your Bio:</label>
+			<div class="control">
+				<input type="text" id="bio" class="input" th:field="*{bio}" placeholder="bio"/>
+			</div>
+		</div>
+
 <!--		<div class="field">-->
 <!--			<label for="passwordConfirm">Confirm Password</label>-->
 <!--			<div class="control">-->
@@ -88,6 +101,16 @@
 <!--			</div>-->
 <!--		</div>-->
 
+		<div class="field" id="photo">
+			<div>
+				<button class="btn btn-light" type="button" id="picker">Upload Event Photo</button>
+				<input type="hidden" id="fileupload" name="file" />
+				<!--            <div type="hidden" id="photoURL" name="photoURL" />-->
+			</div>
+			<div id="nameBox"></div>
+			<th:block th:replace="fragments/filestack" />
+		</div>
+
 		<div class="field">
 			<div class="control">
 <!--				<button id="editDisabled" class="button is-success" disabled="disabled">Confirm Changes</button>-->
@@ -95,11 +118,15 @@
 			</div>
 		</div>
 
+
+
 	</form>
 </div>
 
 <th:block th:replace="fragments/footer :: footer" />
 <script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
 <script type="text/javascript" th:src="@{/js/passwordjs.js}"></script>
+<script th:src="@{/js/key.js}"></script>
+
 </body>
 </html>
