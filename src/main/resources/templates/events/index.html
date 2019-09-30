@@ -21,14 +21,20 @@
             <div class="column is-one-third event">
                 <div th:class="${event.title}">
                 <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img th:src="${event.photo}" alt="Placeholder image"/>
+                        </figure>
+                    </div>
                     <header class="card-header">
                         <p class="card-header-title is-centered" th:text="${event.title}"></p>
                     </header>
                     <div class="card-content">
                         <div class="content">
                             <p th:text="*{#dates.format(event.start, 'MMM d, yyyy H:mm')}"></p>
-                            <p th:text="${event.address}"></p>
-                            <p th:text="${event.description}"></p>
+                            <p>Number of Volunteers Needed: <span th:text="${totalVolunteersNeeded}"></span></p>
+<!--                            <p th:text="${event.address}"></p>-->
+<!--                            <p th:text="${event.description}"></p>-->
                         </div>
                     </div>
                     <footer class="card-footer">

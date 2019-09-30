@@ -1,6 +1,7 @@
 package com.codeup.volunteertracker.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -144,5 +145,6 @@ public class Event {
     public void setAddress(String address) {
         this.address = address;
     }
+
 
 }

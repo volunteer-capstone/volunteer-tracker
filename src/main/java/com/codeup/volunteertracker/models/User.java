@@ -1,10 +1,8 @@
 package com.codeup.volunteertracker.models;
 
-import com.codeup.volunteertracker.models.Event;
-import com.codeup.volunteertracker.models.UserPosition;
 import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -68,6 +66,7 @@ public class User {
         this.hours = hours;
         this.isOrganizer = isOrganizer;
         this.photo = photo;
+        this.bio = bio;
         this.events = events;
         this.userPosition = userPosition;
     }
@@ -84,6 +83,7 @@ public class User {
         hours = copy.hours;
         isOrganizer = copy.isOrganizer;
         photo = copy.photo;
+        bio = copy.bio;
         events = copy.events;
         userPosition = copy.userPosition;
     }
