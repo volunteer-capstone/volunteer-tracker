@@ -50,7 +50,7 @@
 <hr/>
 	<div class="content">
 	<h4>Events:</h4>
-	<div th:each="event: ${user.getUserEvents()}" class="pastEventDiv">
+	<div th:each="event: ${user.getUserEvents()}" class="pastEventDiv" style="display: none">
 		<div th:if="*{event.getStart().before(execInfo.now)}">
 		<br/>
 			<p th:text="*{event.title}"></p>
@@ -77,7 +77,7 @@
 			<hr/>
 		</div>
 	</div>
-	<div th:each="event: ${user.getUserEvents()}" class="plannedEventDiv" style="display: none">
+	<div th:each="event: ${user.getUserEvents()}" class="plannedEventDiv">
 		<div th:if="*{event.getStart().after(execInfo.now)}">
 		<br/>
 			<p th:text="*{event.title}"></p>
