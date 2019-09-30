@@ -14,15 +14,12 @@ public class Position {
     private long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Positions must have a title")
     private String title;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    @NotBlank(message = "Positions must have a description")
     private String description;
 
     @Column(nullable = false)
-//    @NotBlank(message = "Please enter how many are needed for this position")
     private int numNeeded;
 
     @Column(nullable = false, columnDefinition="DATETIME")

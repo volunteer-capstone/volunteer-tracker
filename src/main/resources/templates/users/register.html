@@ -40,12 +40,6 @@
             <label class="label" for="username">Username<span style="color: red">*</span></label>
             <div class="control">
                 <input id="username" class="input" th:field="*{username}" placeholder="Username" />
-                <div class="content">
-                    <div th:if="${#fields.hasErrors('username')}" class="notification is-warning">
-                        <a class="delete"></a>
-                        <strong th:errors="*{username}"></strong>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -53,12 +47,6 @@
             <label class="label" for="email">Email<span style="color: red">*</span></label>
             <div class="control">
                 <input type="text" id="email" class="input" th:field="*{email}" placeholder="Email"/>
-                <div class="content">
-                    <div th:if="${#fields.hasErrors('email')}" class="notification is-warning">
-                        <a class="delete"></a>
-                        <strong th:errors="*{email}"></strong>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -66,11 +54,6 @@
             <label class="label" for="password">Password<span style="color: red">*</span></label>
             <div class="control">
                 <input type="password" id="password" class="input" th:field="*{password}" placeholder="Password"/>
-                <div class="content">
-                    <div th:if="${#fields.hasErrors('password')}" class="notification is-warning"><a class="delete"></a>
-                        <strong th:errors="*{password}"></strong>
-                    </div>
-                </div>
                 <div id="password2" class="content" style="display:none">
                     <div class="notification is-warning"><a class="delete"></a>
                         <strong>Password must be between 6 and 20 characters!</strong>

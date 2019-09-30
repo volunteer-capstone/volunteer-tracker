@@ -15,18 +15,14 @@ public class Event {
     private long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Please give your event a title")
     private String title;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    @NotBlank(message = "Please give your event a description")
     private String description;
 
-    @NotBlank(message = "Please enter a location for your event")
     private String location;
 
     @Column(nullable = false)
-    @NotBlank(message = "Please enter an address for your event.")
     private String address;
 
     @Column(nullable = false, columnDefinition="DATETIME")

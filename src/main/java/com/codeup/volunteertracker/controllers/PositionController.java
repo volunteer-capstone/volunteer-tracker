@@ -44,13 +44,8 @@ public class PositionController {
 
     //  create(go back and wrap create event and post with try catch for the date parse)
     @PostMapping("events/{id}/create-position")
-    public String createPosition(@Valid Position savePosition,
-            @PathVariable long id, @RequestParam(name="description") String description, @RequestParam(name="start") String start, @RequestParam(name="end") String end, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="title") String title, Errors validation, Model model) throws ParseException {
-        if (validation.hasErrors()) {
-            model.addAttribute("errors", validation);
-            model.addAttribute("position", savePosition);
-            return "events/create-position";
-        } else {
+    public String createPosition(
+            @PathVariable long id, @RequestParam(name="description") String description, @RequestParam(name="start") String start, @RequestParam(name="end") String end, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="title") String title) throws ParseException {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
             Date starttime = df.parse(start);
             Date endtime = df.parse(end);
@@ -62,9 +57,9 @@ public class PositionController {
             position.setTitle(title);
             Event event = eventDao.findOne(id);
             position.setEvent(event);
-            savePosition = positionDao.save(position);
+            Position savePosition = positionDao.save(position);
             return "redirect:/events/" + savePosition.getEvent().getId();
-        }
+
     }
 
     // EDIT POSITION
