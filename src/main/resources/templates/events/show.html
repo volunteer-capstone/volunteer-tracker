@@ -20,6 +20,8 @@
                 <h4 th:text="${#dates.format(event.stop, 'MMM-dd-yyyy HH:mm')}"></h4>
                 <h4 th:text="${event.location}"></h4>
                 <h4 id="address" th:text="${event.address}"></h4>
+                <input type="hidden" id="mapToken" name="mapToken" th:value="${mapToken}" />
+
                 <div id="map"></div>
             </div>
         </div>
