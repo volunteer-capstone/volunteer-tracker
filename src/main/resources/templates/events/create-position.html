@@ -9,7 +9,7 @@
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
 <div class="content">
-    <h1>CREATE YOUR POSITIONS HERE!</h1>
+    <h1>Create Position for the event!</h1>
     <h6 class="subtitle is-6">Fields annotated with an <span style="color: red">*</span> are required</h6>
     <h3 th:text="${event.title}"></h3>
     <h3 th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')}"></h3>
@@ -50,7 +50,7 @@
     <div class="field">
         <label class="label" for="description">Description:<span style="color: red">*</span></label>
         <div class="control">
-            <input type="text" id="description" class="input" name="description" placeholder="description"/>
+            <input type="text" id="description" class="input" name="description" placeholder="Description"/>
         </div>
     </div>
 
