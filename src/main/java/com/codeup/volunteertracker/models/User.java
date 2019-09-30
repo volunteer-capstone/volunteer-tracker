@@ -51,8 +51,11 @@ public class User {
     @Column
     private boolean isOrganizer;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String photo;
+
+    @Column(columnDefinition = "TEXT")
+    private String bio;
 
     @OneToMany(cascade =CascadeType.ALL, mappedBy = "creator")
     private List<Event> events;
@@ -64,7 +67,7 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String phoneNumber, String username, String email, String password, long hours, boolean isOrganizer, String photo, List<Event> events, List<UserPosition> userPosition) {
+    public User(String firstName, String lastName, String phoneNumber, String username, String email, String password, long hours, boolean isOrganizer, String photo, String bio, List<Event> events, List<UserPosition> userPosition) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -137,6 +140,14 @@ public class User {
     public String getPhoto() {return photo;}
 
     public void setPhoto(String photo) {this.photo = photo;}
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
     public List<Event> getEvents() {
         return events;

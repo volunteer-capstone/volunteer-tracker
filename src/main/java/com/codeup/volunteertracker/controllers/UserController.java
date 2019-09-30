@@ -91,7 +91,7 @@ public class UserController {
 
 //    WILL HAVE TO GO BACK AND ADD ABILITY TO EDIT PHOTO
     @PostMapping("/profile/edit")
-    public String editProfile(@ModelAttribute User user, @RequestParam(name="email") String email, @RequestParam(name="firstName") String firstName, @RequestParam(name="lastName") String lastName, @RequestParam(name="phoneNumber") String phoneNumber, @RequestParam(name="username") String username){
+    public String editProfile(@ModelAttribute User user, @RequestParam(name="email") String email, @RequestParam(name="firstName") String firstName, @RequestParam(name="lastName") String lastName, @RequestParam(name="phoneNumber") String phoneNumber, @RequestParam(name="username") String username, @RequestParam(name="file") String photo, @RequestParam(name="bio") String bio){
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setId(userSession.getId());
 
@@ -104,6 +104,8 @@ public class UserController {
             user.setPhoneNumber(phoneNumber);
             user.setUsername(username);
             user.setPassword(userSession.getPassword());
+            user.setPhoto(photo);
+            user.setBio(bio);
             User editedUser = userRepo.save(user);
             return "redirect:/users/" + user.getId() + "/profile";
         } else {
