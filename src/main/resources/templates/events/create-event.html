@@ -13,9 +13,14 @@
 
 <div class="container">
 
+    <div class="content">
+        <h2>Create an Event!</h2>
+        <h6 class="subtitle is-6">Fields annotated with an <span style="color: red">*</span> are required</h6>
+    </div>
+
     <form th:action="@{'/events/create'}" th:method="post" th:object="${event}">
     <div class="field">
-        <label class="label" for="title">Event Name:</label>
+        <label class="label" for="title">Event Name:<span style="color: red">*</span></label>
         <div class="control">
             <input type="text"  name="title" id="title" class="input" placeholder="Event Name" />
             <div class="content">
@@ -29,7 +34,7 @@
 
     <!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
     <div class="field">
-        <label class="label" for="start">Start Date and Time:</label>
+        <label class="label" for="start">Start Date and Time:<span style="color: red">*</span></label>
         <div class="control">
             <input type="datetime-local" name="start" id="start" class="input"/>
             <div class="content">
@@ -42,7 +47,7 @@
     </div>
 
     <div class="field">
-        <label class="label" for="stop">End Date and Time:</label>
+        <label class="label" for="stop">End Date and Time:<span style="color: red">*</span></label>
         <div class="control">
             <input type="datetime-local" name="stop" id="stop" class="input"/>
             <div class="content">
@@ -68,7 +73,7 @@
     </div>
 
     <div class="field">
-        <label class="label" for="address">Address:</label>
+        <label class="label" for="address">Address:<span style="color: red">*</span></label>
         <div class="control">
             <label for="address">Address:</label>
             <div id='geocoder' class='geocoder'></div>
@@ -82,7 +87,7 @@
     </div>
 
     <div class="field">
-        <label class="label" for="description">Description:</label>
+        <label class="label" for="description">Description:<span style="color: red">*</span></label>
         <div class="control">
             <input id="description" name="description" type="text" class="input" placeholder="description"/>
             <div class="content">
@@ -121,9 +126,9 @@
 <script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
-<!--<script th:src="@{/js/key.js}"></script>-->
-<!--<script th:src="@{/js/mapbox-geocoder-utils.js}"></script>-->
-<!--<script th:src="@{/js/mapGeocodejs.js}"></script>-->
+<script th:src="@{/js/key.js}"></script>
+<script th:src="@{/js/mapbox-geocoder-utils.js}"></script>
+<script th:src="@{/js/mapGeocodejs.js}"></script>
 <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 <script th:src="@{/js/key.js}"></script>
 

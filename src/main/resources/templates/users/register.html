@@ -10,33 +10,34 @@
 
 <div class="container">
     <div class="content">
-        <h3>Make an account!</h3>
+        <h2>Make an account!</h2>
+        <h6 class="subtitle is-6">Fields annotated with an <span style="color: red">*</span> are required</h6>
     </div>
 
     <form th:action="@{/register}" th:method="post" th:object="${user}">
         <div class="field">
-            <label class="label" for="firstName">First Name</label>
+            <label class="label" for="firstName">First Name<span style="color: red">*</span></label>
             <div class="control">
                 <input type="text" id="firstName" class="input" th:field="*{firstName}" placeholder="First Name" />
             </div>
         </div>
 
         <div class="field">
-            <label class="label" for="lastName">Last Name</label>
+            <label class="label" for="lastName">Last Name<span style="color: red">*</span></label>
             <div class="control">
                 <input type="text" id="lastName" class="input" th:field="*{lastName}" placeholder="Last Name"/>
             </div>
         </div>
 
         <div class="field">
-            <label class="label" for="phoneNumber">Phone Number</label>
+            <label class="label" for="phoneNumber">Phone Number<span style="color: red">*</span></label>
             <div class="control">
                 <input type="text" id="phoneNumber" class="input" th:field="*{phoneNumber}" placeholder="Phone Number"/>
             </div>
         </div>
 
         <div class="field">
-            <label class="label" for="username">Username</label>
+            <label class="label" for="username">Username<span style="color: red">*</span></label>
             <div class="control">
                 <input id="username" class="input" th:field="*{username}" placeholder="Username" />
                 <div class="content">
@@ -49,7 +50,7 @@
         </div>
 
         <div class="field">
-            <label class="label" for="email">Email</label>
+            <label class="label" for="email">Email<span style="color: red">*</span></label>
             <div class="control">
                 <input type="text" id="email" class="input" th:field="*{email}" placeholder="Email"/>
                 <div class="content">
@@ -62,7 +63,7 @@
         </div>
 
         <div class="field">
-            <label class="label" for="password">Password</label>
+            <label class="label" for="password">Password<span style="color: red">*</span></label>
             <div class="control">
                 <input type="password" id="password" class="input" th:field="*{password}" placeholder="Password"/>
                 <div class="content">
@@ -79,7 +80,7 @@
         </div>
 
         <div class="field">
-            <label class="label" for="passwordConfirm">Confirm Password</label>
+            <label class="label" for="passwordConfirm">Confirm Password<span style="color: red">*</span></label>
             <div class="control">
                 <input type="password" id="passwordConfirm" class="input" placeholder="Confirm Password"/>
                 <div id="passwordConfirm2" class="content" style="display: none">
