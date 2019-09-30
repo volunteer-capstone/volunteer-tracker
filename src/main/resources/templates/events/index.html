@@ -13,10 +13,12 @@
 
     <label for="eventSearch">Search by event name:</label>
     <input id="eventSearch" type="text" onkeyup="searchEvents()" placeholder="Enter event title" />
-    <label for="positionSearch">Search by position:</label>
-    <input id="positionSearch" type="text" onkeyup="searchEvents()" placeholder="Enter position" />
+    <input id="posCheckbox" type="checkbox" onclick="searchEvents()"/>
+    <label for="posCheckbox">Include position title in search</label>
+<!--    <label for="positionSearch">Search by position:</label>-->
+<!--    <input id="positionSearch" type="text" onkeyup="searchEvents()" placeholder="Enter position" />-->
 
-    <div class="columns is-multiline is-mobile eventDiv">
+    <div class="columns is-multiline is-mobile eventDiv" style="margin-top: 10px;">
         <th:block th:each="event : ${events}" >
             <div class="column is-one-third event">
                 <div th:class="${event.title}">
@@ -33,6 +35,9 @@
                         <div class="content">
                             <p th:text="*{#dates.format(event.start, 'MMM d, yyyy H:mm')}"></p>
                             <p>Number of Volunteers Needed: <span th:text="${totalVolunteersNeeded}"></span></p>
+                            <div class="positionDiv" th:each="pos: ${event.getPositions()}">
+                                <p th:text="${pos.getTitle()}"></p>
+                            </div>
                         </div>
                     </div>
                     <footer class="card-footer">
@@ -44,7 +49,49 @@
             </div>
         </th:block>
     </div>
+</div>
 
+
+<th:block th:replace="fragments/footer :: footer" />
+<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
+<script>
+    var input = '';
+    var posInput = '';
+
+    function searchEvents() {
+        var eventList = $(".event");
+        input = $('#eventSearch').val();
+
+        let posCheck = false;
+        for (let i = 0; eventList.length > i; i++) {
+            posCheck = false;
+            var posList = $(eventList[i]).find(".positionDiv");
+            if ($(eventList[i]).children().attr("class").indexOf(input) > -1) {
+                posCheck = true;
+            } else {
+                if ($('#posCheckbox').is(':checked')) {
+                    for (let j = 0; posList.length > j; j++) {
+                        if ($(posList[j]).children().text().indexOf(input) > -1) {
+                            posCheck = true;
+                        }
+                    }
+                }
+            }
+            if (posCheck) {
+                $(eventList[i]).css("display", "inline")
+            } else {
+                $(eventList[i]).css("display", "none")
+            }
+        }
+        if (input === '') {
+            if (posInput === '') {
+            $(eventList).css("display", "inline")
+            }
+        }
+    }
+
+
+</script>
 <!--    <div class="eventDiv">-->
 <!--        <div th:each="event : ${events}" class="event">-->
 <!--            <div th:class="${event.getTitle()}">-->
@@ -55,39 +102,5 @@
 <!--            </div>-->
 <!--        </div>-->
 <!--    </div>-->
-</div>
-
-<th:block th:replace="fragments/footer :: footer" />
-<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
-<script>
-    var input = '';
-    var posInput = '';
-
-    function searchEvents() {
-        var eventList = document.getElementsByClassName("event");
-        posInput = $('#positionSearch').val();
-
-        let posCheck = false;
-        for (let i = 0; eventList.length > i; i++) {
-            posCheck = false;
-            input = $('#eventSearch').val();
-            var posList = $(eventList[i]).find(".positionDiv");
-            if ($(eventList[i]).children().next().attr("class").indexOf(input) > -1) {
-                for (let j = 0; posList.length > j; j++) {
-                    if ($(posList[j]).children().text().indexOf(posInput) > -1) {
-                        posCheck = true;
-                    }
-                }
-            }
-            if (posCheck) {
-                $(eventList[i]).css("display", "inline")
-            } else {
-                $(eventList[i]).css("display", "none")
-            }
-        }
-    }
-
-
-</script>
 </body>
 </html>
