@@ -27,6 +27,8 @@
             <th>Start Time</th>
             <th>End Time</th>
             <th>Total Hours</th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -36,7 +38,15 @@
                 <td th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></td>
                 <td th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></td>
                 <td th:text="${event.posHours(position.start, position.end)}"></td>
+                <td></td>
+                <td></td>
             </tr>
+            <th></th>
+            <th></th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Profile</th>
                 <th:block th:each="userPosition : ${volunteers.get(position)}">
             <tr>
                 <td></td>
@@ -44,6 +54,7 @@
                 <td th:text="${userPosition.getUser().getUsername()}"></td>
                 <td th:text="${userPosition.getUser().getEmail()}"></td>
                 <td th:text="${userPosition.getUser().getPhoneNumber()}"></td>
+                <td><a class="button is-info" th:href="@{/users/{id}/profile(id=${userPosition.getUser().getId()})}">View Profile</a></td>
             </tr>
                 </th:block>
         </th:block>
