@@ -45,6 +45,12 @@ public class EventController {
         viewModel.addAttribute("events", events);
         Iterable<Position> positions = positionDao.findAll();
         viewModel.addAttribute("positions", positions);
+
+        long totalVolunteersNeeded = 0;
+        for(Position position: positions){
+            totalVolunteersNeeded = totalVolunteersNeeded + position.getNumNeeded();
+        }
+        viewModel.addAttribute("totalVolunteersNeeded", totalVolunteersNeeded);
         return "events/index";
     }
 
