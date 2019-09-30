@@ -3,8 +3,6 @@ package com.codeup.volunteertracker.models;
 import com.codeup.volunteertracker.models.Event;
 import com.codeup.volunteertracker.models.UserPosition;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
-
 import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,28 +19,22 @@ public class User {
     private long id;
 
     @Column (nullable = false)
-    @NotBlank(message = "Please enter your first name")
     private String firstName;
 
     @Column (nullable = false)
-    @NotBlank(message = "Please enter your last name")
     private String lastName;
 
     @Column (nullable = false, length = 20)
-    @NotBlank(message = "Please enter a phone number")
     private String phoneNumber;
 
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Please enter a username")
     private String username;
 
     @Column (nullable = false, unique = true)
-    @NotBlank(message = "Please enter an email")
     @Email(message = "Email should be valid")
     private String email;
 
     @Column (nullable = false)
-    @NotBlank(message = "Please enter a password")
     private String password;
 
     @Column
@@ -59,7 +51,6 @@ public class User {
 
     @OneToMany(cascade =CascadeType.ALL, mappedBy = "creator")
     private List<Event> events;
-
 
     @OneToMany(mappedBy = "user")
     private List<UserPosition> userPosition;
