@@ -16,41 +16,70 @@
 
 
 
-<form th:action="@{/events/{id}/create-position(id=${event.id})}" th:method="post">
+<form th:action="@{/events/{id}/create-position(id=${event.id})}" th:method="post" th:object="${position}">
     <div class="field">
+        <label class="label" for="title">Position Name:</label>
         <div class="control">
-            <label for="title">Position Name:</label>
             <input type="text" id="title" class="input" name="title" placeholder="Position Name" />
+            <div class="content">
+                <div th:if="${#fields.hasErrors('title')}" class="notification is-warning">
+                    <a class="delete"></a>
+                    <strong th:errors="*{title}"></strong>
+                </div>
+            </div>
         </div>
     </div>
 
     <!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
     <div class="field">
+        <label class="label" for="start">Start Date and Time:</label>
         <div class="control">
-            <label for="start">Start Date and Time:</label>
             <input type="datetime-local" id="start" class="input" name="start"/>
+            <div class="content">
+                <div th:if="${#fields.hasErrors('start')}" class="notification is-warning">
+                    <a class="delete"></a>
+                    <strong th:errors="*{start}"></strong>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="field">
+        <label class="label" for="end">End Date and Time:</label>
         <div class="control">
-            <label for="end">End Date and Time:</label>
             <input type="datetime-local" id="end" class="input" name="end"/>
+            <div class="content">
+                <div th:if="${#fields.hasErrors('end')}" class="notification is-warning">
+                    <a class="delete"></a>
+                    <strong th:errors="*{end}"></strong>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!--    NEED TO FIND WAY TO INPUT LOCATION STRING FROM MAPBOX HERE WITH GEOLOCATION TO STORE TO DATABASE-->
     <div class="field">
+        <label class="label" for="numNeeded">Number of Volunteers Needed:</label>
         <div class="control">
-            <label for="numNeeded">Number of Volunteers Needed:</label>
             <input id="numNeeded" type="number" class="input" name="numNeeded" placeholder="numNeeded" />
+            <div class="content">
+                <div th:if="${#fields.hasErrors('numNeeded')}" class="notification is-warning">
+                    <a class="delete"></a>
+                    <strong th:errors="*{numNeeded}"></strong>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="field">
+        <label class="label" for="description">Description:</label>
         <div class="control">
-            <label for="description">Description:</label>
             <input type="text" id="description" class="input" name="description" placeholder="description"/>
+            <div class="content">
+                <div th:if="${#fields.hasErrors('description')}" class="notification is-warning">
+                    <a class="delete"></a>
+                    <strong th:errors="*{description}"></strong>
+                </div>
+            </div>
         </div>
     </div>
 
