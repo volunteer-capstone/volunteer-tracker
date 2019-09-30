@@ -2,6 +2,7 @@ package com.codeup.volunteertracker.models;
 
 import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,18 +39,18 @@ public class Position {
     private Event event;
 
     @OneToMany
-    private List<UserPosition> positionVolunteers;
+    private List<UserPosition> userPositions;
 
     public Position(){}
 
-    public Position(String title, String description, int numNeeded, Date start, Date end, Event event, List<UserPosition> positionVolunteers) {
+    public Position(String title, String description, int numNeeded, Date start, Date end, Event event, List<UserPosition> userPositions) {
         this.title = title;
         this.description = description;
         this.numNeeded = numNeeded;
         this.start = start;
         this.end = end;
         this.event = event;
-        this.positionVolunteers = positionVolunteers;
+        this.userPositions = userPositions;
     }
 
     public long getId() {
@@ -108,11 +109,24 @@ public class Position {
         this.event = event;
     }
 
-    public List<UserPosition> getPositionVolunteers() {
-        return positionVolunteers;
+    public List<UserPosition> getuserPositions() {
+        return userPositions;
     }
 
-    public void setPositionVolunteers(List<UserPosition> positionVolunteers) {
-        this.positionVolunteers = positionVolunteers;
+    public void setuserPositions(List<UserPosition> userPositions) {
+        this.userPositions = userPositions;
+    }
+
+    public List<User> getUsersByPosition(Long posId) {
+        List<UserPosition> userPositionList = new ArrayList<>();
+        List<User> userList = new ArrayList<>();
+        for (int i = 0; i < userPositions.size(); i ++) {
+            userPositionList.add(userPositions.get(i));
+            for (int j = 0; j < 3; j++) {
+                userList.add(userPositions.get(i).getUser());
+            }
+        }
+        return userList;
+
     }
 }

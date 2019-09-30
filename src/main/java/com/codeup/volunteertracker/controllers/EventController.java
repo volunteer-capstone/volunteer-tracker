@@ -56,12 +56,16 @@ public class EventController {
 
         viewModel.addAttribute("eventUser", eventUser);
 
+        long userId = 0;
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
-            String userId = "";
             viewModel.addAttribute("userId", userId);
         } else {
             User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            long userId = userSession.getId();
+            User currentUser = userDao.findOne(userSession.getId());
+
+            List<UserPosition> userPos = currentUser.getUserPosition();
+            viewModel.addAttribute("userPos", userPos);
+
             viewModel.addAttribute("userId", userId);
         }
 
