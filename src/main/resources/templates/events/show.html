@@ -37,6 +37,7 @@
                 <h5 th:text="${event.getCreator().getLastName()}"></h5>
                 <h5 th:text="${event.getCreator().getEmail()}"></h5>
                 <h5 th:text="${event.getCreator().getPhoneNumber()}"></h5>
+                <a class="button is-info" th:href="@{/users/{id}/profile(id=${event.getCreator().getId()})}">View Profile</a>
             </div>
         </div>
     </div>
