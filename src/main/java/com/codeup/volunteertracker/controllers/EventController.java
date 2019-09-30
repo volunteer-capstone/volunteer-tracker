@@ -12,8 +12,10 @@ import com.codeup.volunteertracker.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -82,30 +84,31 @@ public class EventController {
     }
 
     @PostMapping("/events/create")
-    public String createEvent(@RequestParam(name="location") String location, @RequestParam(name="address") String address, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description) throws ParseException {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-        Date localTimeObj1= df.parse(start);
-        Date localTimeObj2 = df.parse(stop);
-        Event event = new Event();
-        event.setId(event.getId());
-        event.setStart(localTimeObj1);
-        event.setStop(localTimeObj2);
-        event.setDescription(description);
-        event.setLocation(location);
-        event.setAddress(address);
-        event.setTitle(title);
-        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userDao.findOne(userSession.getId());
-        event.setCreator(user);
-        Event createEvent = eventDao.save(event);
-        System.out.println(createEvent.getStart());
-        System.out.println(createEvent.getStart());
-        System.out.println(createEvent.getStop());
-        System.out.println(createEvent.getDescription());
-        System.out.println(createEvent.getTitle());
-        System.out.println(createEvent.getLocation());
-        System.out.println(createEvent.getId());
-        return "redirect:/events/" + createEvent.getId() + "/create-position";
+    public String createEvent(@Valid Event createEvent,
+            @RequestParam(name="location") String location, @RequestParam(name="address") String address, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description,
+                              Errors validation, Model model) throws ParseException {
+        if (validation.hasErrors()) {
+            model.addAttribute("errors", validation);
+            model.addAttribute("event", createEvent);
+            return "events/create-event";
+        } else {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            Date localTimeObj1 = df.parse(start);
+            Date localTimeObj2 = df.parse(stop);
+            Event event = new Event();
+            event.setId(event.getId());
+            event.setStart(localTimeObj1);
+            event.setStop(localTimeObj2);
+            event.setDescription(description);
+            event.setLocation(location);
+            event.setAddress(address);
+            event.setTitle(title);
+            User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userDao.findOne(userSession.getId());
+            event.setCreator(user);
+            createEvent = eventDao.save(event);
+            return "redirect:/events/" + createEvent.getId() + "/create-position";
+        }
     }
 
 //    EDIT EVENT
@@ -134,7 +137,7 @@ public class EventController {
         editedEvent.setLocation(location);
         editedEvent.setAddress(address);
         editedEvent.setDescription(description);
-        Event saveEvent = eventDao.save(editedEvent);
+        eventDao.save(editedEvent);
         return "redirect:/events/" + id;
     }
 
