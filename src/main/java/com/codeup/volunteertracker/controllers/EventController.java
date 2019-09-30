@@ -101,6 +101,7 @@ public class EventController {
         viewModel.addAttribute("event", new Event());
         viewModel.addAttribute("mapToken", mapToken);
         viewModel.addAttribute("filestackAPI", filestackAPI);
+        System.out.println(mapToken);
         return "events/create-event";
     }
 
