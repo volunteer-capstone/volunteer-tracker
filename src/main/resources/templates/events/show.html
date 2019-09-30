@@ -54,7 +54,7 @@
 
         <div class="columns is-multiline is-mobile">
         <th:block th:each="position: ${positions}">
-            <div class="column is-one-quarter">
+            <div class="column is-one-quarter" th:if="(${position.numNeeded} > 0)">
                 <p th:text="${position.title}"></p>
                 <p th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></p>
                 <p th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></p>
