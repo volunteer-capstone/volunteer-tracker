@@ -2,6 +2,8 @@ package com.codeup.volunteertracker.controllers;
 
 import com.codeup.volunteertracker.models.User;
 import com.codeup.volunteertracker.repositories.UserRepository;
+import com.codeup.volunteertracker.services.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +32,10 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
+
+    @Autowired
+    private EmailService emailService;
+
     //    CREATE USER
     @GetMapping("/register")
     public String viewRegister(Model model) {
@@ -54,6 +60,8 @@ public class UserController {
             String hash = passwordEncoder.encode(registerUser.getPassword());
             registerUser.setPassword(hash);
             userRepo.save(registerUser);
+            emailService.createdAnAccount(registerUser, "Account Created with Path of the Volunteer", String.format("Congratulations! An account was made at pathofthevolunteer.com using this email address under the username: %s.  Enjoy volunteering and giving back to your community! If you feel that this has occurred in error please visit our website to contact us.", registerUser.getUsername())) ;
+
             return "redirect:/login";
         }
     }
@@ -107,6 +115,7 @@ public class UserController {
             user.setPhoto(photo);
             user.setBio(bio);
             User editedUser = userRepo.save(user);
+            emailService.createdAnAccount(editedUser, "Account Changes with Path of the Volunteer", String.format("Notification: Changes were made to your account.  If you feel that you are receiving this email in error, please visit pathofthevolunteer.com to contact us.")) ;
             return "redirect:/users/" + user.getId() + "/profile";
         } else {
             return "redirect:/profile/edit";
@@ -121,8 +130,9 @@ public class UserController {
         long userId = userSession.getId();
         User user = userRepo.findOne(userId);
         userRepo.delete(userId);
+        emailService.createdAnAccount(user, "Account Deleted with Path of the Volunteer", String.format("Thank you, %s %s for being a member of pathofthevolunteer.com . If you would like to use our services again in the future, please feel free to visit our site again.", user.getFirstName(), user.getLastName())) ;
 
-        return "redirect:/login";
+        return "redirect:/login?logout";
     }
 
 //    MAKE USER AN ORGANIZER
