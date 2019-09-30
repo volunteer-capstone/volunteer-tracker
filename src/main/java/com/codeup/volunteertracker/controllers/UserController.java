@@ -73,6 +73,7 @@ public class UserController {
             User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             long userId = userSession.getId();
             viewModel.addAttribute("userId", userId);
+            viewModel.addAttribute("curUser", userSession);
         }
 
         return "users/view";

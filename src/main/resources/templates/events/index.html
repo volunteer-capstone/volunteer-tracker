@@ -14,7 +14,7 @@
     <label for="eventSearch">Search by event name:</label>
     <input id="eventSearch" type="text" onkeyup="searchEvents()" placeholder="Enter event title" />
     <label for="positionSearch">Search by position:</label>
-    <input id="positionSearch" type="text" onkeyup="searchEventPositions()" placeholder="Enter position" />
+    <input id="positionSearch" type="text" onkeyup="searchEvents()" placeholder="Enter position" />
 
     <div class="columns is-multiline is-mobile eventDiv">
         <th:block th:each="event : ${events}" >
@@ -63,36 +63,22 @@
 <script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
 <script>
     var input = '';
-
-    function searchEvents() {
-        var eventList = document.getElementsByClassName("event");
-        console.log('eventList:'  + eventList);
-        console.log(eventList[0]);
-
-        for (let i = 0; eventList.length > i; i++) {
-            input = $('#eventSearch').val();
-            console.log(input);
-            if ($(eventList[i]).children().next().attr("class").indexOf(input) > -1) {
-                $(eventList[i]).css("display", "inline")
-            } else {
-                $(eventList[i]).css("display", "none")
-            }
-        }
-    }
-
     var posInput = '';
 
-    function searchEventPositions() {
+    function searchEvents() {
         var eventList = document.getElementsByClassName("event");
         posInput = $('#positionSearch').val();
 
         let posCheck = false;
         for (let i = 0; eventList.length > i; i++) {
             posCheck = false;
+            input = $('#eventSearch').val();
             var posList = $(eventList[i]).find(".positionDiv");
-            for (let j = 0; posList.length > j; j++) {
-                if ($(posList[j]).children().text().indexOf(posInput) > -1) {
-                    posCheck = true;
+            if ($(eventList[i]).children().next().attr("class").indexOf(input) > -1) {
+                for (let j = 0; posList.length > j; j++) {
+                    if ($(posList[j]).children().text().indexOf(posInput) > -1) {
+                        posCheck = true;
+                    }
                 }
             }
             if (posCheck) {
@@ -102,6 +88,8 @@
             }
         }
     }
+
+
 </script>
 </body>
 </html>

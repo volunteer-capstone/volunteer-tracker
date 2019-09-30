@@ -112,19 +112,4 @@ public class Position {
     public void setuserPositions(List<UserPosition> userPositions) {
         this.userPositions = userPositions;
     }
-
-    public List<User> getUsersByPosition(Long posId) {
-        List<UserPosition> userPositionList = new ArrayList<>();
-        List<User> userList = new ArrayList<>();
-        for (int i = 0; i < userPositions.size(); i ++) {
-            userPositionList.add(userPositions.get(i));
-            for (int j = 0; j < 3; j++) {
-                userList.add(userPositions.get(i).getUser());
-            }
-        }
-        return userList;
-
-    }
-
-
 }
