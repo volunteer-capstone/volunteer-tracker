@@ -70,6 +70,7 @@
     <div class="field">
         <label class="label" for="address">Address:</label>
         <div class="control">
+            <label for="address">Address:</label>
             <div id='geocoder' class='geocoder'></div>
             <div class="content">
                 <div th:if="${#fields.hasErrors('address')}" class="notification is-warning">
@@ -93,11 +94,21 @@
         </div>
     </div>
 
-    <div class="field">
-        <div class="control">
-            <input type="hidden" name="eventId" th:value="${event.id}" />
-    <!--        <button id="create-eventDisabled" class="button is-success" disabled="disabled">Next→</button>-->
-            <button id="create-event" class="button is-success">Next<span class="icon"><i class="far fa-hand-point-right"></i></span></button>
+    <div class="field" id="photo">
+        <div>
+            <button class="btn btn-light" type="button" id="picker">Upload Event Photo</button>
+            <input type="hidden" id="fileupload" name="file" />
+<!--            <div type="hidden" id="photoURL" name="photoURL" />-->
+        </div>
+        <div id="nameBox"></div>
+        <th:block th:replace="fragments/filestack" />
+    </div>
+
+<div class="field">
+    <div class="control">
+        <input type="hidden" name="eventId" th:value="${event.id}" />
+<!--        <button id="create-eventDisabled" class="button is-success" disabled="disabled">Next→</button>-->
+        <button id="create-event" class="button is-success">Next<span class="icon"><i class="far fa-hand-point-right"></i></span></button>
         </div>
     </div>
 
@@ -106,11 +117,16 @@
 
 <div id="map"></div>
 <th:block th:replace="fragments/footer :: footer" />
+
 <script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
+<!--<script th:src="@{/js/key.js}"></script>-->
+<!--<script th:src="@{/js/mapbox-geocoder-utils.js}"></script>-->
+<!--<script th:src="@{/js/mapGeocodejs.js}"></script>-->
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 <script th:src="@{/js/key.js}"></script>
-<script th:src="@{/js/mapbox-geocoder-utils.js}"></script>
-<script th:src="@{/js/mapGeocodejs.js}"></script>
+
+
 </body>
 </html>
