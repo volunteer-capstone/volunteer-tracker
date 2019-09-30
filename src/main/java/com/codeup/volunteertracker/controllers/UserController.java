@@ -10,15 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import org.springframework.web.bind.annotation.ModelAttribute;
-
-import org.springframework.web.bind.annotation.PathVariable;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -44,13 +36,16 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid User registerUser, Errors validation, Model model) {
+    public String registerUser(@Valid User registerUser, Errors validation, Model model, @RequestParam(name = "organizer", defaultValue = "off") String isOrganizer) {
         if(userRepo.countAllByEmailOrUsername(registerUser.getEmail(), registerUser.getUsername()) > 0) {
             validation.rejectValue(
                     "username",
                     "user.username",
                     "Invalid username and/or email."
             );
+        }
+        if(!isOrganizer.equals("off")) {
+            registerUser.setOrganizer(true);
         }
         if (validation.hasErrors()) {
             model.addAttribute("errors", validation);
