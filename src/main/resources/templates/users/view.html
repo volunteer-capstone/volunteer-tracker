@@ -20,7 +20,7 @@
 <p><a class="pastEvents">Past Events</a>&emsp;<a class="plannedEvents">Planned Events</a>&emsp;<a th:if="${user.isOrganizer()}" class="pastEventsCreated">Past Events Created</a>&emsp;<a th:if="${user.isOrganizer()}" class="plannedEventsCreated">Planned Events Created</a></p>
 <hr/>
 <h4>Events:</h4>
-<div th:each="event: ${user.getUserEvents()}" class="pastEventDiv">
+<div th:each="event: ${user.getUserEvents()}" class="pastEventDiv" style="display: none">
 	<div th:if="*{event.getStart().before(execInfo.now)}">
 	<br/>
 		<p th:text="*{event.title}"></p>
@@ -34,7 +34,7 @@
 	</div>
 </div>
 	</div>
-<div th:each="event: ${user.getUserEvents()}" class="plannedEventDiv" style="display: none">
+<div th:each="event: ${user.getUserEvents()}" class="plannedEventDiv">
 	<div th:if="*{event.getStart().after(execInfo.now)}">
 	<br/>
 		<p th:text="*{event.title}"></p>
