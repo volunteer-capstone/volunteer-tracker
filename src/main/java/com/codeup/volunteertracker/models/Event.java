@@ -33,12 +33,12 @@ public class Event {
     @Temporal(TemporalType.TIMESTAMP)
     private Date start;
 
-   @Column(nullable = false, columnDefinition="DATETIME")
-   @Temporal(TemporalType.TIMESTAMP)
-   private Date stop;
+    @Column(nullable = false, columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date stop;
 
-   @Column( columnDefinition = "TEXT")
-   private String photo;
+    @Column( columnDefinition = "TEXT")
+    private String photo;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
