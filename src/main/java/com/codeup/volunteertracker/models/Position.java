@@ -1,6 +1,7 @@
 package com.codeup.volunteertracker.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -111,4 +112,6 @@ public class Position {
     public void setPositionVolunteers(List<UserPosition> positionVolunteers) {
         this.positionVolunteers = positionVolunteers;
     }
+
+
 }
