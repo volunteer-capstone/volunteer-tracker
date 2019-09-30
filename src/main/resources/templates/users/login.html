@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/header :: my-header('Please Login')" />
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
@@ -26,14 +28,14 @@
     </div>
     <form th:action="@{/login}" th:method="post">
         <div class="field">
-            <label for="username">Username</label>
+            <label class="label" for="username">Username</label>
             <div class="control">
                 <input class="input" type="text" id="username" name="username" placeholder="Username" />
             </div>
         </div>
 
         <div class="field">
-            <label for="password">Password</label>
+            <label class="label" for="password">Password</label>
             <div class="control">
                 <input class="input" type="password" id="password" name="password" placeholder="Password"/>
             </div>

@@ -2,65 +2,95 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/header :: my-header('All Events')" />
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.css' rel='stylesheet'/>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
+    <link rel="stylesheet" th:href="@{/css/geocodecss.css}" />
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
-<form th:action="@{'/events/create'}" th:method="post">
-<div class="field">
-    <div class="control">
-        <label for="title">Event Name:</label>
-        <input type="text"  name="title" id="title" class="input" placeholder="Event Name" />
+<div class="container">
+    <div class="content">
+        <h2>Create an Event!</h2>
+        <h6 class="subtitle is-6">Fields annotated with an <span style="color: red">*</span> are required</h6>
     </div>
-</div>
 
-<!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
-<div class="field">
-    <div class="control">
-        <label for="start">Start Date and Time:</label>
-        <input type="datetime-local" name="start" id="start" class="input"/>
-    </div>
-</div>
-
-<div class="field">
-    <div class="control">
-        <label for="stop">End Date and Time:</label>
-        <input type="datetime-local" name="stop" id="stop" class="input"/>
-    </div>
-</div>
-
-<!--    NEED TO FIND WAY TO INPUT ADDRESS  STRING FROM MAPBOX HERE WITH GEOLOCATION TO STORE TO DATABASE-->
-<div class="field">
-    <div class="control">
-        <label for="location">Location:</label>
-        <input id="location" type="text" name="location" class="input" placeholder="location" />
-    </div>
-</div>
-
+    <form th:action="@{'/events/create'}" th:method="post">
     <div class="field">
+        <label class="label" for="title">Event Name:<span style="color: red">*</span></label>
         <div class="control">
-            <label for="address">Address::</label>
-            <input id="address" type="text" name="address" class="input" placeholder="address" />
+            <input type="text"  name="title" id="title" class="input" placeholder="Event Name" />
         </div>
     </div>
 
-<div class="field">
-    <div class="control">
-        <label for="description">Description:</label>
-        <input id="description" name="description" type="text" class="input" placeholder="description"/>
+    <!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
+    <div class="field">
+        <label class="label" for="start">Start Date and Time:<span style="color: red">*</span></label>
+        <div class="control">
+            <input type="datetime-local" name="start" id="start" class="input"/>
+        </div>
     </div>
-</div>
+
+    <div class="field">
+        <label class="label" for="stop">End Date and Time:<span style="color: red">*</span></label>
+        <div class="control">
+            <input type="datetime-local" name="stop" id="stop" class="input"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label" for="venue">Location:</label>
+        <div class="control">
+            <input id="venue" type="text" name="location" class="input" placeholder="location" />
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label" for="address">Address:<span style="color: red">*</span></label>
+        <div class="control">
+            <div id='geocoder' class='geocoder'></div>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label" for="description">Description:<span style="color: red">*</span></label>
+        <div class="control">
+            <input id="description" name="description" type="text" class="input" placeholder="description"/>
+        </div>
+    </div>
+
+    <div class="field" id="photo">
+        <div>
+            <button class="btn btn-light" type="button" id="picker">Upload Event Photo</button>
+            <input type="hidden" id="fileupload" name="file" />
+<!--            <div type="hidden" id="photoURL" name="photoURL" />-->
+        </div>
+        <div id="nameBox"></div>
+        <th:block th:replace="fragments/filestack" />
+    </div>
 
 <div class="field">
     <div class="control">
         <input type="hidden" name="eventId" th:value="${event.id}" />
-<!--        <button id="create-eventDisabled" class="button is-success" disabled="disabled">Next→</button>-->
-        <button id="create-event" class="button is-success">Next→</button>
+
+        <button id="create-event" class="button is-success">Next<span class="icon"><i class="far fa-hand-point-right"></i></span></button>
+        </div>
     </div>
+
+    </form>
 </div>
 
-</form>
+<div id="map"></div>
 <th:block th:replace="fragments/footer :: footer" />
-<!--<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>-->
+
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
+<script th:src="@{/js/key.js}"></script>
+<script th:src="@{/js/mapbox-geocoder-utils.js}"></script>
+<script th:src="@{/js/mapGeocodejs.js}"></script>
+<script th:src="@{/js/enableEventButtonjs.js}"></script>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 </body>
 </html>

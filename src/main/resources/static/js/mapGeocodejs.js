@@ -1,9 +1,8 @@
 "use strict";
 $(document).ready(function() {
     mapboxgl.accessToken = mapToken;
-    let eventLocation = $('#address').text();
 
-    geocode(eventLocation, mapToken).then(function(loc) {
+    geocode("San Antonio, TX", mapToken).then(function(loc) {
         let mapOptions = {
             container: 'map',
             style: 'mapbox://styles/mapbox/streets-v9',
@@ -14,11 +13,16 @@ $(document).ready(function() {
 
         let map = new mapboxgl.Map(mapOptions);
 
-        let marker = new mapboxgl.Marker()
-            .setLngLat(loc)
-            .addTo(map);
-
         map.addControl(new mapboxgl.NavigationControl());
 
+        let geocoder = new MapboxGeocoder({
+            accessToken: mapToken,
+            mapboxgl: mapboxgl
+        });
+
+        document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+        let search = $('.mapboxgl-ctrl-geocoder--input');
+        search.attr('id', 'address');
+        search.attr('name', 'address');
     });
 });
