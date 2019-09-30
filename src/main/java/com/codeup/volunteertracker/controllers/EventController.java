@@ -9,6 +9,7 @@ import com.codeup.volunteertracker.repositories.EventRepository;
 import com.codeup.volunteertracker.repositories.PositionRepository;
 import com.codeup.volunteertracker.repositories.UserPositionRepository;
 import com.codeup.volunteertracker.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +41,12 @@ public class EventController {
         this.positionDao = positionDao;
         this.userPositionDao = userPositionRepository;
     }
+
+    @Value("${mapToken}")
+    private String mapToken;
+
+    @Value("${filestack-api-key}")
+    private String filestackAPI;
 
 // LIST OF EVENTS
     @GetMapping("/events")
@@ -83,6 +90,8 @@ public class EventController {
         Iterable<UserPosition> userPositions = userPositionDao.findAll();
         viewModel.addAttribute("userPositions", userPositions);
 
+        viewModel.addAttribute("mapToken", mapToken);
+
         return "events/show";
     }
 
@@ -90,6 +99,8 @@ public class EventController {
     @GetMapping("/events/create")
     public String createEvent(Model viewModel){
         viewModel.addAttribute("event", new Event());
+        viewModel.addAttribute("mapToken", mapToken);
+        viewModel.addAttribute("filestackAPI", filestackAPI);
         return "events/create-event";
     }
 
@@ -118,6 +129,9 @@ public class EventController {
     @GetMapping("/events/edit/{id}")
     public String editEvent(@PathVariable long id, Model viewModel){
         viewModel.addAttribute("event", eventDao.findOne(id));
+        viewModel.addAttribute("mapToken", mapToken);
+        viewModel.addAttribute("filestackAPI", filestackAPI);
+
         return "events/edit-event";
     }
 

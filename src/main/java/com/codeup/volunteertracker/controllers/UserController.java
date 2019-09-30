@@ -4,6 +4,7 @@ import com.codeup.volunteertracker.models.User;
 import com.codeup.volunteertracker.repositories.UserRepository;
 import com.codeup.volunteertracker.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +28,9 @@ public class UserController {
 
     @Autowired
     private EmailService emailService;
+
+    @Value("${filestack-api-key}")
+    private String filestackAPI;
 
     //    CREATE USER
     @GetMapping("/register")
@@ -90,6 +94,8 @@ public class UserController {
         long id = userSession.getId();
 //        User user = userRepo.findOne(id);
         viewModel.addAttribute("user", userSession);
+        viewModel.addAttribute("filestackAPI", filestackAPI);
+        System.out.println(filestackAPI);
         return "users/edit";
     }
 

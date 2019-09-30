@@ -104,6 +104,11 @@
 <!--		</div>-->
 
 		<div class="field" id="photo">
+			<div>
+				<input type="hidden" id="filestackAPI" name="filestackAPI" th:value="${filestackAPI}" />
+				<button class="btn btn-light" type="button" id="picker">Upload Event Photo</button>
+				<input type="hidden" id="fileupload" name="file" />
+				<!--            <div type="hidden" id="photoURL" name="photoURL" />-->
 			<div class="file">
 				<label class="file-label">
 					<input id="picker" class="file-input" type="file" name="resume" />
@@ -119,6 +124,7 @@
 				</label>
 			</div>
 			<div id="nameBox"></div>
+
 			<th:block th:replace="fragments/filestack" />
 		</div>
 
