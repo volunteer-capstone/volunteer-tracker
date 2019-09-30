@@ -15,7 +15,6 @@
     <div class="columns is-mobile">
         <div class="column">
             <div class="content">
-                <!--<h3>Event ID:  <span th:text="${event.id}"></span></h3>-->
                 <h4 th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')}"></h4>
                 <h4 th:text="${#dates.format(event.stop, 'MMM-dd-yyyy HH:mm')}"></h4>
                 <h4 th:text="${event.location}"></h4>
@@ -50,7 +49,24 @@
 
     <div class="content">
         <h3>Volunteer Positions:</h3>
+        <div th:each="position: ${positions}">
+            <h6 th:text="${position.title}"></h6>
+            <h6 th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></h6>
+            <h6 th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></h6>
+            <h6 th:text="${position.numNeeded}"></h6>
+            <h6 th:text="${position.description}"></h6>
+            <th:block sec:authorize="isAuthenticated()"><h6 th:if="${userPos.get(0).getPosition().getId()} == ${position.getId()}">You have already signed up for this position!</h6></th:block>
+            <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId}) and (${userPos.get(0).getPosition().getId()} != ${position.getId()})"><a class="button is-primary" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a></th:block>
+            <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-warning" th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a></th:block>
+            <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-danger" th:href="@{/events/positions/delete/{id}(id = ${position.id})}">Delete Position</a></th:block>
+        </div>
     </div>
+
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/approve/{id}(id=${event.id})}">Approve Volunteer Hours</a></button>
+<button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/text}">Text Message All Volunteers</a></button>
 
         <div class="columns is-multiline is-mobile">
         <th:block th:each="position: ${positions}">
