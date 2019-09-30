@@ -73,6 +73,8 @@ public class PositionController {
         return "events/edit-position";
    }
 
+
+
 //    NEED TO SURROUND DF WITH TRY CATCH
     @PostMapping("/events/positions/edit/{id}")
     public String editPosition(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="description") String description, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="start") String start, @RequestParam(name="end") String end, Model viewModel) throws ParseException {
@@ -120,6 +122,7 @@ public class PositionController {
         Position position = positionDao.findOne(id);
         userPosition.setUser(userSession);
         userPosition.setPosition(position);
+        position.setNumNeeded(position.getNumNeeded() - 1);
         userPositionDao.save(userPosition);
 
         long eventId = positionDao.positionEventId(position.getId());
