@@ -27,7 +27,8 @@
 		<p th:if="${user.organizer}"><strong>Organizer</strong></p>
 
 <!--		MAKE THIS BIT VISIBLE ONLY TO SIGNED IN ORGANIZERS-->
-		<th:block th:unless="${user.organizer} and (${user.id} != ${userId}) and (${userId} != 'anonymousUser')"><p>Would you like to make this user an Organizer? </p>
+		<th:block sec:authorize="isAuthenticated()">
+		<th:block th:if="(${user.id} != ${userId}) and (${curUser.organizer})"><p>Would you like to make this user an Organizer? </p>
 		<form th:action="@{/profile/organizer/{id}(id=${user.id})}" th:method="post">
 			<div class="field">
 				<div class="control">
@@ -35,6 +36,7 @@
 				</div>
 			</div>
 		</form>
+		</th:block>
 		</th:block>
 
 	</div>
