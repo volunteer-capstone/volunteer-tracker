@@ -14,6 +14,9 @@
         <h1>THIS IS THE HOME PAGE :)</h1>
     </div>
 </div>
+<div class="orgList" th:each="org: ${orgList}">
+    <p th:text="${org}"></p>
+</div>
 
 <div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>
 
