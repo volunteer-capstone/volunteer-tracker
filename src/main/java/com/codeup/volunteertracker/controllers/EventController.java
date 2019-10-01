@@ -23,10 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class EventController {
@@ -218,7 +215,7 @@ public class EventController {
 
     @PostMapping("/events/approve")
     public String submitHours(@RequestParam(name = "check", defaultValue = "off") long[] isApproved,
-                              @RequestParam(name = "eventId") long eventId) {
+                              @RequestParam(name = "eventId") long eventId) throws ParseException {
         Event event = eventDao.findOne(eventId);
         for(long userPos : isApproved) {
             UserPosition userPosition = userPositionDao.findOne(userPos);
@@ -233,7 +230,11 @@ public class EventController {
             user.setHours(currentHours+shiftHours);
             userDao.save(user);
 
-        emailService.createdAnAccount(user, "Letter of Appreciation", String.format(user.getFirstName() + " " + user.getLastName() + ",\n\n On behalf of the " + event.getOrganization() + ", we would like to thank you for taking the time to volunteer at the " + event.getTitle() + " that took place on " + event.getStart() + ". We could not have had such an amazing event without your help and support.\n\n By participating for a total of " + shiftHours + " hour(s) as a " + position.getTitle() + " volunteer, you aided us in bringing the community closer together and giving back. We hope to see you again as a volunteer at future events.\n\n If you have any questions or need to get into contact with the organizer of this event, please do so at " + event.getCreator().getEmail() + " or " + event.getCreator().getPhoneNumber() + ". \n\n\n Sincerely,\n\n " + event.getCreator().getFirstName() + " " + event.getCreator().getLastName() + "\n" + event.getOrganization()));
+            DateFormat fmt = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
+            String dateString = fmt.format(event.getStart());
+
+
+            emailService.createdAnAccount(user, "Letter of Appreciation", String.format(user.getFirstName() + " " + user.getLastName() + ",\n\n On behalf of the " + event.getOrganization() + ", we would like to thank you for taking the time to volunteer at the " + event.getTitle() + " that took place on " + dateString + ". We could not have had such an amazing event without your help and support.\n\n By participating for a total of " + shiftHours + " hour(s) as a " + position.getTitle() + " volunteer, you aided us in bringing the community closer together and giving back. We hope to see you again as a volunteer at future events.\n\n If you have any questions or need to get into contact with the organizer of this event, please do so at " + event.getCreator().getEmail() + " or " + event.getCreator().getPhoneNumber() + ". \n\n\n Sincerely,\n\n " + event.getCreator().getFirstName() + " " + event.getCreator().getLastName() + "\n" + event.getOrganization()));
         }
         return "redirect:/events";
     }
