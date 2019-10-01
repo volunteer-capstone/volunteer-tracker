@@ -1,6 +1,7 @@
 package com.codeup.volunteertracker.services;
 
 
+import com.codeup.volunteertracker.models.Position;
 import com.codeup.volunteertracker.models.User;
 import com.codeup.volunteertracker.models.UserPosition;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class EmailService {
     @Value("${spring.mail.from}")
     private String from;
 
-    public void signedToVolunteer(UserPosition userPosition, String subject, String body) {
+    public void createdUserPosition(UserPosition userPosition, String subject, String body) {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(from);
         msg.setTo(userPosition.getUser().getEmail());
@@ -40,6 +41,23 @@ public class EmailService {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(from);
         msg.setTo(user.getEmail());
+        msg.setSubject(subject);
+        msg.setText(body);
+
+        try{
+            this.emailSender.send(msg);
+        }
+        catch (MailException ex) {
+            // simply log it and go on...
+            System.err.println(ex.getMessage());
+//            eventually create a log file with the message error to fix this error for a real fix outside of testing purposes.
+        }
+    }
+
+    public void createdPosition(Position position, String subject, String body) {
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setFrom(from);
+        msg.setTo(position.getEvent().getCreator().getEmail());
         msg.setSubject(subject);
         msg.setText(body);
 

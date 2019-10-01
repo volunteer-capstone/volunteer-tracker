@@ -7,6 +7,8 @@ import com.codeup.volunteertracker.models.UserPosition;
 import com.codeup.volunteertracker.repositories.EventRepository;
 import com.codeup.volunteertracker.repositories.PositionRepository;
 import com.codeup.volunteertracker.repositories.UserPositionRepository;
+import com.codeup.volunteertracker.services.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +36,9 @@ public class PositionController {
         this.userPositionDao = userPositionRepository;
     }
 
+    @Autowired
+    private EmailService emailService;
+
     @GetMapping("events/{id}/create-position")
     public String createPosition(Model viewModel, @PathVariable long id){
         viewModel.addAttribute("position", new Position());
@@ -58,6 +63,8 @@ public class PositionController {
             Event event = eventDao.findOne(id);
             position.setEvent(event);
             Position savePosition = positionDao.save(position);
+
+        emailService.createdPosition(savePosition, "Congrats on Creating Your Volunteer Position", String.format("Let's get the community together to volunteer by giving back and helping you with your good deed.  Spread the word to gather volunteers for this position with the following link: https://pathofthevolunteer.com/events/%d", savePosition.getEvent().getId()));
             return "redirect:/events/" + savePosition.getEvent().getId();
 
     }
@@ -111,6 +118,8 @@ public class PositionController {
         Position toDelete = positionDao.findOne(id);
         long eventId =toDelete.getEvent().getId();
         positionDao.delete(id);
+
+        emailService.createdPosition(toDelete, "Notification: Deletion of Volunteer Position", String.format("One of the positions on the %s event has been removed.  Please visit the following link: https://pathofthevolunteer.com/events/%d to add more positions, if needed.", toDelete.getEvent(), toDelete.getEvent().getId()));
         return "redirect:/events/" + eventId ;
     }
 
@@ -126,6 +135,9 @@ public class PositionController {
         userPositionDao.save(userPosition);
 
         long eventId = positionDao.positionEventId(position.getId());
+        Event event = eventDao.findOne(eventId);
+
+        emailService.createdUserPosition(userPosition, "Congrats on Volunteering!", String.format("Thank you for volunteering! This will take place  at " + event.getLocation() + ", " + event.getAddress() + ".  Your volunteer slot is from " + position.getStart() + " to " + position.getEnd() + ". Please try to arrive 15 minutes early to check in with the organizer.  If you have anymore follow up questions about your event, please reference the following link: https://pathofthevolunteer.com/events/" + eventId + " or contact the organizer, " + event.getCreator().getFirstName() + " " + event.getCreator().getLastName() + " at " +  event.getCreator().getEmail() + " or " +  event.getCreator().getPhoneNumber() + "."));
 
         return "redirect:/users/" + userSession.getId() + "/profile";
     }
