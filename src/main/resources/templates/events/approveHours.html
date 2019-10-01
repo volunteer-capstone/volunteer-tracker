@@ -31,7 +31,6 @@
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Total Hours</th>
-                <th>Signed up Users</th>
                 <th>
                     <div class="field">
                         <div class="control">
@@ -51,26 +50,35 @@
                 <td th:text="${#dates.format(position.start, 'dd-MMM-yyyy HH:mm')}"></td>
                 <td th:text="${#dates.format(position.end, 'dd-MMM-yyyy HH:mm')}"></td>
                 <td id="hours" th:text="${event.posHours(position.start, position.end)}"></td>
-                <th:block th:each="userPosition : ${volunteers.get(position)}">
-                    <td th:text="${userPosition.getUser().getUsername()}"></td>
-                    <td>
-                        <div class="field">
-                            <div class="control">
-                                <label class="checkbox">
-                                    <th:block th:if="${userPosition.isApproved()}">
-                                        <input type="checkbox" disabled="disabled" />
-                                        Approved
-                                    </th:block>
-                                    <th:block th:unless="${userPosition.isApproved()}">
-                                        <input id="check" name="check" th:value="${userPosition.getId()}" type="checkbox"/>
-                                        Approve
-                                    </th:block>
-                                </label>
-                            </div>
-                        </div>
-                    </td>
-                </th:block>
+                <td></td>
             </tr>
+            <th></th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Status</th>
+                <th:block th:each="userPosition : ${volunteers.get(position)}">
+                    <tr>
+                        <td></td>
+                        <td th:text="${userPosition.getUser().getFirstName()}"></td>
+                        <td th:text="${userPosition.getUser().getLastName()}"></td>
+                        <td>
+                            <div class="field">
+                                <div class="control">
+                                    <label class="checkbox">
+                                        <th:block th:if="${userPosition.isApproved()}">
+                                            Approved
+                                        </th:block>
+                                        <th:block th:unless="${userPosition.isApproved()}">
+                                            <input id="check" name="check" th:value="${userPosition.getId()}" type="checkbox"/>
+                                            Approve
+                                        </th:block>
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                </th:block>
         </th:block>
         </tbody>
     </table>
