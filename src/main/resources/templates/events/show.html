@@ -36,7 +36,7 @@
                 <h5 th:text="${event.creator.lastName}"></h5>
                 <h5 th:text="${event.creator.email}"></h5>
                 <h5 th:text="${event.creator.phoneNumber}"></h5>
-                <a class="button is-light" th:href="@{/users/{id}/profile(id=${event.creator.id})}">View Profile</a>
+                <a class="button is-light" th:href="@{/users/{id}/profile(id=${event.creator.id})}">View Organizer Profile</a>
             </div>
         </div>
     </div>
@@ -48,11 +48,7 @@
     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/text}">Text Message All Volunteers</a></th:block>
 
 
-    <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a></button>
-    <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a></button>
-    <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></button>
-    <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/events/approve/{id}(id=${event.id})}">Approve Volunteer Hours</a></button>
-    <button th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a th:href="@{/text}">Text Message All Volunteers</a></button>
+
 
     <div class="columns is-multiline is-mobile">
         <th:block th:each="position: ${positions}">
