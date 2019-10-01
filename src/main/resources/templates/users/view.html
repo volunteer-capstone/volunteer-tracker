@@ -14,7 +14,12 @@
 		<h3 th:unless="${user.id} == ${userId}" th:text="'This is '+${user.username}+'\'s profile: '"></h3>
 		<div class="column">
 			<div class="content">
-				<img th:src="@{${user.photo}}" alt="profile photo" width="250rem" height="200rem"/>
+				<th:block th:if="${user.photo} == null">
+					<img th:src="@{/img/profilePlaceholder.png}" alt="profile photo" width="250rem" height="200rem" />
+				</th:block>
+				<th:block th:unless="${user.photo} == null">
+					<img th:src="@{${user.photo}}" alt="profile photo" width="250rem" height="200rem"/>
+				</th:block>
 			</div>
 		</div>
 		<p>Name: 						<span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></p>
