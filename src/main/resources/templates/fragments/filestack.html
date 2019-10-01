@@ -6,14 +6,15 @@
 </head>
 <body>
 <th:block th:fragment="filestack">
-    <script src="/js/key.js"></script>
+<!--    <script src="/js/key.js"></script>-->
     <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
     <script>
         // Set up the picker
         // var client = filestack.init("api key");
 
         // // Helper to overwrite the field input value
-
+        let filestackAPI =$('#filestackAPI').val();
+        console.log(filestackAPI);
 
         const client = filestack.init(filestackAPI);
         // client.picker().open();

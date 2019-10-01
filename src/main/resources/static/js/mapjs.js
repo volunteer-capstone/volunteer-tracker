@@ -1,5 +1,8 @@
 "use strict";
 $(document).ready(function() {
+    let mapToken=$('#mapToken').val();
+    console.log(mapToken);
+
     mapboxgl.accessToken = mapToken;
     let eventLocation = $('#address').text();
 

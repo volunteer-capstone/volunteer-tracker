@@ -38,8 +38,15 @@
             <div class="control">
                 <div id='geocoder' class='geocoder'></div>
             </div>
-        </div>
+        </div>   
 
+      <div class="field">
+        <input type="hidden" id="mapToken" name="mapToken" th:value="${mapToken}" />
+        <label class="label" for="address">Address:<span style="color: red">*</span></label>
+        <div class="control">
+            <div id='geocoder' class='geocoder'></div>
+        </div>
+        
         <div class="field">
             <label class="label" for="cal">Start and End Date and Time:<span style="color: red">*</span></label>
             <div class="control">
@@ -58,6 +65,7 @@
         </div>
 
         <div class="field" id="photo">
+          <input type="hidden" id="filestackAPI" name="filestackAPI" th:value="${filestackAPI}" />
             <div class="file">
                 <label class="file-label">
                     <input id="picker" class="file-input" type="file" name="resume" />
@@ -91,7 +99,6 @@
 
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
-<script th:src="@{/js/key.js}"></script>
 <script th:src="@{/js/mapbox-geocoder-utils.js}"></script>
 <script th:src="@{/js/mapGeocodejs.js}"></script>
 <script th:src="@{/js/enableEventButtonjs.js}"></script>
