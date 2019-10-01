@@ -109,7 +109,7 @@ public class EventController {
 
     @PostMapping("/events/create")
     public String createEvent(@RequestParam(name="location") String location, @RequestParam(name="address") String address, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description, @RequestParam(name="file") String photo) throws ParseException {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            DateFormat df = new SimpleDateFormat("MM/dd/yy HH:mm");
             Date localTimeObj1 = df.parse(start);
             Date localTimeObj2 = df.parse(stop);
             Event event = new Event();

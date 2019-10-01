@@ -12,10 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,7 +52,7 @@ public class PositionController {
     @PostMapping("events/{id}/create-position")
     public String createPosition(
             @PathVariable long id, @RequestParam(name="description") String description, @RequestParam(name="start") String start, @RequestParam(name="end") String end, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="title") String title) throws ParseException {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            DateFormat df = new SimpleDateFormat("MM/dd/yy HH:mm");
             Date starttime = df.parse(start);
             Date endtime = df.parse(end);
             Position position = new Position();
@@ -66,7 +67,6 @@ public class PositionController {
 
         emailService.createdPosition(savePosition, "Congrats on Creating Your Volunteer Position", String.format("Let's get the community together to volunteer by giving back and helping you with your good deed.  \n\n Spread the word to gather volunteers for this position with the following link: https://pathofthevolunteer.com/events/%d", savePosition.getEvent().getId()));
             return "redirect:/events/" + savePosition.getEvent().getId();
-
     }
 
     // EDIT POSITION
