@@ -104,12 +104,12 @@
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
                     <div class="field">
                         <div class="control">
-                            <a id="openSMSModal" class="button">Text These Volunteers</a>
+                            <a id="openModal2" class="button">SMS</a>
                         </div>
                     </div>
 
-                    <div class="modal">
-                        <div class="modal-background"></div>
+                    <div class="modal2">
+                        <div class="modal-background2"></div>
                         <div class="modal-card">
                             <header class="modal-card-head">
                                 <p class="modal-card-title" th:text="${position.title}"></p>
@@ -117,22 +117,17 @@
                             </header>
                             <section class="modal-card-body">
                                 <div class="content">
-                                    <form th:action="@{/text/position/{id}(id=${position.id})}" th:method="post">
-                                        <div class="field">
-                                            <label class="label" for="body">Message:</label>
-                                            <div>
-                                                <input id="body" name="body" type="text" class="input" placeholder="Message..."/>
-                                            </div>
-                                        </div>
-                                <a class="button is-primary" type="submit">Send Message</a>
-                                <button id="close" class="button">Close
+                                 <p>test</p>
+                                </div>
+                            </section>
+                            <footer class="modal-card-foot">
+                                <a class="button is-primary" th:href="@{/text/position/{id}(id = ${position.id})}">SMS</a>
+                                <button id="close" class="button">Cancel
                                     <span class="icon">
                                         <i class="fas fa-backspace"></i>
                                     </span>
                                 </button>
-                            </form>
-                        </div>
-                            </section>
+                            </footer>
                         </div>
                     </div>
                 </th:block>
