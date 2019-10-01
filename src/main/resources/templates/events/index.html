@@ -14,7 +14,7 @@
     <label for="eventSearch">Search by event name:</label>
     <input id="eventSearch" type="text" onkeyup="searchEvents()" placeholder="Enter event title" />
     <input id="posCheckbox" type="checkbox" onclick="searchEvents()" checked="checked"/>
-    <label for="posCheckbox">Include position title in search</label>
+    <label for="posCheckbox">Include position title in search: </label>
 
     <div class="columns is-multiline is-mobile eventDiv" style="margin-top: 10px;">
         <th:block th:each="event : ${events}" >
