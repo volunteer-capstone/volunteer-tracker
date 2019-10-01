@@ -9,6 +9,8 @@ import com.codeup.volunteertracker.repositories.EventRepository;
 import com.codeup.volunteertracker.repositories.PositionRepository;
 import com.codeup.volunteertracker.repositories.UserPositionRepository;
 import com.codeup.volunteertracker.repositories.UserRepository;
+import com.codeup.volunteertracker.services.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,9 @@ public class EventController {
         this.positionDao = positionDao;
         this.userPositionDao = userPositionRepository;
     }
+
+    @Autowired
+    private EmailService emailService;
 
     @Value("${mapToken}")
     private String mapToken;
@@ -123,6 +128,8 @@ public class EventController {
             User user = userDao.findOne(userSession.getId());
             event.setCreator(user);
             Event createEvent = eventDao.save(event);
+
+        emailService.createdEvent(createEvent, "Creation of Volunteer Event", String.format("Let's get the community together to volunteer by giving back and helping you with your good deed.  Spread the word to gather volunteers needed for this event with the following link: https://pathofthevolunteer.com/events/%d", createEvent.getId()));
             return "redirect:/events/" + createEvent.getId() + "/create-position";
     }
 
@@ -170,6 +177,9 @@ public class EventController {
             positionDao.delete(positionId);
         }
         eventDao.delete(eventId);
+
+        emailService.createdEvent(toDelete, "Deletion of Volunteer Event", String.format("An event has been removed under your profile.  If you would like to create any future events please visit our website at https://pathofthevolunteer.com ."));
+
         return "redirect:/events";
     }
 
@@ -222,6 +232,8 @@ public class EventController {
             long currentHours = user.getHours();
             user.setHours(currentHours+shiftHours);
             userDao.save(user);
+
+        emailService.createdAnAccount(user, "Letter of Appreciation", String.format(user.getFirstName() + " " + user.getLastName() + ",\n On behalf of the " + event.getOrganization() + ", we would like to thank you for taking the time to volunteer at the " + event.getTitle() + " that took place on " + event.getStart() + ". We could not have had such an amazing event without your help and support.\n By participating for a total of " + shiftHours + " hour(s) as a " + position.getTitle() + " volunteer, you aided us in bringing the community closer together and giving back.\n We hope to see you again as a volunteer at future events. If you have any questions or need to get into contact with the organizer of this event, please do so at " + event.getCreator().getEmail() + " or " + event.getCreator().getPhoneNumber() + ". \n Sincerely,\n\n " + event.getCreator().getFirstName() + " " + event.getCreator().getLastName() + "\n" + event.getOrganization()));
         }
         return "redirect:/events";
     }

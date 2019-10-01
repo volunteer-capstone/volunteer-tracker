@@ -1,6 +1,7 @@
 package com.codeup.volunteertracker.services;
 
 
+import com.codeup.volunteertracker.models.Event;
 import com.codeup.volunteertracker.models.Position;
 import com.codeup.volunteertracker.models.User;
 import com.codeup.volunteertracker.models.UserPosition;
@@ -58,6 +59,23 @@ public class EmailService {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(from);
         msg.setTo(position.getEvent().getCreator().getEmail());
+        msg.setSubject(subject);
+        msg.setText(body);
+
+        try{
+            this.emailSender.send(msg);
+        }
+        catch (MailException ex) {
+            // simply log it and go on...
+            System.err.println(ex.getMessage());
+//            eventually create a log file with the message error to fix this error for a real fix outside of testing purposes.
+        }
+    }
+
+    public void createdEvent(Event event, String subject, String body) {
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setFrom(from);
+        msg.setTo(event.getCreator().getEmail());
         msg.setSubject(subject);
         msg.setText(body);
 
