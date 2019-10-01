@@ -6,6 +6,7 @@
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
     <link rel="stylesheet" th:href="@{/css/geocodecss.css}" />
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" />
 
 </head>
 <body>
@@ -18,75 +19,69 @@
     </div>
 
     <form th:action="@{'/events/create'}" th:method="post">
-    <div class="field">
-        <label class="label" for="title">Event Name:<span style="color: red">*</span></label>
-        <div class="control">
-            <input type="text"  name="title" id="title" class="input" placeholder="Event Name" />
+        <div class="field">
+            <label class="label" for="title">Event Name:<span style="color: red">*</span></label>
+            <div class="control">
+                <input type="text"  name="title" id="title" class="input" placeholder="Event Name" />
+            </div>
         </div>
-    </div>
 
-    <!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
-    <div class="field">
-        <label class="label" for="start">Start Date and Time:<span style="color: red">*</span></label>
-        <div class="control">
-            <input type="datetime-local" name="start" id="start" class="input"/>
+        <div class="field">
+            <label class="label" for="venue">Location:</label>
+            <div class="control">
+                <input id="venue" type="text" name="location" class="input" placeholder="Location" />
+            </div>
         </div>
-    </div>
 
-    <div class="field">
-        <label class="label" for="stop">End Date and Time:<span style="color: red">*</span></label>
-        <div class="control">
-            <input type="datetime-local" name="stop" id="stop" class="input"/>
+        <div class="field">
+            <label class="label" for="address">Address:<span style="color: red">*</span></label>
+            <div class="control">
+                <div id='geocoder' class='geocoder'></div>
+            </div>
         </div>
-    </div>
 
-    <div class="field">
-        <label class="label" for="venue">Location:</label>
-        <div class="control">
-            <input id="venue" type="text" name="location" class="input" placeholder="Location" />
+        <div class="field">
+            <label class="label" for="cal">Start and End Date and Time:<span style="color: red">*</span></label>
+            <div class="control">
+                <input type="date" id="cal" />
+                <input type="hidden" id="start" name="start" />
+                <input type="hidden" id="stop" name="stop" />
+                <input type="hidden" id="end" />
+            </div>
         </div>
-    </div>
 
-    <div class="field">
-        <label class="label" for="address">Address:<span style="color: red">*</span></label>
-        <div class="control">
-            <div id='geocoder' class='geocoder'></div>
+        <div class="field">
+            <label class="label" for="description">Description:<span style="color: red">*</span></label>
+            <div class="control">
+                <input id="description" name="description" type="text" class="input" placeholder="Description"/>
+            </div>
         </div>
-    </div>
 
-    <div class="field">
-        <label class="label" for="description">Description:<span style="color: red">*</span></label>
-        <div class="control">
-            <input id="description" name="description" type="text" class="input" placeholder="Description"/>
+        <div class="field" id="photo">
+            <div class="file">
+                <label class="file-label">
+                    <input id="picker" class="file-input" type="file" name="resume" />
+                    <input type="hidden" id="fileupload" name="file" />
+                    <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      Upload Event Photo
+                    </span>
+                    </span>
+                </label>
+            </div>
+            <div id="nameBox"></div>
+            <th:block th:replace="fragments/filestack" />
         </div>
-    </div>
 
-    <div class="field" id="photo">
-        <div class="file">
-            <label class="file-label">
-                <input id="picker" class="file-input" type="file" name="resume" />
-                <input type="hidden" id="fileupload" name="file" />
-                <span class="file-cta">
-                <span class="file-icon">
-                  <i class="fas fa-upload"></i>
-                </span>
-                <span class="file-label">
-                  Upload Event Photo
-                </span>
-                </span>
-            </label>
-        </div>
-        <div id="nameBox"></div>
-        <th:block th:replace="fragments/filestack" />
-    </div>
-
-<div class="field">
-    <div class="control">
-        <input type="hidden" name="eventId" th:value="${event.id}" />
-
-        <button id="create-event" class="button is-success">Next<span class="icon"><i class="far fa-hand-point-right"></i></span></button>
-        </div>
-    </div>
+            <div class="field">
+                <div class="control">
+                    <input type="hidden" name="eventId" th:value="${event.id}" />
+                    <button id="create-event" class="button is-success">Next<span class="icon"><i class="far fa-hand-point-right"></i></span></button>
+                </div>
+            </div>
 
     </form>
 </div>
@@ -100,5 +95,7 @@
 <script th:src="@{/js/mapbox-geocoder-utils.js}"></script>
 <script th:src="@{/js/mapGeocodejs.js}"></script>
 <script th:src="@{/js/enableEventButtonjs.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+<script th:src="@{/js/bulmaCalendarjs.js}"></script>
 </body>
 </html>
