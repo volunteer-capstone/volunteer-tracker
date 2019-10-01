@@ -52,11 +52,11 @@
 
     <div class="columns is-multiline is-mobile">
         <th:block th:each="position: ${positions}">
-            <div class="column is-one-quarter" th:if="((${position.numNeeded} - ${position.getNumberOfPositionsTaken(position.getId())}) > 0)">
+            <div class="column is-one-quarter" th:if="((${position.numNeeded}) > 0)">
                 <p th:text="${position.title}"></p>
                 <p th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></p>
                 <p th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></p>
-                <p th:text="${position.numNeeded} - ${position.getNumberOfPositionsTaken(position.getId())}"></p>
+                <p th:text="${position.numNeeded}"></p>
                 <p th:text="${position.description}"></p>
                 <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})"><a class="button is-primary" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a></th:block>
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-small is-warning" th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a></th:block>

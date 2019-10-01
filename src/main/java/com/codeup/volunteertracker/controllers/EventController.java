@@ -94,6 +94,8 @@ public class EventController {
 
         viewModel.addAttribute("mapToken", mapToken);
 
+
+
         return "events/show";
     }
 
