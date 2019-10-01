@@ -95,7 +95,6 @@ public class UserController {
 //        User user = userRepo.findOne(id);
         viewModel.addAttribute("user", userSession);
         viewModel.addAttribute("filestackAPI", filestackAPI);
-        System.out.println(filestackAPI);
         return "users/edit";
     }
 

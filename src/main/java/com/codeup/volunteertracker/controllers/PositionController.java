@@ -131,7 +131,6 @@ public class PositionController {
         Position position = positionDao.findOne(id);
         userPosition.setUser(userSession);
         userPosition.setPosition(position);
-        position.setNumNeeded(position.getNumNeeded() - 1);
         userPositionDao.save(userPosition);
 
         long eventId = positionDao.positionEventId(position.getId());

@@ -34,7 +34,7 @@ public class Position {
     @JoinColumn(name = "event_id")
     private Event event;
 
-    @OneToMany
+    @OneToMany(mappedBy = "position")
     private List<UserPosition> userPositions;
 
     public Position(){}
@@ -105,11 +105,22 @@ public class Position {
         this.event = event;
     }
 
-    public List<UserPosition> getuserPositions() {
+    public List<UserPosition> getUserPositions() {
         return userPositions;
     }
 
     public void setuserPositions(List<UserPosition> userPositions) {
         this.userPositions = userPositions;
+    }
+
+    public int getNumberOfPositionsTaken(long id) {
+        int posTaken = 0;
+        List<UserPosition> userPositionList = this.userPositions;
+        for (int i = 0; i < userPositionList.size(); i++) {
+            if (userPositionList.get(i).getPosition().getId() == id) {
+                posTaken++;
+            }
+        }
+        return posTaken;
     }
 }
