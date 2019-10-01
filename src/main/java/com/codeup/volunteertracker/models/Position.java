@@ -113,14 +113,4 @@ public class Position {
         this.userPositions = userPositions;
     }
 
-    public int getNumberOfPositionsTaken(long id) {
-        int posTaken = 0;
-        List<UserPosition> userPositionList = this.userPositions;
-        for (int i = 0; i < userPositionList.size(); i++) {
-            if (userPositionList.get(i).getPosition().getId() == id) {
-                posTaken++;
-            }
-        }
-        return posTaken;
-    }
 }
