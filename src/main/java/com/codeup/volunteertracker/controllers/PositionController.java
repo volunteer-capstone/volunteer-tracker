@@ -8,6 +8,7 @@ import com.codeup.volunteertracker.repositories.EventRepository;
 import com.codeup.volunteertracker.repositories.PositionRepository;
 import com.codeup.volunteertracker.repositories.UserPositionRepository;
 import com.codeup.volunteertracker.services.EmailService;
+import com.codeup.volunteertracker.services.TwilioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,7 @@ public class PositionController {
 
     @Autowired
     private EmailService emailService;
+
 
     @GetMapping("events/{id}/create-position")
     public String createPosition(Model viewModel, @PathVariable long id){
