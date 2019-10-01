@@ -17,71 +17,72 @@
     <form th:action="@{/events/approve}" th:method="post">
 
     <div class="columns is-mobile">
-        <div class="column" th:text="${event.title}"></div>
-        <div class="column" th:text="${#dates.format(event.start, 'dd-MMM-yyyy HH:mm')}"></div>
-        <div class="column" th:text="${#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></div>
+        <div class="column"><h1 class="title" th:text="${event.title}"></h1></div>
+        <div class="column"><h1 class="title" th:text="${#dates.format(event.start, 'dd-MMM-yyyy HH:mm')}"></h1></div>
+        <div class="column"><h1 class="title" th:text="${#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></h1></div>
         <input type="hidden" name="eventId" th:value="${event.id}"/>
     </div>
     <hr/>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Position</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Total Hours</th>
-                <th>
-                    <div class="field">
-                        <div class="control">
-                            <label class="checkbox">
-                                <input type="checkbox" onclick="checkAll(this)" />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Total Hours</th>
+                    <th>
+                        <div class="field">
+                            <div class="control">
+                                <label class="checkbox"></label>
+                                <input type="checkbox" onclick="checkAll(this)"/>
                                 Approve all hours
-                            </label>
+                            </div>
                         </div>
-                    </div>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="position : ${volunteers.keySet()}">
-            <tr>
-                <td th:text="${position.title}"></td>
-                <td th:text="${#dates.format(position.start, 'dd-MMM-yyyy HH:mm')}"></td>
-                <td th:text="${#dates.format(position.end, 'dd-MMM-yyyy HH:mm')}"></td>
-                <td id="hours" th:text="${event.posHours(position.start, position.end)}"></td>
-                <td></td>
-            </tr>
-            <th></th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Status</th>
-                <th:block th:each="userPosition : ${volunteers.get(position)}">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block th:each="position : ${volunteers.keySet()}">
                     <tr>
+                        <td th:text="${position.title}"></td>
+                        <td th:text="${#dates.format(position.start, 'dd-MMM-yyyy HH:mm')}"></td>
+                        <td th:text="${#dates.format(position.end, 'dd-MMM-yyyy HH:mm')}"></td>
+                        <td id="hours" th:text="${event.posHours(position.start, position.end)}"></td>
                         <td></td>
-                        <td th:text="${userPosition.getUser().getFirstName()}"></td>
-                        <td th:text="${userPosition.getUser().getLastName()}"></td>
-                        <td>
-                            <div class="field">
-                                <div class="control">
-                                    <label class="checkbox">
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Approval Status</th>
+                        <th></th>
+                    </tr>
+                    <th:block th:each="userPosition : ${volunteers.get(position)}">
+                        <tr>
+                            <td></td>
+                            <td th:text="${userPosition.getUser().getFirstName()}"></td>
+                            <td th:text="${userPosition.getUser().getLastName()}"></td>
+                            <td>
+                                <div class="field">
+                                    <div class="control">
                                         <th:block th:if="${userPosition.isApproved()}">
                                             Approved
                                         </th:block>
                                         <th:block th:unless="${userPosition.isApproved()}">
-                                            <input id="check" name="check" th:value="${userPosition.getId()}" type="checkbox"/>
+                                            <label class="checkbox"></label>
+                                            <input id="check" name="check" th:value="${userPosition.getId()}" type="checkbox" />
                                             Approve
                                         </th:block>
-                                    </label>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td></td>
-                    </tr>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </th:block>
                 </th:block>
-        </th:block>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
         <div class="field">
             <div class="control">
