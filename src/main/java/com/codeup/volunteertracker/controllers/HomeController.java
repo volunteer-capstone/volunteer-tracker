@@ -30,7 +30,9 @@ public class HomeController {
         List<Event> eventList = (List<Event>) eventDao.findAll();
         List<String> orgList = new ArrayList<>();
         for (int i = 0; i < eventList.size(); i++) {
+            if (!orgList.contains(eventList.get(i).getOrganization())) {
             orgList.add(eventList.get(i).getOrganization());
+            }
         }
         Collections.sort(orgList);
         viewModel.addAttribute("orgList", orgList);
