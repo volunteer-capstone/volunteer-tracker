@@ -85,22 +85,33 @@
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
                     <div class="field">
                         <div class="control">
-                            <a class="open-modal button is-info">Text Message All Volunteers</a>
-                        </div>
-                    </div>
-                    <div class="modal">
-                        <div class="modal-background"></div>
-                        <div class="modal-card">
-                            <header class="modal-card-head">
-                                <p class="modal-card-title">Write your message</p>
-                                <button class="close delete is-large" aria-label="close"></button>
-                            </header>
-                            <section class="modal-card-body">
-                                <div class="field">
-                                    <label class="label">Message</label>
-                                    <div class="control">
-                                        <textarea name="SMS" id="SMS" cols="30" rows="10"></textarea>
-                                    </div>
+                            <a class="open-modal button is-info">Text Message Position Volunteers</a>
+                            <div class="modal">
+                                <div class="modal-background close"></div>
+                                <div class="modal-card">
+                                    <header class="modal-card-head">
+                                        <p class="modal-card-title">Write your message</p>
+                                        <button class="close delete is-large" aria-label="close"></button>
+                                    </header>
+                                    <section class="modal-card-body">
+                                        <form th:action="@{/text/position/{id}(id = ${position.id})}" th:method="post">
+                                        <div class="field">
+                                            <label class="label">Message</label>
+                                            <div class="control">
+                                                <textarea name="body" id="body" cols="30" rows="10"></textarea>
+                                            </div>
+                                        </div>
+                                            <button type="submit">Send SMS</button>
+                                        </form>
+                                    </section>
+                                    <footer class="modal-card-foot">
+
+                                        <button class="close button">Cancel
+                                            <span class="icon">
+                                                <i class="fas fa-backspace"></i>
+                                            </span>
+                                        </button>
+                                    </footer>
                                 </div>
                             </section>
                             <footer class="modal-card-foot">
