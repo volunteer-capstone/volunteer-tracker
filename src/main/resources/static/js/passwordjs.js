@@ -38,7 +38,15 @@ function phoneNumber() {
     let phoneNo = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
     if(number.match(phoneNo)) {
         document.querySelector('#phoneNumber2').style.display="none";
+        document.querySelector('#registerDisabled').style.display = "none";
+        document.querySelector('#register').style.display = "inline";
+        document.querySelector('#editDisabled').style.display = "none";
+        document.querySelector('#edit').style.display = "inline";
     } else {
         document.querySelector('#phoneNumber2').style.display="inline";
+        document.querySelector('#registerDisabled').style.display = "inline";
+        document.querySelector('#register').style.display = "none";
+        document.querySelector('#editDisabled').style.display = "inline";
+        document.querySelector('#edit').style.display = "none";
     }
 }
