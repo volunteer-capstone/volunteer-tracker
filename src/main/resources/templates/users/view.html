@@ -72,7 +72,7 @@
 						<h6 th:text="*{event.title}"></h6>
 						<th:block th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
 							<h6>Position has ended</h6>
-							<p th:text="'Name: ' + *{pos.title}"></p>
+							<p th:text="'Position: ' + *{pos.title}"></p>
 							<p th:text="'Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
 						</th:block>
 						<div class="field">
@@ -89,9 +89,9 @@
 				<div class="column">
 					<div th:if="*{event.getStart().after(execInfo.now)}">
 						<br/>
-						<h6 th:text="*{event.title}"></h6>
+						<h5 th:text="*{event.title}"></h5>
 						<th:block th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
-							<p th:text="'Name: ' + *{pos.title}"></p>
+							<p th:text="'Position: ' + *{pos.title}"></p>
 							<p th:text="'Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
 						</th:block>
 						<div class="field">
@@ -110,15 +110,14 @@
 						<br/>
 						<h5>This Event has ended</h5>
 						<h6 th:text="*{event.title}"></h6>
-						<th:block th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
-							<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>
-							<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
-						</th:block>
+						<p th:text="'Start: ' + *{#dates.format(event.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></p>
+						<div class="field">
+							<div class="control">
+								<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>
+							</div>
+						</div>
 						<th:block th:if="(${user.id} == ${userId}) and (${user.organizer} == true)">
 							<div class="field is-grouped">
-								<div class="control">
-									<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>
-								</div>
 								<div class="control">
 									<a class="button is-small is-info">Email all volunteers</a>
 								</div>
@@ -139,17 +138,15 @@
 				<div class="column">
 					<div th:if="*{event.getStart().after(execInfo.now)}">
 						<br/>
-						<h6 th:text="*{event.title}" th:href="@{/events/{id}(id=${event.id})}"></h6>
-						<th:block th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
-							<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>
-							<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
-							<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
-						</th:block>
+						<h5 th:text="*{event.title}"></h5>
+						<p th:text="'Start: ' + *{#dates.format(event.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></p>
+						<div class="field">
+							<div class="control">
+								<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>
+							</div>
+						</div>
 						<th:block th:if="(${user.id} == ${userId}) and (${user.organizer} == true)">
 							<div class="field is-grouped">
-								<div class="control">
-									<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>
-								</div>
 								<div class="control">
 									<a class="button is-small is-info">Email all volunteers</a>
 								</div>
