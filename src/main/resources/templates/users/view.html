@@ -53,10 +53,10 @@
 
 	<div class="tabs is-toggle">
 		<ul>
-			<li class="tab"><a class="pastEvents">Past Events</a></li>
-			<li class="tab"><a class="plannedEvents">Planned Events</a></li>
+			<li class="tab"><a class="pastEvents">Past Events Volunteered For</a></li>
+			<li class="tab"><a class="plannedEvents">Future Events Volunteered For</a></li>
 			<li class="tab"><a th:if="${user.organizer}" class="pastEventsCreated">Past Events Created</a></li>
-			<li class="tab"><a th:if="${user.organizer}" class="plannedEventsCreated">Planned Events Created</a></li>
+			<li class="tab"><a th:if="${user.organizer}" class="plannedEventsCreated">Future Events Created</a></li>
 		</ul>
 	</div>
 	<hr/>
