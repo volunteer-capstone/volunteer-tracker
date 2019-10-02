@@ -57,7 +57,7 @@ public class EventController {
         viewModel.addAttribute("events", events);
         Iterable<Position> positions = positionDao.findAll();
         viewModel.addAttribute("positions", positions);
-
+      
         return "events/index";
     }
 

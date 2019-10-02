@@ -51,7 +51,7 @@ public class PositionController {
     //  create(go back and wrap create event and post with try catch for the date parse)
     @PostMapping("events/{id}/create-position")
     public String createPosition(
-            @PathVariable long id, @RequestParam(name="description") String description, @RequestParam(name="start") String start, @RequestParam(name="end") String end, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="title") String title) throws ParseException {
+            @PathVariable long id, @RequestParam(name="description") String description, @RequestParam(name="start") String start, @RequestParam(name="end") String end, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="title") String title, @RequestParam(name="action") String action) throws ParseException {
             DateFormat df = new SimpleDateFormat("MM/dd/yy HH:mm");
             Date starttime = df.parse(start);
             Date endtime = df.parse(end);
@@ -66,7 +66,11 @@ public class PositionController {
             Position savePosition = positionDao.save(position);
 
         emailService.createdPosition(savePosition, "Congrats on Creating Your Volunteer Position", String.format("Let's get the community together to volunteer by giving back and helping you with your good deed.  \n\n Spread the word to gather volunteers for this position with the following link: https://pathofthevolunteer.com/events/%d", savePosition.getEvent().getId()));
+        if (action.equals("another")) {
+            return "redirect:/events/"+ savePosition.getEvent().getId()+"/create-position";
+        } else {
             return "redirect:/events/" + savePosition.getEvent().getId();
+        }
     }
 
     // EDIT POSITION

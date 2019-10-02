@@ -3,25 +3,22 @@
 <head>
     <th:block th:replace="fragments/header :: my-header('All Events')" />
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
-
+  
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 <div class="container">
-    ​
-    <div class="field is-grouped">
+    <div class="field">
         <label for="eventSearch">Search for an Event:</label>
         <div class="control">
             <input class="input" id="eventSearch" type="text" onkeyup="searchEvents()" placeholder="Enter event title" />
         </div>
-        <div class="control">
-                <input id="posCheckbox" type="checkbox" onclick="searchEvents()" checked="checked"/>
-            <label class="checkbox" for="posCheckbox">Filter by Position
-            </label>
+        <div class="control" style="text-align: center">
+            <input id="posCheckbox" type="checkbox" onclick="searchEvents()" checked="checked"/>
+            <label class="checkbox" for="posCheckbox">Filter by Position</label>
         </div>
     </div>
-    ​
-    ​
+
     <div class="columns is-multiline is-mobile eventDiv" style="margin-top: 10px;">
         <th:block th:each="event : ${events}" >
             <div class="column is-one-third event">
@@ -52,8 +49,7 @@
                         <footer class="card-footer">
                             <a class="card-footer-item" th:href="@{/events/{id}(id=${event.id})}">View Event!</a>
                         </footer>
-                    </div>
-                    ​
+                    </div>​
                 </div>
             </div>
         </th:block>

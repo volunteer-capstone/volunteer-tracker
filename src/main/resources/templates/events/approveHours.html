@@ -3,7 +3,6 @@
 <head>
     <th:block th:replace="fragments/header :: my-header('Approve Hours')" />
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
-
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
@@ -44,15 +43,17 @@
             </thead>
             <tbody>
                 <th:block th:each="position : ${volunteers.keySet()}">
-                    <tr>
+                    <tr style="background: lightblue">
                         <td th:text="${position.title}"></td>
                         <td th:text="${#dates.format(position.start, 'dd-MMM-yyyy HH:mm')}"></td>
                         <td th:text="${#dates.format(position.end, 'dd-MMM-yyyy HH:mm')}"></td>
                         <td id="hours" th:text="${event.posHours(position.start, position.end)}"></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <th></th>
                         <th>Name</th>
+                        <th></th>
                         <th>Approval Status</th>
                         <th></th>
                     </tr>
@@ -60,6 +61,7 @@
                         <tr>
                             <td></td>
                             <td th:text="${userPosition.getUser().getFirstName()} + ' ' + ${userPosition.getUser().getLastName()}"></td>
+                            <td></td>
                             <td>
                                 <div class="field">
                                     <div class="control">
