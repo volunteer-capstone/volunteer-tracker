@@ -12,33 +12,43 @@
 	<div class="content">
 		<h3 th:if="${user.id} == ${userId}">This is your profile: &emsp;<a class="button is-info" th:href="@{/profile/edit}">Edit</a></h3>
 		<h3 th:unless="${user.id} == ${userId}" th:text="'This is '+${user.username}+'\'s profile: '"></h3>
-		<div class="column">
-			<div class="content">
-				<img th:src="@{${user.photo}}" alt="profile photo" width="250rem" height="200rem"/>
+		<div class="columns">
+			<div class="column">
+				<div class="content">
+					<th:block th:if="${user.photo} == null">
+						<img th:src="@{/img/profilePlaceholder.png}" alt="profile photo" width="250rem" height="200rem" />
+					</th:block>
+					<th:block th:unless="${user.photo} == null">
+						<img th:src="@{${user.photo}}" alt="profile photo" width="250rem" height="200rem"/>
+					</th:block>
+				</div>
+			</div>
+			<div class="column">
+				<div class="content">
+					<p>Name: 						<span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></p>
+					<p>Username: 					<span th:text="${user.username}"></span></p>
+					<p>Email: 						<span th:text="${user.email}"></span></p>
+					<p>Phone Number: 				<span th:text="${user.phoneNumber}"></span></p>
+					<p>Number of Hours Volunteered: <span th:text="${user.hours}"></span></p>
+					<p>Number of Hours Planned: 	<span th:text="${user.addHours()}"></span></p>
+					<p>Bio: <span th:text="${user.bio}"></span></p>
+					<p th:if="${user.organizer}"><strong>Organizer</strong></p>
+
+					<!--		MAKE THIS BIT VISIBLE ONLY TO SIGNED IN ORGANIZERS-->
+					<th:block sec:authorize="isAuthenticated()">
+						<th:block th:if="(${user.id} != ${userId}) and (${curUser.organizer})"><p>Would you like to make this user an Organizer? </p>
+							<form th:action="@{/profile/organizer/{id}(id=${user.id})}" th:method="post">
+								<div class="field">
+									<div class="control">
+										<button class="button">Click Here</button>
+									</div>
+								</div>
+							</form>
+						</th:block>
+					</th:block>
+				</div>
 			</div>
 		</div>
-		<p>Name: 						<span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></p>
-		<p>Username: 					<span th:text="${user.username}"></span></p>
-		<p>Email: 						<span th:text="${user.email}"></span></p>
-		<p>Phone Number: 				<span th:text="${user.phoneNumber}"></span></p>
-		<p>Number of Hours Volunteered: <span th:text="${user.hours}"></span></p>
-		<p>Number of Hours Planned: 	<span th:text="${user.addHours()}"></span></p>
-		<p>Bio: <span th:text="${user.bio}"></span></p>
-		<p th:if="${user.organizer}"><strong>Organizer</strong></p>
-
-		<!--		MAKE THIS BIT VISIBLE ONLY TO SIGNED IN ORGANIZERS-->
-		<th:block sec:authorize="isAuthenticated()">
-			<th:block th:if="(${user.id} != ${userId}) and (${curUser.organizer})"><p>Would you like to make this user an Organizer? </p>
-				<form th:action="@{/profile/organizer/{id}(id=${user.id})}" th:method="post">
-					<div class="field">
-						<div class="control">
-							<button class="button">Click Here</button>
-						</div>
-					</div>
-				</form>
-			</th:block>
-		</th:block>
-
 	</div>
 
 	<div class="tabs is-toggle">

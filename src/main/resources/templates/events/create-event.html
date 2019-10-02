@@ -15,12 +15,12 @@
 <div class="container">
     <div class="content">
         <h2>Create an Event!</h2>
-        <h6 class="subtitle is-6">Fields annotated with an <span style="color: red">*</span> are required</h6>
+        <h6 class="subtitle is-6">All fields ae required</h6>
     </div>
 
     <form th:action="@{'/events/create'}" th:method="post">
         <div class="field">
-            <label class="label" for="title">Event Name:<span style="color: red">*</span></label>
+            <label class="label" for="title"></label>
             <div class="control">
                 <input type="text"  name="title" id="title" class="input" placeholder="Event Name" />
             </div>
@@ -34,21 +34,14 @@
         </div>
 
         <div class="field">
-            <label class="label" for="address">Address:<span style="color: red">*</span></label>
+            <label class="label" for="address">Address:</label>
             <div class="control">
                 <div id='geocoder' class='geocoder'></div>
             </div>
-        </div>   
-
-      <div class="field">
-        <input type="hidden" id="mapToken" name="mapToken" th:value="${mapToken}" />
-        <label class="label" for="address">Address:<span style="color: red">*</span></label>
-        <div class="control">
-            <div id='geocoder' class='geocoder'></div>
         </div>
         
         <div class="field">
-            <label class="label" for="cal">Start and End Date and Time:<span style="color: red">*</span></label>
+            <label class="label" for="cal">Start and End Date and Time:</label>
             <div class="control">
                 <input type="date" id="cal" />
                 <input type="hidden" id="start" name="start" />
@@ -58,7 +51,7 @@
         </div>
 
         <div class="field">
-            <label class="label" for="description">Description:<span style="color: red">*</span></label>
+            <label class="label" for="description">Description:</label>
             <div class="control">
                 <input id="description" name="description" type="text" class="input" placeholder="Description"/>
             </div>
@@ -84,13 +77,12 @@
             <th:block th:replace="fragments/filestack" />
         </div>
 
-            <div class="field">
-                <div class="control">
-                    <input type="hidden" name="eventId" th:value="${event.id}" />
-                    <button id="create-event" class="button is-success">Next<span class="icon"><i class="far fa-hand-point-right"></i></span></button>
-                </div>
+        <div class="field">
+            <div class="control">
+                <input type="hidden" name="eventId" th:value="${event.id}" />
+                <button id="create-event" class="button is-success">Next<span class="icon"><i class="far fa-hand-point-right"></i></span></button>
             </div>
-
+        </div>
     </form>
 </div>
 
