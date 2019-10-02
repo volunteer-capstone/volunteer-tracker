@@ -14,9 +14,9 @@
     </div>
 
     <div class="columns is-mobile">
-        <div class="column" th:text="${event.title}"></div>
-        <div class="column" th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')}"></div>
-        <div class="column" th:text="${#dates.format(event.stop, 'MMM-dd-yyyy HH:mm')}"></div>
+        <div class="column"><h1 class="title" th:text="${event.title}"></h1></div>
+        <div class="column"><h1 class="title" th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')}"></h1></div>
+        <div class="column"><h1 class="title" th:text="${#dates.format(event.stop, 'MMM-dd-yyyy HH:mm')}"></h1></div>
     </div>
     <hr/>
 
