@@ -178,13 +178,25 @@ public class User {
         return events;
     }
 
-    public List<Position> getUserPositionTitlesByEventId(Long id) {
+    public List<Position> getUserPositionsByEventId(Long id) {
 
         List<UserPosition> posList = userPosition;
         List<Position> positions = new ArrayList<>();
         for (int i = 0; i < posList.size(); i++) {
             if (posList.get(i).getPosition().getEvent().getId() == id) {
                 positions.add(posList.get(i).getPosition());
+            }
+        }
+        return positions;
+    }
+
+    public List<Long> getUserPositionIdsByEventId(Long id) {
+
+        List<UserPosition> posList = userPosition;
+        List<Long> positions = new ArrayList<>();
+        for (int i = 0; i < posList.size(); i++) {
+            if (posList.get(i).getPosition().getEvent().getId() == id) {
+                positions.add(posList.get(i).getPosition().getId());
             }
         }
         return positions;
