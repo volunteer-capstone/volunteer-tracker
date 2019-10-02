@@ -124,8 +124,12 @@
                                         </div>
                                     </section>
                                     <footer class="modal-card-foot">
-                                      <th:block sec:authorize="isAuthenticated()"><h6 th:if="${userPos.contains(position.getId())}">You have already signed up for this position!</h6></th:block>
-                                      <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId}) and (!${userPos.contains(position.getId())})"><a class="button is-primary" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a></th:block>
+                                      <th:block sec:authorize="isAuthenticated()">
+                                          <h6 th:if="${userPos.contains(position.getId())}">You have already signed up for this position!</h6>
+                                      </th:block>
+                                      <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId}) and (!${userPos.contains(position.getId())})">
+                                          <a class="button is-primary" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a>
+                                      </th:block>
                                       <button class="close button">Cancel
                                         <span class="icon">
                                           <i class="fas fa-backspace"></i>
@@ -133,9 +137,9 @@
                                       </button>
                                     </footer>                                
                                 </div>
+                            </div>
                         </div>
                     </div>
-
                 </th:block>
 
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-small is-warning" th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a></th:block>
