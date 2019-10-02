@@ -71,7 +71,7 @@
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
                     <div class="field">
                         <div class="control">
-                            <a class="open-modal button is-info" th:href="@{/text}">Text Message All Volunteers</a>
+                            <a class="open-modal button is-info" th:href="@{/text/position/{id}(id = ${position.id})}">Text Message Position Volunteers</a>
                             <div class="modal">
                                 <div class="modal-background close"></div>
                                 <div class="modal-card">
