@@ -30,10 +30,10 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-128x128">
-                                <th:block th:if="${event.photo} == null">
+                                <th:block th:if="${event.photo} == null or ${event.photo} == ''">
                                     <img th:src="@{/img/eventLocation.jpeg}" alt="event photo"/>
                                 </th:block>
-                                <th:block th:unless="${event.photo} == null">
+                                <th:block th:unless="${event.photo} == null or ${event.photo} == ''">
                                     <img th:src="@{${event.photo}}" alt="event photo"/>
                                 </th:block>
                             </figure>
