@@ -32,7 +32,7 @@
         </thead>
         <tbody>
         <th:block th:each="position : ${volunteers.keySet()}">
-            <tr>
+            <tr style="background: lightblue">
                 <td th:text="${position.title}"></td>
                 <td th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></td>
                 <td th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></td>
