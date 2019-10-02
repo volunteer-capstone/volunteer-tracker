@@ -18,7 +18,7 @@ const calOptions = {
     clearLabel: 'Clear',
     todayLabel: 'Today',
     nowLabel: 'Now',
-    validateLabel: 'Validate',
+    validateLabel: 'Submit',
     enableMonthSwitch: true,
     enableYearSwitch: true,
     minDate: '2018-01-01',
