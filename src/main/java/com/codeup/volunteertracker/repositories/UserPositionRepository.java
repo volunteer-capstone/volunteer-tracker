@@ -15,5 +15,8 @@ public interface UserPositionRepository extends CrudRepository<UserPosition, Lon
 
     List<UserPosition> findAllByPosition(Position position);
 
-    UserPosition findByPosition_Id(long positionId);
+//    UserPosition findByPosition_Id(long positionId);
+    UserPosition findUserPositionByPositionAndUser(Position position, User user);
+
 }
+
