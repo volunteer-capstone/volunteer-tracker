@@ -9,12 +9,19 @@
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
 <div class="container">
-    <h1>THIS IS THE EVENT LIST PAGE</h1>
 
-    <label for="eventSearch">Search by event name:</label>
-    <input id="eventSearch" type="text" onkeyup="searchEvents()" placeholder="Enter event title" />
-    <input id="posCheckbox" type="checkbox" onclick="searchEvents()" checked="checked"/>
-    <label for="posCheckbox">Include position title in search: </label>
+    <div class="field is-grouped">
+        <label for="eventSearch">Search by event name:</label>
+        <div class="control">
+            <input class="input" id="eventSearch" type="text" onkeyup="searchEvents()" placeholder="Enter event title" />
+        </div>
+        <div class="control">
+            <label class="checkbox" for="posCheckbox">Include position title in search:
+                <input id="posCheckbox" type="checkbox" onclick="searchEvents()" checked="checked"/>
+            </label>
+        </div>
+    </div>
+
 
     <div class="columns is-multiline is-mobile eventDiv" style="margin-top: 10px;">
         <th:block th:each="event : ${events}" >
