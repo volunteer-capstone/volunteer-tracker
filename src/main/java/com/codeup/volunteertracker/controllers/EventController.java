@@ -80,7 +80,9 @@ public class EventController {
             User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User currentUser = userDao.findOne(userSession.getId());
 
-            List<UserPosition> userPos = currentUser.getUserPosition();
+            List<Long> userPos = currentUser.getUserPositionIdsByEventId(id);
+
+//            List<UserPosition> userPos = currentUser.getUserPosition();
             viewModel.addAttribute("userPos", userPos);
             long userId = userSession.getId();
             viewModel.addAttribute("userId", userId);
@@ -109,7 +111,7 @@ public class EventController {
     }
 
     @PostMapping("/events/create")
-    public String createEvent(@RequestParam(name="location") String location, @RequestParam(name="address") String address, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description, @RequestParam(name="file") String photo) throws ParseException {
+    public String createEvent(@RequestParam(name="location") String location, @RequestParam(name="address") String address, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description, @RequestParam(name="file") String photo, @RequestParam(name="organization") String organization) throws ParseException {
             DateFormat df = new SimpleDateFormat("MM/dd/yy HH:mm");
             Date localTimeObj1 = df.parse(start);
             Date localTimeObj2 = df.parse(stop);
@@ -121,6 +123,7 @@ public class EventController {
             event.setLocation(location);
             event.setAddress(address);
             event.setTitle(title);
+            event.setOrganization(organization);
             event.setPhoto(photo);
             User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User user = userDao.findOne(userSession.getId());
@@ -145,7 +148,7 @@ public class EventController {
     @PostMapping("/events/edit/{id}")
     public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") String start, @RequestParam(name="stop") String stop, @RequestParam(name="location") String location, @RequestParam(name="address") String address,@RequestParam(name="description") String description) throws ParseException {
         Event editedEvent = eventDao.findOne(id);
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        DateFormat df = new SimpleDateFormat("MM/dd/yy HH:mm");
         Date newStart = df.parse(start);
         Date newStop = df.parse(stop);
         editedEvent.setId(id);
