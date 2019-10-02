@@ -13,7 +13,7 @@
 		<h3>Edit your account!</h3>
 	</div>
 
-	<a class="button is-primary" th:href="@{/profile/delete}">Delete Your Profile</a>
+	<a class="button is-danger" th:href="@{/profile/delete}">Delete Your Profile</a>
 
 	<form th:action="@{/profile/edit}" th:method="post" th:object="${user}">
 		<div class="field">
