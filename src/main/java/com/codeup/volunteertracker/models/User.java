@@ -208,14 +208,16 @@ public class User {
         long totalHours = 0;
         for (int i = 0; i < posList.size(); i++) {
 
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-            Date firstDate = posList.get(i).getPosition().getStart();
-            Date secondDate = posList.get(i).getPosition().getEnd();
+            if (posList.get(i).isApproved()) {
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+                Date firstDate = posList.get(i).getPosition().getStart();
+                Date secondDate = posList.get(i).getPosition().getEnd();
 
-            long diffInMillis = Math.abs(secondDate.getTime() - firstDate.getTime());
-            long diff = TimeUnit.MINUTES.convert(diffInMillis, TimeUnit.MILLISECONDS);
+                long diffInMillis = Math.abs(secondDate.getTime() - firstDate.getTime());
+                long diff = TimeUnit.MINUTES.convert(diffInMillis, TimeUnit.MILLISECONDS);
 
-            totalHours += diff;
+                totalHours += diff;
+            }
         }
         return (totalHours/60);
     }
