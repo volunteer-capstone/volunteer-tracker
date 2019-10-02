@@ -50,7 +50,7 @@
     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-success" th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a></th:block>
     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-danger" th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a></th:block>
     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-warning" th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></th:block>
-    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/events/approve/{id}(id=${event.id})}">Approve Volunteer Hours</a></th:block>
+    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true) and ${event.getStart().before(execInfo.now)}"><a class="button is-info" th:href="@{/events/approve/{id}(id=${event.id})}">Approve Volunteer Hours</a></th:block>
     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/events/volunteers/{id}(id=${event.id})}">Volunteer Contact Info</a></th:block>
     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/text}">Text Message All Volunteers</a></th:block>
 
