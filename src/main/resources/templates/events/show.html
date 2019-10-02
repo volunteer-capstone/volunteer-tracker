@@ -95,17 +95,16 @@
                                     </header>
                                     <section class="modal-card-body">
                                         <form th:action="@{/text/position/{id}(id = ${position.id})}" th:method="post">
-                                        <div class="field">
-                                            <label class="label">Message</label>
-                                            <div class="control">
-                                                <textarea name="body" id="body" cols="30" rows="10"></textarea>
+                                            <div class="field">
+                                                <label class="label">Message</label>
+                                                <div class="control">
+                                                    <textarea name="body" id="body" cols="30" rows="10"></textarea>
+                                                </div>
                                             </div>
-                                        </div>
                                             <button type="submit">Send SMS</button>
                                         </form>
                                     </section>
                                     <footer class="modal-card-foot">
-
                                         <button class="close button">Cancel
                                             <span class="icon">
                                                 <i class="fas fa-backspace"></i>
@@ -113,20 +112,19 @@
                                         </button>
                                     </footer>
                                 </div>
-                            </section>
-                            <footer class="modal-card-foot">
-                                <form th:action="@{/text/psotion/{id}(id = ${position.id})}" th:method="post">
-                                    <button class="button is-success">Send SMS</button>
-                                </form>
-                                <button class="close button">Cancel
-                                    <span class="icon">
-                                        <i class="fas fa-backspace"></i>
-                                    </span>
-                                </button>
-                            </footer>
+                                <footer class="modal-card-foot">
+                                    <form th:action="@{/text/psotion/{id}(id = ${position.id})}" th:method="post">
+                                        <button class="button is-success">Send SMS</button>
+                                    </form>
+                                    <button class="close button">Cancel
+                                        <span class="icon">
+                                            <i class="fas fa-backspace"></i>
+                                        </span>
+                                    </button>
+                                </footer>
+                            </div>
                         </div>
                     </div>
-                        </div>
                 </th:block>
 
                 <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})">

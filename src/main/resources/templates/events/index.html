@@ -43,7 +43,9 @@
                         <div class="card-content">
                             <div class="content">
                                 <p th:text="*{#dates.format(event.start, 'MMM d, yyyy H:mm')}"></p>
-                                <p>Number of Volunteers Needed: <span th:text="${totalVolunteersNeeded}"></span></p>
+<!--                                <p>Number of Volunteers Needed: <span th:text="${totalVolunteersNeeded}"></span></p>-->
+                                <p>Number of Volunteers Needed: <span th:text="${event.getPositionNumsNeeded()}"></span></p>
+
                             </div>
                         </div>
                         <div class="positionDiv" th:each="pos: ${event.getPositions()}" hidden="hidden">
@@ -52,8 +54,7 @@
                         <footer class="card-footer">
                             <a class="card-footer-item" th:href="@{/events/{id}(id=${event.id})}">View Event!</a>
                         </footer>
-                    </div>
-                    ​
+                    </div>​
                 </div>
             </div>
         </th:block>
