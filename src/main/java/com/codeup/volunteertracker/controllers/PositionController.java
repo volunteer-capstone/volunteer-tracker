@@ -136,6 +136,7 @@ public class PositionController {
         long eventId = positionDao.positionEventId(position.getId());
         Event event = eventDao.findOne(eventId);
         position.setNumNeeded(position.getNumNeeded() - 1);
+        positionDao.save(position);
 
         emailService.createdUserPosition(userPosition, "Congrats on Volunteering!", String.format("Thank you for volunteering! \n\n This will event take place  at " + event.getLocation() + ", " + event.getAddress() + ".\n\n  Your volunteer slot is from " + position.getStart() + " to " + position.getEnd() + ".\n\n  Please try to arrive 15 minutes early to check in with the organizer.  If you have anymore follow up questions about your event, please reference the following link: https://pathofthevolunteer.com/events/" + eventId + " or contact the organizer, " + event.getCreator().getFirstName() + " " + event.getCreator().getLastName() + " at " +  event.getCreator().getEmail() + " or " +  event.getCreator().getPhoneNumber() + "."));
 
