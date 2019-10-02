@@ -20,6 +20,7 @@
                 <h4 th:text="${event.location}"></h4>
                 <h4 id="address" th:text="${event.address}"></h4>
                 <div id="map"></div>
+                <input type="hidden" id="mapToken" name="mapToken" th:value="${mapToken}" />
             </div>
         </div>
         <div class="column">
