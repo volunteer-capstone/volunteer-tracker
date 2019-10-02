@@ -14,6 +14,13 @@
 
 <form th:action="@{/events/edit/{id}(id=${event.id})}" th:method="post">
     <div class="field">
+        <label class="label" for="organization">Organization Name:</label>
+        <div class="control">
+            <p>Current Event Organization: <span th:text="${event.organization}"></span></p>
+            <input type="text"  name="organization" id="organization" class="input" placeholder="Organization..." />
+        </div>
+    </div>
+    <div class="field">
         <label class="label" for="title">Event Name:</label>
         <div class="control">
             <p>Current Event Name: <span th:text="${event.title}"></span></p>

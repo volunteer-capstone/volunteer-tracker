@@ -23,14 +23,14 @@
     <div class="field">
         <label class="label" for="cal">Start and End Date and Time:</label>
         <div class="control">
-            <p>Current Position Start & End Date and Time:
-                <span th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></span>
-                <span th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></span>
+            <p>Current Start Date and Time:
+                <span th:text="${#dates.format(event.start, 'dd-MMM-yyyy HH:mm')}"></span>
+                <span th:text="${#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></span>
             </p>
             <input type="date" id="cal" />
             <input type="hidden" id="start" name="start" />
             <input type="hidden" id="stop" name="stop" />
-            <input type="hidden" id="end" />
+            <input type="hidden" id="end" name="end" />
         </div>
     </div>
 

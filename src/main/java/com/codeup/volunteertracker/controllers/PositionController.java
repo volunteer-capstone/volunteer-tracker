@@ -85,7 +85,7 @@ public class PositionController {
 //    NEED TO SURROUND DF WITH TRY CATCH
     @PostMapping("/events/positions/edit/{id}")
     public String editPosition(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="description") String description, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="start") String start, @RequestParam(name="end") String end, Model viewModel) throws ParseException {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        DateFormat df = new SimpleDateFormat("MM/dd/yy HH:mm");
         Date starttime= df.parse(start);
         Date endtime = df.parse(end);
         Position editedPosition = positionDao.findOne(id);
