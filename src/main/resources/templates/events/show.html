@@ -85,8 +85,7 @@
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
                     <div class="field">
                         <div class="control">
-
-                            <a class="open-modal button is-info" th:href="@{/text/position/{id}(id = ${position.id})}">Text Message Position Volunteers</a>
+                            <a class="open-modal button is-info">Text Message Position Volunteers</a>
                             <div class="modal">
                                 <div class="modal-background close"></div>
                                 <div class="modal-card">
@@ -95,17 +94,18 @@
                                         <button class="close delete is-large" aria-label="close"></button>
                                     </header>
                                     <section class="modal-card-body">
+                                        <form th:action="@{/text/position/{id}(id = ${position.id})}" th:method="post">
                                         <div class="field">
                                             <label class="label">Message</label>
                                             <div class="control">
                                                 <textarea name="body" id="body" cols="30" rows="10"></textarea>
                                             </div>
                                         </div>
+                                            <button type="submit">Send SMS</button>
+                                        </form>
                                     </section>
                                     <footer class="modal-card-foot">
-                                        <form th:action="@{/text/psotion/{id}(id = ${position.id})}" th:method="post">
-                                            <button>Send SMS</button>
-                                        </form>
+
                                         <button class="close button">Cancel
                                             <span class="icon">
                                                 <i class="fas fa-backspace"></i>
@@ -126,6 +126,7 @@
                             </footer>
                         </div>
                     </div>
+                        </div>
                 </th:block>
 
                 <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})">
