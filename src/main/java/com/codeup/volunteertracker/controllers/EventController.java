@@ -148,7 +148,7 @@ public class EventController {
     @PostMapping("/events/edit/{id}")
     public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") String start, @RequestParam(name="stop") String stop, @RequestParam(name="location") String location, @RequestParam(name="address") String address,@RequestParam(name="description") String description) throws ParseException {
         Event editedEvent = eventDao.findOne(id);
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        DateFormat df = new SimpleDateFormat("MM/dd/yy HH:mm");
         Date newStart = df.parse(start);
         Date newStop = df.parse(stop);
         editedEvent.setId(id);
