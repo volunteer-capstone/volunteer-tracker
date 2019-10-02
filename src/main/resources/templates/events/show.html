@@ -15,52 +15,88 @@
     <div class="columns is-mobile">
         <div class="column">
             <div class="content">
-                <!--<h3>Event ID:  <span th:text="${event.id}"></span></h3>-->
                 <h4 th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')}"></h4>
                 <h4 th:text="${#dates.format(event.stop, 'MMM-dd-yyyy HH:mm')}"></h4>
                 <h4 th:text="${event.location}"></h4>
                 <h4 id="address" th:text="${event.address}"></h4>
                 <div id="map"></div>
+                <input type="hidden" id="mapToken" name="mapToken" th:value="${mapToken}" />
             </div>
         </div>
         <div class="column">
             <div class="content">
                 <h1 th:text="${event.title}"></h1>
-                <img th:src="@{${event.photo}}" alt="event photo"/>
+                <th:block th:if="${event.photo} == null">
+                    <img th:src="@{/img/eventLocation.jpeg}" alt="event photo"/>
+                </th:block>
+                <th:block th:unless="${event.photo} == null">
+                    <img th:src="@{${event.photo}}" alt="event photo"/>
+                </th:block>
             </div>
         </div>
         <div class="column">
             <div class="content">
                 <p th:text="${event.description}"></p>
                 <h3>Organizer Contact Information:</h3>
-                <h5 th:text="${event.getCreator().getFirstName()}"></h5>
-                <h5 th:text="${event.getCreator().getLastName()}"></h5>
-                <h5 th:text="${event.getCreator().getEmail()}"></h5>
-                <h5 th:text="${event.getCreator().getPhoneNumber()}"></h5>
+                <h5 th:text="${event.creator.firstName}"></h5>
+                <h5 th:text="${event.creator.lastName}"></h5>
+                <h5 th:text="${event.creator.email}"></h5>
+                <h5 th:text="${event.creator.phoneNumber}"></h5>
+                <a class="button is-light" th:href="@{/users/{id}/profile(id=${event.creator.id})}">View Organizer Profile</a>
             </div>
         </div>
     </div>
 
     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-success" th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a></th:block>
-    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-danger" th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a></th:block>
-    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-warning" th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></th:block>
-    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/events/approve/{id}(id=${event.id})}">Approve Volunteer Hours</a></th:block>
+    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true) and ${event.getStart().before(execInfo.now)}"><a class="button is-info" th:href="@{/events/approve/{id}(id=${event.id})}">Approve Volunteer Hours</a></th:block>
+    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/events/volunteers/{id}(id=${event.id})}">Volunteer Contact Info</a></th:block>
     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/text}">Text Message All Volunteers</a></th:block>
-    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/events/volunteers/{id}(id=${event.id})}">View all Volunteers Contact Information</a></th:block>
+    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-warning" th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></th:block>
+    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-danger" th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a></th:block>
 
-    <div class="content">
-        <h3>Volunteer Positions:</h3>
-    </div>
 
     <div class="columns is-multiline is-mobile">
         <th:block th:each="position: ${positions}">
-            <div class="column is-one-quarter">
-                <p th:text="${position.title}"></p>
-                <p th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></p>
-                <p th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></p>
-                <p th:text="${position.numNeeded}"></p>
-                <p th:text="${position.description}"></p>
-                <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})"><a class="button is-primary" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a></th:block>
+            <div class="column is-one-quarter" th:if="((${position.numNeeded}) > 0)">
+                <div class="content">
+                    <h6 th:text="${position.title}"></h6>
+                    <h6 th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></h6>
+                    <h6 th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></h6>
+                    <h6 th:text="${position.numNeeded}"></h6>
+                </div>
+                <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})">
+                    <div class="field">
+                        <div class="control">
+                            <a id="openModal" class="button">View Details</a>
+                        </div>
+                    </div>
+
+                    <div class="modal">
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title" th:text="${position.title}"></p>
+                                <button class="modal-close delete is-large" aria-label="close"></button>
+                            </header>
+                            <section class="modal-card-body">
+                                <div class="content">
+                                    <p th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></p>
+                                    <p th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></p>
+                                    <p th:text="${position.numNeeded}"></p>
+                                    <p th:text="${position.description}"></p>
+                                </div>
+                            </section>
+                            <footer class="modal-card-foot">
+                                <a class="button is-primary" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a>
+                                <button id="cancel" class="button">Cancel
+                                    <span class="icon">
+                                        <i class="fas fa-backspace"></i>
+                                    </span>
+                                </button>
+                            </footer>
+                        </div>
+                    </div>
+                </th:block>
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-small is-warning" th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a></th:block>
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-small is-danger" th:href="@{/events/positions/delete/{id}(id = ${position.id})}">Delete Position</a></th:block>
             </div>
@@ -68,12 +104,11 @@
     </div>
 </div>
 
-<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>
-<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
+<!--<div class ="footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>-->
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
-<script th:src="@{/js/key.js}"></script>
 <script th:src="@{/js/mapbox-geocoder-utils.js}"></script>
 <script th:src="@{/js/mapjs.js}"></script>
+<script th:src="@{/js/bulmaModalJs.js}"></script>
 </body>
 </html>

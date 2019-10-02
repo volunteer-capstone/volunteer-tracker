@@ -10,13 +10,13 @@
 
 <div class="container">
     <div class="content">
-        <h3>Approve hours for <span th:text="${event.title}"></span></h3>
+        <h3>Volunteers signed up for <span th:text="${event.title}"></span></h3>
     </div>
 
     <div class="columns is-mobile">
-        <div class="column" th:text="${event.title}"></div>
-        <div class="column" th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')}"></div>
-        <div class="column" th:text="${#dates.format(event.stop, 'MMM-dd-yyyy HH:mm')}"></div>
+        <div class="column"><h1 class="title" th:text="${event.title}"></h1></div>
+        <div class="column"><h1 class="title" th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')}"></h1></div>
+        <div class="column"><h1 class="title" th:text="${#dates.format(event.stop, 'MMM-dd-yyyy HH:mm')}"   ></h1></div>
     </div>
     <hr/>
 
@@ -27,6 +27,8 @@
             <th>Start Time</th>
             <th>End Time</th>
             <th>Total Hours</th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -36,14 +38,20 @@
                 <td th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></td>
                 <td th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></td>
                 <td th:text="${event.posHours(position.start, position.end)}"></td>
+                <td></td>
             </tr>
+            <th></th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Profile</th>
                 <th:block th:each="userPosition : ${volunteers.get(position)}">
             <tr>
-                <td></td>
                 <td><strong>Volunteer</strong></td>
-                <td th:text="${userPosition.getUser().getUsername()}"></td>
+                <td th:text="${userPosition.getUser().getFirstName()} + ' ' + ${userPosition.getUser().getLastName()}"></td>
                 <td th:text="${userPosition.getUser().getEmail()}"></td>
                 <td th:text="${userPosition.getUser().getPhoneNumber()}"></td>
+                <td><a class="button is-info" th:href="@{/users/{id}/profile(id=${userPosition.getUser().getId()})}">View Profile</a></td>
             </tr>
                 </th:block>
         </th:block>
@@ -51,6 +59,6 @@
     </table>
 </div>
 
-<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>
+<!--<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>-->
 </body>
 </html>

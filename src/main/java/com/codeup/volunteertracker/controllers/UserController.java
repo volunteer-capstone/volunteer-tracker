@@ -1,40 +1,49 @@
 package com.codeup.volunteertracker.controllers;
 
+import com.codeup.volunteertracker.models.Event;
+import com.codeup.volunteertracker.models.Position;
 import com.codeup.volunteertracker.models.User;
+import com.codeup.volunteertracker.models.UserPosition;
+import com.codeup.volunteertracker.repositories.EventRepository;
+import com.codeup.volunteertracker.repositories.PositionRepository;
+import com.codeup.volunteertracker.repositories.UserPositionRepository;
 import com.codeup.volunteertracker.repositories.UserRepository;
 import com.codeup.volunteertracker.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import org.springframework.web.bind.annotation.ModelAttribute;
-
-import org.springframework.web.bind.annotation.PathVariable;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class UserController {
     private final UserRepository userRepo;
     private PasswordEncoder passwordEncoder;
+    private final UserPositionRepository userPositionDao;
+    private final PositionRepository positionDao;
+    private final EventRepository eventDao;
 
-    public UserController(UserRepository userRepo, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userRepo, PasswordEncoder passwordEncoder, UserPositionRepository userPositionRepository, PositionRepository positionRepository, EventRepository eventRepository) {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
+        this.userPositionDao = userPositionRepository;
+        this.positionDao = positionRepository;
+        this.eventDao = eventRepository;
     }
 
 
     @Autowired
     private EmailService emailService;
+
+    @Value("${filestack-api-key}")
+    private String filestackAPI;
 
     //    CREATE USER
     @GetMapping("/register")
@@ -44,13 +53,16 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid User registerUser, Errors validation, Model model) {
+    public String registerUser(@Valid User registerUser, Errors validation, Model model, @RequestParam(name = "organizer", defaultValue = "off") String isOrganizer) {
         if(userRepo.countAllByEmailOrUsername(registerUser.getEmail(), registerUser.getUsername()) > 0) {
             validation.rejectValue(
                     "username",
                     "user.username",
                     "Invalid username and/or email."
             );
+        }
+        if(!isOrganizer.equals("off")) {
+            registerUser.setOrganizer(true);
         }
         if (validation.hasErrors()) {
             model.addAttribute("errors", validation);
@@ -60,7 +72,7 @@ public class UserController {
             String hash = passwordEncoder.encode(registerUser.getPassword());
             registerUser.setPassword(hash);
             userRepo.save(registerUser);
-            emailService.createdAnAccount(registerUser, "Account Created with Path of the Volunteer", String.format("Congratulations! An account was made at pathofthevolunteer.com using this email address under the username: %s.  Enjoy volunteering and giving back to your community! If you feel that this has occurred in error please visit our website to contact us.", registerUser.getUsername())) ;
+            emailService.createdAnAccount(registerUser, "Account Created with Path of the Volunteer", String.format("Congratulations!\n\n An account was made at https://pathofthevolunteer.com using this email address under the username: %s.\n\n  Enjoy volunteering and giving back to your community! \n\n If you feel that this has occurred in error please visit our website to contact us.", registerUser.getUsername())) ;
 
             return "redirect:/login";
         }
@@ -95,6 +107,7 @@ public class UserController {
         long id = userSession.getId();
 //        User user = userRepo.findOne(id);
         viewModel.addAttribute("user", userSession);
+        viewModel.addAttribute("filestackAPI", filestackAPI);
         return "users/edit";
     }
 
@@ -116,7 +129,7 @@ public class UserController {
             user.setPhoto(photo);
             user.setBio(bio);
             User editedUser = userRepo.save(user);
-            emailService.createdAnAccount(editedUser, "Account Changes with Path of the Volunteer", String.format("Notification: Changes were made to your account.  If you feel that you are receiving this email in error, please visit pathofthevolunteer.com to contact us.")) ;
+            emailService.createdAnAccount(editedUser, "Account Changes with Path of the Volunteer", String.format("Notification: Changes were made to your account. \n\n If you feel that you are receiving this email in error, please visit https://pathofthevolunteer.com to contact us.")) ;
             return "redirect:/users/" + user.getId() + "/profile";
         } else {
             return "redirect:/profile/edit";
@@ -130,11 +143,41 @@ public class UserController {
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         long userId = userSession.getId();
         User user = userRepo.findOne(userId);
-        userRepo.delete(userId);
-        emailService.createdAnAccount(user, "Account Deleted with Path of the Volunteer", String.format("Thank you, %s %s for being a member of pathofthevolunteer.com . If you would like to use our services again in the future, please feel free to visit our site again.", user.getFirstName(), user.getLastName())) ;
+        if(!user.isOrganizer()){
+            List<UserPosition> userPositions = userPositionDao.findByUser(user);
+            for(UserPosition userPosition: userPositions){
+                Position position = positionDao.findOne(userPosition.getPosition().getId());
+                position.setNumNeeded(position.getNumNeeded() + 1);
+                positionDao.save(position);
+            }
+            userPositionDao.delete(userPositions);
+            userRepo.delete(userId);
+        }else{
+            List<Event> events = eventDao.findAllByCreator(user);
+            for(Event event: events){
+                List<Position> createdPositions = positionDao.findAllByEvent_Id(event.getId());
+                for(Position createdPosition: createdPositions){
+                    List<UserPosition> createdPositionUserPositions = userPositionDao.findAllByPosition(createdPosition);
+                    userPositionDao.delete(createdPositionUserPositions);
+                    List<UserPosition> userPositions = userPositionDao.findByUser(user);
+                    for(UserPosition userPosition: userPositions){
+                        Position position = positionDao.findOne(userPosition.getPosition().getId());
+                        position.setNumNeeded(position.getNumNeeded() + 1);
+                        positionDao.save(position);
+                    }
+                    userPositionDao.delete(userPositions);
+                }
+                positionDao.delete(createdPositions);
+            }
+            eventDao.delete(events);
+            userRepo.delete(userId);
+        }
+
+        emailService.createdAnAccount(user, "Account Deleted with Path of the Volunteer", String.format("Thank you, %s %s for being a member of Path of the Volunteer.\n\n If you would like to use our services again in the future, please feel free to visit our site at https://pathofthevolunteer.com.", user.getFirstName(), user.getLastName())) ;
 
         return "redirect:/login?logout";
     }
+
 
 //    MAKE USER AN ORGANIZER
     @PostMapping("profile/organizer/{id}")

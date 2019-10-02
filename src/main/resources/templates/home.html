@@ -3,20 +3,49 @@
 <head>
     <th:block th:replace="fragments/header :: my-header('Path of the Volunteer')" />
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css" />
 
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
+<!-- Start Hero Carousel -->
+<section class="hero is-medium has-carousel">
+    <div id="carousel-demo" class="hero-carousel">
+        <div class="item-1">
+            <!-- Slide Content -->
+            <figure class="image is-fullwidth">
+                <img th:src="@{/img/cover.png}"/>
+            </figure>
+        </div>
+        <div class="item-2">
+            <!-- Slide Content -->
+            <figure class="image is-fullwidth">
+                <img th:src="@{http://www.arc-sa.org/wp-content/uploads/2014/01/IMG_3139.jpg}"/>
+            </figure>
+        </div>
+        <div class="item-3">
+            <!-- Slide Content -->
+            <figure class="image is-fullwidth">
+                <img th:src="@{https://www.soill.org/wp-content/uploads/2018/05/volunteer.jpg}"/>
+            </figure>
+        </div>
+    </div>
+    <div class="hero-head"></div>
+    <div class="hero-body"></div>
+    <div class="hero-foot"></div>
+</section>
+<!-- End Hero Carousel -->
 <div class="container">
     <div class="content">
-        <h1>THIS IS THE HOME PAGE :)</h1>
+<!--        <h1>THIS IS THE HOME PAGE :)</h1>-->
     </div>
 </div>
+<div class="orgList" th:each="org: ${orgList}">
+    <p th:text="${org}"></p>
+</div>
 
-<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>
-
-<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
+<!--<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>-->
+<script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
 </body>
 </html>

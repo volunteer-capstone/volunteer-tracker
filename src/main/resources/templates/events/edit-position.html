@@ -3,6 +3,7 @@
 <head>
     <th:block th:replace="fragments/header :: my-header('All Events')" />
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" />
 
 </head>
 <body>
@@ -19,24 +20,20 @@
         </div>
     </div>
 
-    <!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
     <div class="field">
-        <label class="label" for="start">Start Date and Time:</label>
+        <label class="label" for="cal">Start and End Date and Time:</label>
         <div class="control">
-            <p>Current Position Start Date and Time: <span th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></span></p>
-            <input type="datetime-local" id="start" class="input" name="start"/>
+            <p>Current Position Start & End Date and Time:
+                <span th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></span>
+                <span th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></span>
+            </p>
+            <input type="date" id="cal" />
+            <input type="hidden" id="start" name="start" />
+            <input type="hidden" id="stop" name="stop" />
+            <input type="hidden" id="end" />
         </div>
     </div>
 
-    <div class="field">
-        <label class="label" for="end">End Date and Time:</label>
-        <div class="control">
-            <p>Current Position End Date and Time: <span th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></span></p>
-            <input type="datetime-local" id="end" class="input" name="end"/>
-        </div>
-    </div>
-
-    <!--    NEED TO FIND WAY TO INPUT LOCATION STRING FROM MAPBOX HERE WITH GEOLOCATION TO STORE TO DATABASE-->
     <div class="field">
         <label class="label" for="numNeeded">Number of Volunteers Needed:</label>
         <div class="control">
@@ -49,7 +46,7 @@
         <label class="label" for="description">Description:</label>
         <div class="control">
             <p>Current Position Description: <span th:text="${position.description}"></span></p>
-            <input type="text" id="description" class="input" name="description" placeholder="Description"/>
+            <textarea id="description" class="textarea" name="description" placeholder="Description"></textarea>
         </div>
     </div>
 
@@ -61,8 +58,9 @@
     </div>
 
 </form>
-<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>
+<!--<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>-->
 
-<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+<script th:src="@{/js/bulmaCalendarjs.js}"></script>
 </body>
 </html>

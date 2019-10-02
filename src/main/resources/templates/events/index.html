@@ -3,104 +3,66 @@
 <head>
     <th:block th:replace="fragments/header :: my-header('All Events')" />
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
-
+    ​
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
-
+​
 <div class="container">
-    <h1>THIS IS THE EVENT LIST PAGE</h1>
-
-    <label for="eventSearch">Search by event name:</label>
-    <input id="eventSearch" type="text" onkeyup="searchEvents()" placeholder="Enter event title" />
-    <input id="posCheckbox" type="checkbox" onclick="searchEvents()"/>
-    <label for="posCheckbox">Include position title in search</label>
-<!--    <label for="positionSearch">Search by position:</label>-->
-<!--    <input id="positionSearch" type="text" onkeyup="searchEvents()" placeholder="Enter position" />-->
-
+    ​
+    <div class="field is-grouped">
+        <label for="eventSearch">Search by event name:</label>
+        <div class="control">
+            <input class="input" id="eventSearch" type="text" onkeyup="searchEvents()" placeholder="Enter event title" />
+        </div>
+        <div class="control">
+            <label class="checkbox" for="posCheckbox">Include position title in search:
+                <input id="posCheckbox" type="checkbox" onclick="searchEvents()" checked="checked"/>
+            </label>
+        </div>
+    </div>
+    ​
+    ​
     <div class="columns is-multiline is-mobile eventDiv" style="margin-top: 10px;">
         <th:block th:each="event : ${events}" >
             <div class="column is-one-third event">
                 <div th:class="${event.title}">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-4by3">
-                            <img th:src="${event.photo}" alt="Placeholder image"/>
-                        </figure>
-                    </div>
-                    <header class="card-header">
-                        <p class="card-header-title is-centered" th:text="${event.title}"></p>
-                    </header>
-                    <div class="card-content">
-                        <div class="content">
-                            <p th:text="*{#dates.format(event.start, 'MMM d, yyyy H:mm')}"></p>
-                            <p>Number of Volunteers Needed: <span th:text="${totalVolunteersNeeded}"></span></p>
-                            <div class="positionDiv" th:each="pos: ${event.getPositions()}">
-                                <p th:text="${pos.getTitle()}"></p>
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-128x128">
+                                <th:block th:if="${event.photo} == null">
+                                    <img th:src="@{/img/eventLocation.jpeg}" alt="event photo"/>
+                                </th:block>
+                                <th:block th:unless="${event.photo} == null">
+                                    <img th:src="@{${event.photo}}" alt="event photo"/>
+                                </th:block>
+                            </figure>
+                        </div>
+                        <header class="card-header">
+                            <p class="card-header-title is-centered" th:text="${event.title}"></p>
+                        </header>
+                        <div class="card-content">
+                            <div class="content">
+                                <p th:text="*{#dates.format(event.start, 'MMM d, yyyy H:mm')}"></p>
+                                <p>Number of Volunteers Needed: <span th:text="${totalVolunteersNeeded}"></span></p>
                             </div>
                         </div>
+                        <div class="positionDiv" th:each="pos: ${event.getPositions()}" hidden="hidden">
+                            <p th:text="${pos.getTitle()}"></p>
+                        </div>
+                        <footer class="card-footer">
+                            <a class="card-footer-item" th:href="@{/events/{id}(id=${event.id})}">View Event!</a>
+                        </footer>
                     </div>
-                    <footer class="card-footer">
-                        <a class="card-footer-item" th:href="@{/events/{id}(id=${event.id})}">View Event!</a>
-                    </footer>
-                </div>
-
+                    ​
                 </div>
             </div>
         </th:block>
     </div>
 </div>
-
-
-<th:block th:replace="fragments/footer :: footer" />
-<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
-<script>
-    var input = '';
-    var posInput = '';
-
-    function searchEvents() {
-        var eventList = $(".event");
-        input = $('#eventSearch').val();
-
-        let posCheck = false;
-        for (let i = 0; eventList.length > i; i++) {
-            posCheck = false;
-            var posList = $(eventList[i]).find(".positionDiv");
-            if ($(eventList[i]).children().attr("class").indexOf(input) > -1) {
-                posCheck = true;
-            } else {
-                if ($('#posCheckbox').is(':checked')) {
-                    for (let j = 0; posList.length > j; j++) {
-                        if ($(posList[j]).children().text().indexOf(input) > -1) {
-                            posCheck = true;
-                        }
-                    }
-                }
-            }
-            if (posCheck) {
-                $(eventList[i]).css("display", "inline")
-            } else {
-                $(eventList[i]).css("display", "none")
-            }
-        }
-        if (input === '') {
-            if (posInput === '') {
-            $(eventList).css("display", "inline")
-            }
-        }
-    }
-
-
-</script>
-<!--    <div class="eventDiv">-->
-<!--        <div th:each="event : ${events}" class="event">-->
-<!--            <div th:class="${event.getTitle()}">-->
-<!--                <a th:href="@{/events/{id}(id=${event.id})}"><h3 th:text="${event.title}"></h3></a>-->
-<!--                <p th:if="${event.getTitle().contains('h')}" class="event-title">this has h in it</p>-->
-<!--                <h3 th:text="*{#dates.format(event.start, 'MMM d, yyyy H:mm')}"></h3>-->
-<!--                <p th:text="${event.getTitle()}"></p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+​
+​
+<!--<th:block th:replace="fragments/footer :: footer" />-->
+<script type="text/javascript" th:src="@{/js/search.js}" ></script>
 </body>
 </html>

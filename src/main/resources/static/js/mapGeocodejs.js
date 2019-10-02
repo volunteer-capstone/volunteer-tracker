@@ -1,5 +1,7 @@
 "use strict";
 $(document).ready(function() {
+    let mapToken =$('#mapToken').val();
+
     mapboxgl.accessToken = mapToken;
 
     geocode("San Antonio, TX", mapToken).then(function(loc) {

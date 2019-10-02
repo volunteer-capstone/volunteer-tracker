@@ -9,6 +9,9 @@ import com.codeup.volunteertracker.repositories.EventRepository;
 import com.codeup.volunteertracker.repositories.PositionRepository;
 import com.codeup.volunteertracker.repositories.UserPositionRepository;
 import com.codeup.volunteertracker.repositories.UserRepository;
+import com.codeup.volunteertracker.services.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class EventController {
@@ -40,6 +40,15 @@ public class EventController {
         this.positionDao = positionDao;
         this.userPositionDao = userPositionRepository;
     }
+
+    @Autowired
+    private EmailService emailService;
+
+    @Value("${mapToken}")
+    private String mapToken;
+
+    @Value("${filestack-api-key}")
+    private String filestackAPI;
 
 // LIST OF EVENTS
     @GetMapping("/events")
@@ -83,6 +92,10 @@ public class EventController {
         Iterable<UserPosition> userPositions = userPositionDao.findAll();
         viewModel.addAttribute("userPositions", userPositions);
 
+        viewModel.addAttribute("mapToken", mapToken);
+
+
+
         return "events/show";
     }
 
@@ -90,12 +103,14 @@ public class EventController {
     @GetMapping("/events/create")
     public String createEvent(Model viewModel){
         viewModel.addAttribute("event", new Event());
+        viewModel.addAttribute("mapToken", mapToken);
+        viewModel.addAttribute("filestackAPI", filestackAPI);
         return "events/create-event";
     }
 
     @PostMapping("/events/create")
     public String createEvent(@RequestParam(name="location") String location, @RequestParam(name="address") String address, @RequestParam(name = "start") String start, @RequestParam(name = "stop") String stop, @RequestParam(name = "title") String title, @RequestParam(name="description") String description, @RequestParam(name="file") String photo) throws ParseException {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            DateFormat df = new SimpleDateFormat("MM/dd/yy HH:mm");
             Date localTimeObj1 = df.parse(start);
             Date localTimeObj2 = df.parse(stop);
             Event event = new Event();
@@ -111,6 +126,8 @@ public class EventController {
             User user = userDao.findOne(userSession.getId());
             event.setCreator(user);
             Event createEvent = eventDao.save(event);
+
+        emailService.createdEvent(createEvent, "Creation of Volunteer Event", String.format("Let's get the community together to volunteer by giving back and helping you with your good deed.\n\n  Spread the word to gather volunteers needed for this event with the following link: https://pathofthevolunteer.com/events/%d", createEvent.getId()));
             return "redirect:/events/" + createEvent.getId() + "/create-position";
     }
 
@@ -118,6 +135,9 @@ public class EventController {
     @GetMapping("/events/edit/{id}")
     public String editEvent(@PathVariable long id, Model viewModel){
         viewModel.addAttribute("event", eventDao.findOne(id));
+        viewModel.addAttribute("mapToken", mapToken);
+        viewModel.addAttribute("filestackAPI", filestackAPI);
+
         return "events/edit-event";
     }
 
@@ -144,7 +164,7 @@ public class EventController {
     public String deleteEvent(@PathVariable long id) {
         Event toDelete = eventDao.findOne(id);
         long eventId = toDelete.getId();
-        List<Position> positions = positionDao.findByEvent_Id(eventId);
+        List<Position> positions = positionDao.findAllByEvent_Id(eventId);
         for ( Position position : positions) {
             long positionId = position.getId();
             List<UserPosition> userPositions = userPositionDao.findAllByPosition_Id(positionId);
@@ -155,6 +175,9 @@ public class EventController {
             positionDao.delete(positionId);
         }
         eventDao.delete(eventId);
+
+        emailService.createdEvent(toDelete, "Deletion of Volunteer Event", String.format("An event has been removed under your profile.\n\n  If you would like to create any future events please visit our website at https://pathofthevolunteer.com ."));
+
         return "redirect:/events";
     }
 
@@ -181,7 +204,7 @@ public class EventController {
             model.addAttribute("userId", userId);
         }
 
-        List<Position> positions = positionDao.findByEvent_Id(id);
+        List<Position> positions = positionDao.findAllByEvent_Id(id);
         Map<Position, List> volunteers = new HashMap<>();
         for(Position position : positions) {
             List<UserPosition> userPositions = userPositionDao.findAllByPosition(position);
@@ -193,7 +216,7 @@ public class EventController {
 
     @PostMapping("/events/approve")
     public String submitHours(@RequestParam(name = "check", defaultValue = "off") long[] isApproved,
-                              @RequestParam(name = "eventId") long eventId) {
+                              @RequestParam(name = "eventId") long eventId) throws ParseException {
         Event event = eventDao.findOne(eventId);
         for(long userPos : isApproved) {
             UserPosition userPosition = userPositionDao.findOne(userPos);
@@ -207,6 +230,12 @@ public class EventController {
             long currentHours = user.getHours();
             user.setHours(currentHours+shiftHours);
             userDao.save(user);
+
+            DateFormat fmt = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
+            String dateString = fmt.format(event.getStart());
+
+
+            emailService.createdAnAccount(user, "Letter of Appreciation", String.format(user.getFirstName() + " " + user.getLastName() + ",\n\n On behalf of the " + event.getOrganization() + ", we would like to thank you for taking the time to volunteer at the " + event.getTitle() + " that took place on " + dateString + ". We could not have had such an amazing event without your help and support.\n\n By participating for a total of " + shiftHours + " hour(s) as a " + position.getTitle() + " volunteer, you aided us in bringing the community closer together and giving back. We hope to see you again as a volunteer at future events.\n\n If you have any questions or need to get into contact with the organizer of this event, please do so at " + event.getCreator().getEmail() + " or " + event.getCreator().getPhoneNumber() + ". \n\n\n Sincerely,\n\n " + event.getCreator().getFirstName() + " " + event.getCreator().getLastName() + "\n" + event.getOrganization()));
         }
         return "redirect:/events";
     }
@@ -216,7 +245,7 @@ public class EventController {
     public String showVolunteersPage(@PathVariable long id, Model model) {
         Event event = eventDao.findOne(id);
         model.addAttribute("event", event);
-        List<Position> positions = positionDao.findByEvent_Id(id);
+        List<Position> positions = positionDao.findAllByEvent_Id(id);
         Map<Position, List> volunteers = new HashMap<>();
         for(Position position : positions) {
             List<UserPosition> userPositions = userPositionDao.findAllByPosition(position);

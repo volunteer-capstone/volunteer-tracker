@@ -6,6 +6,7 @@
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
     <link rel="stylesheet" th:href="@{/css/geocodecss.css}" />
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" />
 
 </head>
 <body>
@@ -20,42 +21,42 @@
         </div>
     </div>
 
-    <!--    NEED TO FIND FORM FOR DATE TIME STAMP INPUT-->
     <div class="field">
-        <label class="label" for="start">Start Date and Time:</label>
-        <div class="control">
-            <p>Current Start Date and Time: <span th:text="${#dates.format(event.start, 'dd-MMM-yyyy HH:mm')}"></span></p>
-            <input type="datetime-local" name="start" id="start" class="input"/>
-        </div>
-    </div>
-
-    <div class="field">
-        <label class="label" for="stop">End Date and Time:</label>
-        <div class="control">
-            <p>Current End Date and Time: <span th:text="${#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></span></p>
-            <input type="datetime-local" name="stop" id="stop" class="input"/>
-        </div>
-    </div>
-
-    <div class="field">
-        <label class="label" for="location">Location:</label>
+        <label class="label" for="venue">Venue:</label>
         <div class="control">
             <p>Current Location: <span th:text="${event.location}"></span></p>
-            <input id="location" type="text" name="location" class="input" placeholder="Location" />
+            <input id="venue" type="text" name="location" class="input" placeholder="Venue" />
         </div>
     </div>
+
     <div class="field">
+        <input type="hidden" id="mapToken" name="mapToken" th:value="${mapToken}" />
         <label class="label" for="address">Address:</label>
         <div class="control">
             <p>Current Location: <span th:text="${event.address}"></span></p>
             <div id='geocoder' class='geocoder'></div>
         </div>
     </div>
+
+    <div class="field">
+        <label class="label" for="cal">Start and End Date and Time:</label>
+        <div class="control">
+            <p>Current Start Date and Time:
+                <span th:text="${#dates.format(event.start, 'dd-MMM-yyyy HH:mm')}"></span>
+                <span th:text="${#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></span>
+            </p>
+            <input type="date" id="cal" />
+            <input type="hidden" id="start" name="start" />
+            <input type="hidden" id="stop" name="stop" />
+            <input type="hidden" id="end" />
+        </div>
+    </div>
+
     <div class="field">
         <label class="label" for="description">Description:</label>
         <div class="control">
             <p>Current Event Name: <span th:text="${event.description}"></span></p>
-            <input id="description" name="description" type="text" class="input" placeholder="Description"/>
+            <textarea id="description" name="description" class="textarea" placeholder="Description"></textarea>
         </div>
     </div>
 
@@ -68,12 +69,14 @@
     </div>
 
 </form>
-<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>
-<!--<script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>-->
+<div id="map"></div>
+<!--<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>-->
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
 <script th:src="@{/js/key.js}"></script>
 <script th:src="@{/js/mapbox-geocoder-utils.js}"></script>
 <script th:src="@{/js/mapGeocodejs.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+<script th:src="@{/js/bulmaCalendarjs.js}"></script>
 </body>
 </html>

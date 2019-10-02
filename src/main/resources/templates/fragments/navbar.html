@@ -18,7 +18,8 @@
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             <a href="/" class="navbar-item">Home</a>
-            <a href="/events" class="navbar-item">View All Events</a>
+            <a href="/events" class="navbar-item">Search Events</a>
+            <a href="/about-us" class="navbar-item">About Us</a>
             <a sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().isOrganizer()} == true" href="/events/create" class="navbar-item">Create An Event</a>
         </div>
 
@@ -27,7 +28,7 @@
                 <div class="buttons">
                     <a sec:authorize="!isAuthenticated()" th:href="@{/register}" class="button is-primary"><strong>Sign up</strong>
                         <span class="icon">
-                            <i class="fas fa-frog"></i>
+                            <i class="fas fa-hands-helping"></i>
                         </span>
                     </a>
                     <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="button is-light">Log in
@@ -37,7 +38,7 @@
                     </a>
                     <a sec:authorize="isAuthenticated()" th:href="@{/users/{id}/profile(id=${#authentication.principal.id})}" class="button is-primary">View Profile
                     <span class="icon">
-                        <i class="fas fa-kiwi-bird"></i>
+                        <i class="fas fa-hands-helping"></i>
                     </span></a>
                     <form th:action="@{/logout}" th:method="post">
                         <button sec:authorize="isAuthenticated()" class="button is-warning">Logout

@@ -7,13 +7,16 @@ import com.codeup.volunteertracker.models.UserPosition;
 import com.codeup.volunteertracker.repositories.EventRepository;
 import com.codeup.volunteertracker.repositories.PositionRepository;
 import com.codeup.volunteertracker.repositories.UserPositionRepository;
+import com.codeup.volunteertracker.services.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,6 +37,9 @@ public class PositionController {
         this.userPositionDao = userPositionRepository;
     }
 
+    @Autowired
+    private EmailService emailService;
+
     @GetMapping("events/{id}/create-position")
     public String createPosition(Model viewModel, @PathVariable long id){
         viewModel.addAttribute("position", new Position());
@@ -46,7 +52,7 @@ public class PositionController {
     @PostMapping("events/{id}/create-position")
     public String createPosition(
             @PathVariable long id, @RequestParam(name="description") String description, @RequestParam(name="start") String start, @RequestParam(name="end") String end, @RequestParam(name="numNeeded") int numNeeded, @RequestParam(name="title") String title) throws ParseException {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            DateFormat df = new SimpleDateFormat("MM/dd/yy HH:mm");
             Date starttime = df.parse(start);
             Date endtime = df.parse(end);
             Position position = new Position();
@@ -58,8 +64,9 @@ public class PositionController {
             Event event = eventDao.findOne(id);
             position.setEvent(event);
             Position savePosition = positionDao.save(position);
-            return "redirect:/events/" + savePosition.getEvent().getId();
 
+        emailService.createdPosition(savePosition, "Congrats on Creating Your Volunteer Position", String.format("Let's get the community together to volunteer by giving back and helping you with your good deed.  \n\n Spread the word to gather volunteers for this position with the following link: https://pathofthevolunteer.com/events/%d", savePosition.getEvent().getId()));
+            return "redirect:/events/" + savePosition.getEvent().getId();
     }
 
     // EDIT POSITION
@@ -111,6 +118,8 @@ public class PositionController {
         Position toDelete = positionDao.findOne(id);
         long eventId =toDelete.getEvent().getId();
         positionDao.delete(id);
+
+        emailService.createdPosition(toDelete, "Notification: Deletion of Volunteer Position", String.format("One of the positions on the %s event has been removed. \n\n Please visit the following link: https://pathofthevolunteer.com/events/%d to add more positions, if needed.", toDelete.getEvent(), toDelete.getEvent().getId()));
         return "redirect:/events/" + eventId ;
     }
 
@@ -122,10 +131,14 @@ public class PositionController {
         Position position = positionDao.findOne(id);
         userPosition.setUser(userSession);
         userPosition.setPosition(position);
-        position.setNumNeeded(position.getNumNeeded() - 1);
         userPositionDao.save(userPosition);
 
         long eventId = positionDao.positionEventId(position.getId());
+        Event event = eventDao.findOne(eventId);
+        position.setNumNeeded(position.getNumNeeded() - 1);
+        positionDao.save(position);
+
+        emailService.createdUserPosition(userPosition, "Congrats on Volunteering!", String.format("Thank you for volunteering! \n\n This will event take place  at " + event.getLocation() + ", " + event.getAddress() + ".\n\n  Your volunteer slot is from " + position.getStart() + " to " + position.getEnd() + ".\n\n  Please try to arrive 15 minutes early to check in with the organizer.  If you have anymore follow up questions about your event, please reference the following link: https://pathofthevolunteer.com/events/" + eventId + " or contact the organizer, " + event.getCreator().getFirstName() + " " + event.getCreator().getLastName() + " at " +  event.getCreator().getEmail() + " or " +  event.getCreator().getPhoneNumber() + "."));
 
         return "redirect:/users/" + userSession.getId() + "/profile";
     }
@@ -137,5 +150,25 @@ public class PositionController {
         return "redirect:/users/" + userSession.getId() + "/profile";
     }
 
+//    unregister for volunteer event
+    @GetMapping("/events/positions/{id}/volunteer/remove")
+    public String volunteerUnregister(@PathVariable long id){
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Position position = positionDao.findOne(id);
+        UserPosition userPosition = userPositionDao.findUserPositionByPositionAndUser(position, userSession);
+        userPositionDao.delete(userPosition);
+        long eventId = positionDao.positionEventId(position.getId());
+        Event event = eventDao.findOne(eventId);
+        position.setNumNeeded(position.getNumNeeded() + 1);
+        positionDao.save(position);
+        return "redirect:/users/" + userSession.getId() + "/profile";
+    }
+
+    @PostMapping("/events/positions/{id}/volunteer/remove")
+    public String volunteerUnregisterPost(@PathVariable long id){
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return "redirect:/users/" + userSession.getId() + "/profile";
+    }
 
 }

@@ -36,6 +36,9 @@ public class Event {
     @Column( columnDefinition = "TEXT")
     private String photo;
 
+    @Column(nullable = false)
+    private String organization;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User creator;
@@ -46,7 +49,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String description, String location, Date start, Date stop, User creator, List<Position> positions, String photo, String address) {
+    public Event(String title, String description, String location, Date start, Date stop, User creator, List<Position> positions, String photo, String address, String organization) {
         this.title = title;
         this.description = description;
         this.location = location;
@@ -56,6 +59,7 @@ public class Event {
         this.positions= positions;
         this.photo= photo;
         this.address = address;
+        this.organization = organization;
     }
 
     public long getId() {
@@ -146,5 +150,11 @@ public class Event {
         this.address = address;
     }
 
+    public String getOrganization() {
+        return organization;
+    }
 
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
 }

@@ -10,41 +10,41 @@
 
 <div class="container">
     <div class="content">
-        <h2>Make an account!</h2>
-        <h6 class="subtitle is-6">Fields annotated with an <span style="color: red">*</span> are required</h6>
+        <h2>Register Here</h2>
+        <h6 class="subtitle is-6">All fields are required</h6>
     </div>
 
     <form th:action="@{/register}" th:method="post" th:object="${user}">
         <div class="field">
-            <label class="label" for="firstName">First Name<span style="color: red">*</span></label>
+            <label class="label" for="firstName">First Name</label>
             <div class="control">
                 <input type="text" id="firstName" class="input" th:field="*{firstName}" placeholder="First Name" />
             </div>
         </div>
 
         <div class="field">
-            <label class="label" for="lastName">Last Name<span style="color: red">*</span></label>
+            <label class="label" for="lastName">Last Name</label>
             <div class="control">
                 <input type="text" id="lastName" class="input" th:field="*{lastName}" placeholder="Last Name"/>
             </div>
         </div>
 
         <div class="field">
-            <label class="label" for="phoneNumber">Phone Number<span style="color: red">*</span></label>
+            <label class="label" for="phoneNumber">Phone Number</label>
             <div class="control">
                 <input type="text" id="phoneNumber" class="input" th:field="*{phoneNumber}" placeholder="Phone Number"/>
             </div>
         </div>
 
         <div class="field">
-            <label class="label" for="username">Username<span style="color: red">*</span></label>
+            <label class="label" for="username">Username</label>
             <div class="control">
                 <input id="username" class="input" th:field="*{username}" placeholder="Username" />
             </div>
         </div>
 
         <div class="field">
-            <label class="label" for="email">Email<span style="color: red">*</span></label>
+            <label class="label" for="email">Email</label>
             <div class="control">
                 <input type="text" id="email" class="input" th:field="*{email}" placeholder="Email"/>
                 <div class="content">
@@ -57,7 +57,7 @@
         </div>
 
         <div class="field">
-            <label class="label" for="password">Password<span style="color: red">*</span></label>
+            <label class="label" for="password">Password</label>
             <div class="control">
                 <input type="password" id="password" class="input" th:field="*{password}" placeholder="Password"/>
                 <div id="password2" class="content" style="display:none">
@@ -69,7 +69,7 @@
         </div>
 
         <div class="field">
-            <label class="label" for="passwordConfirm">Confirm Password<span style="color: red">*</span></label>
+            <label class="label" for="passwordConfirm">Confirm Password</label>
             <div class="control">
                 <input type="password" id="passwordConfirm" class="input" placeholder="Confirm Password"/>
                 <div id="passwordConfirm2" class="content" style="display: none">
@@ -82,6 +82,14 @@
 
         <div class="field">
             <div class="control">
+                <label class="checkbox">
+                    <input id="organizer" name="organizer" type="checkbox" /> Click if you are an Organization that need Volunteers!
+                </label>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
                 <button id="registerDisabled" class="button is-success" disabled="disabled">Register Now</button>
                 <button id="register" class="button is-success" style="display: none">Register Now</button>
             </div>
@@ -89,7 +97,7 @@
 
     </form>
 </div>
-<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>
+<!--<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>-->
 
 <script type="text/javascript" th:src="@{/js/deleteNotification.js}"></script>
 <script type="text/javascript" th:src="@{/js/passwordjs.js}"></script>
