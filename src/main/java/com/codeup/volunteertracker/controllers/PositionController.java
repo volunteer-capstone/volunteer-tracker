@@ -150,5 +150,25 @@ public class PositionController {
         return "redirect:/users/" + userSession.getId() + "/profile";
     }
 
+//    unregister for volunteer event
+    @GetMapping("/events/positions/{id}/volunteer/remove")
+    public String volunteerUnregister(@PathVariable long id){
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Position position = positionDao.findOne(id);
+        UserPosition userPosition = userPositionDao.findUserPositionByPositionAndUser(position, userSession);
+        userPositionDao.delete(userPosition);
+        long eventId = positionDao.positionEventId(position.getId());
+        Event event = eventDao.findOne(eventId);
+        position.setNumNeeded(position.getNumNeeded() + 1);
+        positionDao.save(position);
+        return "redirect:/users/" + userSession.getId() + "/profile";
+    }
+
+    @PostMapping("/events/positions/{id}/volunteer/remove")
+    public String volunteerUnregisterPost(@PathVariable long id){
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return "redirect:/users/" + userSession.getId() + "/profile";
+    }
 
 }

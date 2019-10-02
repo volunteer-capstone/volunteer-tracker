@@ -96,6 +96,7 @@
 					<p th:if="*{pos.start.before(execInfo.now)}">Position has ended</p>
 					<p th:unless="*{pos.start.before(execInfo.now)}">Starts in: </p>
 					<p th:text="'Name: ' + *{pos.title} + ' Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
+					<a class="button is-success" th:href="@{/events/positions/{id}/volunteer/remove(id=${pos.getId()})}">Unregister for Event</a>
 				</th:block>
 				<th:block th:if="(${user.id} == ${userId}) and (${user.organizer} == true)">
 					<div class="field is-grouped">
