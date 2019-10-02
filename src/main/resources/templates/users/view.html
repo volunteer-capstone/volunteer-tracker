@@ -79,9 +79,6 @@
 						<div class="control">
 							<a class="button is-small is-info">Text all volunteers</a>
 						</div>
-						<div class="control">
-							<a class="button is-small is-info">Approve hours</a>
-						</div>
 					</div>
 				</th:block>
 				<hr/>
@@ -104,9 +101,6 @@
 						</div>
 						<div class="control">
 							<a class="button is-small is-info">Text all volunteers</a>
-						</div>
-						<div class="control">
-							<a class="button is-small is-info">Approve hours</a>
 						</div>
 					</div>
 				</th:block>
@@ -132,9 +126,11 @@
 						<div class="control">
 							<a class="button is-small is-info">Text all volunteers</a>
 						</div>
-						<div class="control">
-							<a class="button is-small is-info">Approve hours</a>
-						</div>
+						<th:block th:if="(${user.id} == ${userId}) and (${user.isOrganizer()} == true) and ${event.getStart().before(execInfo.now)}">
+							<div class="control">
+								<a th:href="@{/events/approve/{id}(id=${event.id})}" class="button is-small is-info">Approve hours</a>
+							</div>
+						</th:block>
 					</div>
 				</th:block>
 				<hr/>
@@ -158,9 +154,6 @@
 						</div>
 						<div class="control">
 							<a class="button is-small is-info">Text all volunteers</a>
-						</div>
-						<div class="control">
-							<a class="button is-small is-info">Approve hours</a>
 						</div>
 					</div>
 				</th:block>
