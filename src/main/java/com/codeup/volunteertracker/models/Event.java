@@ -157,4 +157,13 @@ public class Event {
     public void setOrganization(String organization) {
         this.organization = organization;
     }
+
+
+    public int getPositionNumsNeeded() {
+        int totalNumNeeded = 0;
+        for (int i = 0; i < positions.size(); i++) {
+            totalNumNeeded += positions.get(i).getNumNeeded();
+        }
+        return totalNumNeeded;
+    }
 }
