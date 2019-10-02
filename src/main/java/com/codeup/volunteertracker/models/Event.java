@@ -158,7 +158,6 @@ public class Event {
         this.organization = organization;
     }
 
-
     public int getPositionNumsNeeded() {
         int totalNumNeeded = 0;
         for (int i = 0; i < positions.size(); i++) {
