@@ -60,10 +60,10 @@
         <th:block th:each="position: ${positions}">
             <div class="column is-one-quarter" th:if="((${position.numNeeded}) > 0)">
                 <div class="content">
-                    <p th:text="${position.title}"></p>
-                    <p th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></p>
-                    <p th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></p>
-                    <p th:text="${position.numNeeded}"></p>
+                    <h6 th:text="${position.title}"></h6>
+                    <h6 th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></h6>
+                    <h6 th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></h6>
+                    <h6 th:text="${position.numNeeded}"></h6>
                 </div>
                 <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})">
                     <div class="field">
