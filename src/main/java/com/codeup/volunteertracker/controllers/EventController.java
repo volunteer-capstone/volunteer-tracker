@@ -164,7 +164,7 @@ public class EventController {
     public String deleteEvent(@PathVariable long id) {
         Event toDelete = eventDao.findOne(id);
         long eventId = toDelete.getId();
-        List<Position> positions = positionDao.findByEvent_Id(eventId);
+        List<Position> positions = positionDao.findAllByEvent_Id(eventId);
         for ( Position position : positions) {
             long positionId = position.getId();
             List<UserPosition> userPositions = userPositionDao.findAllByPosition_Id(positionId);
@@ -204,7 +204,7 @@ public class EventController {
             model.addAttribute("userId", userId);
         }
 
-        List<Position> positions = positionDao.findByEvent_Id(id);
+        List<Position> positions = positionDao.findAllByEvent_Id(id);
         Map<Position, List> volunteers = new HashMap<>();
         for(Position position : positions) {
             List<UserPosition> userPositions = userPositionDao.findAllByPosition(position);
@@ -245,7 +245,7 @@ public class EventController {
     public String showVolunteersPage(@PathVariable long id, Model model) {
         Event event = eventDao.findOne(id);
         model.addAttribute("event", event);
-        List<Position> positions = positionDao.findByEvent_Id(id);
+        List<Position> positions = positionDao.findAllByEvent_Id(id);
         Map<Position, List> volunteers = new HashMap<>();
         for(Position position : positions) {
             List<UserPosition> userPositions = userPositionDao.findAllByPosition(position);

@@ -20,3 +20,4 @@ public interface UserPositionRepository extends CrudRepository<UserPosition, Lon
 //    @Query(value="select id from user_position where position_id = ? and user_id = ?", nativeQuery = true)
     UserPosition findUserPositionByPositionAndUser(Position position, User user);
 }
+

@@ -1,6 +1,12 @@
 package com.codeup.volunteertracker.controllers;
 
+import com.codeup.volunteertracker.models.Event;
+import com.codeup.volunteertracker.models.Position;
 import com.codeup.volunteertracker.models.User;
+import com.codeup.volunteertracker.models.UserPosition;
+import com.codeup.volunteertracker.repositories.EventRepository;
+import com.codeup.volunteertracker.repositories.PositionRepository;
+import com.codeup.volunteertracker.repositories.UserPositionRepository;
 import com.codeup.volunteertracker.repositories.UserRepository;
 import com.codeup.volunteertracker.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +20,22 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class UserController {
     private final UserRepository userRepo;
     private PasswordEncoder passwordEncoder;
+    private final UserPositionRepository userPositionDao;
+    private final PositionRepository positionDao;
+    private final EventRepository eventDao;
 
-    public UserController(UserRepository userRepo, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userRepo, PasswordEncoder passwordEncoder, UserPositionRepository userPositionRepository, PositionRepository positionRepository, EventRepository eventRepository) {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
+        this.userPositionDao = userPositionRepository;
+        this.positionDao = positionRepository;
+        this.eventDao = eventRepository;
     }
 
 
@@ -130,11 +143,41 @@ public class UserController {
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         long userId = userSession.getId();
         User user = userRepo.findOne(userId);
-        userRepo.delete(userId);
+        if(!user.isOrganizer()){
+            List<UserPosition> userPositions = userPositionDao.findByUser(user);
+            for(UserPosition userPosition: userPositions){
+                Position position = positionDao.findOne(userPosition.getPosition().getId());
+                position.setNumNeeded(position.getNumNeeded() + 1);
+                positionDao.save(position);
+            }
+            userPositionDao.delete(userPositions);
+            userRepo.delete(userId);
+        }else{
+            List<Event> events = eventDao.findAllByCreator(user);
+            for(Event event: events){
+                List<Position> createdPositions = positionDao.findAllByEvent_Id(event.getId());
+                for(Position createdPosition: createdPositions){
+                    List<UserPosition> createdPositionUserPositions = userPositionDao.findAllByPosition(createdPosition);
+                    userPositionDao.delete(createdPositionUserPositions);
+                    List<UserPosition> userPositions = userPositionDao.findByUser(user);
+                    for(UserPosition userPosition: userPositions){
+                        Position position = positionDao.findOne(userPosition.getPosition().getId());
+                        position.setNumNeeded(position.getNumNeeded() + 1);
+                        positionDao.save(position);
+                    }
+                    userPositionDao.delete(userPositions);
+                }
+                positionDao.delete(createdPositions);
+            }
+            eventDao.delete(events);
+            userRepo.delete(userId);
+        }
+
         emailService.createdAnAccount(user, "Account Deleted with Path of the Volunteer", String.format("Thank you, %s %s for being a member of Path of the Volunteer.\n\n If you would like to use our services again in the future, please feel free to visit our site at https://pathofthevolunteer.com.", user.getFirstName(), user.getLastName())) ;
 
         return "redirect:/login?logout";
     }
+
 
 //    MAKE USER AN ORGANIZER
     @PostMapping("profile/organizer/{id}")
