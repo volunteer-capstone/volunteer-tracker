@@ -22,10 +22,10 @@
     </div>
 
     <div class="field">
-        <label class="label" for="location">Location:</label>
+        <label class="label" for="venue">Venue:</label>
         <div class="control">
             <p>Current Location: <span th:text="${event.location}"></span></p>
-            <input id="location" type="text" name="location" class="input" placeholder="Location" />
+            <input id="venue" type="text" name="location" class="input" placeholder="Venue" />
         </div>
     </div>
 
@@ -56,7 +56,7 @@
         <label class="label" for="description">Description:</label>
         <div class="control">
             <p>Current Event Name: <span th:text="${event.description}"></span></p>
-            <input id="description" name="description" type="text" class="input" placeholder="Description"/>
+            <textarea id="description" name="description" class="textarea" placeholder="Description"></textarea>
         </div>
     </div>
 
@@ -69,6 +69,7 @@
     </div>
 
 </form>
+<div id="map"></div>
 <!--<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>-->
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
