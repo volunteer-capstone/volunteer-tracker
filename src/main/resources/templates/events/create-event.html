@@ -14,15 +14,21 @@
 
 <div class="container">
     <div class="content">
-        <h2>Create an Event!</h2>
-        <h6 class="subtitle is-6">All fields ae required</h6>
+        <h2>Event Information</h2>
+        <h6 class="subtitle is-6">*All fields are required.</h6>
     </div>
 
     <form th:action="@{'/events/create'}" th:method="post">
         <div class="field">
-            <label class="label" for="title"></label>
+            <label class="label" for="organization">Organization Name:</label>
             <div class="control">
-                <input type="text"  name="title" id="title" class="input" placeholder="Event Name" />
+                <input type="text"  name="organization" id="organization" class="input" placeholder="Organization..." />
+            </div>
+        </div>
+        <div class="field">
+            <label class="label" for="title">Event Name:</label>
+            <div class="control">
+                <input type="text"  name="title" id="title" class="input" placeholder="Event..." />
             </div>
         </div>
 
