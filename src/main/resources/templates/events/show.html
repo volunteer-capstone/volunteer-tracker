@@ -63,8 +63,39 @@
                 <p th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></p>
                 <p th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></p>
                 <p th:text="${position.numNeeded}"></p>
-                <p th:text="${position.description}"></p>
-                <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})"><a class="button is-primary" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a></th:block>
+                <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})">
+                    <div class="field">
+                        <div class="control">
+                            <a id="openModal" class="button">View Details</a>
+                        </div>
+                    </div>
+
+                    <div class="modal">
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title" th:text="${position.title}"></p>
+                                <button class="modal-close delete is-large" aria-label="close"></button>
+                            </header>
+                            <section class="modal-card-body">
+                                <div class="content">
+                                    <p th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></p>
+                                    <p th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></p>
+                                    <p th:text="${position.numNeeded}"></p>
+                                    <p th:text="${position.description}"></p>
+                                </div>
+                            </section>
+                            <footer class="modal-card-foot">
+                                <a class="button is-primary" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a>
+                                <button id="cancel" class="button">Cancel
+                                    <span class="icon">
+                                        <i class="fas fa-backspace"></i>
+                                    </span>
+                                </button>
+                            </footer>
+                        </div>
+                    </div>
+                </th:block>
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-small is-warning" th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a></th:block>
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-small is-danger" th:href="@{/events/positions/delete/{id}(id = ${position.id})}">Delete Position</a></th:block>
             </div>
