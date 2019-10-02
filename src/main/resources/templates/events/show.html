@@ -87,7 +87,8 @@
                                 </div>
                             </section>
                             <footer class="modal-card-foot">
-                                <a class="button is-primary" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a>
+                                <th:block sec:authorize="isAuthenticated()"><h6 th:if="${userPos.contains(position.getId())}">You have already signed up for this position!</h6></th:block>
+                                <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId}) and (!${userPos.contains(position.getId())})"><a class="button is-primary" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a></th:block>
                                 <button id="cancel" class="button">Cancel
                                     <span class="icon">
                                         <i class="fas fa-backspace"></i>

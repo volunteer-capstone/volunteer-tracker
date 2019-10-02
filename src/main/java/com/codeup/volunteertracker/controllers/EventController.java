@@ -80,7 +80,9 @@ public class EventController {
             User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User currentUser = userDao.findOne(userSession.getId());
 
-            List<UserPosition> userPos = currentUser.getUserPosition();
+            List<Long> userPos = currentUser.getUserPositionIdsByEventId(id);
+
+//            List<UserPosition> userPos = currentUser.getUserPosition();
             viewModel.addAttribute("userPos", userPos);
             long userId = userSession.getId();
             viewModel.addAttribute("userId", userId);

@@ -70,7 +70,7 @@
 						<br/>
 						<h5>This Event has ended</h5>
 						<h6 th:text="*{event.title}"></h6>
-						<th:block th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
+						<th:block th:each="pos: ${user.getUserPositionsByEventId(event.getId())}">
 							<h6>Position has ended</h6>
 							<p th:text="'Position: ' + *{pos.title}"></p>
 							<p th:text="'Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
@@ -91,7 +91,7 @@
 				<div th:if="*{event.getStart().after(execInfo.now)}">
 					<br/>
 					<h6 th:text="*{event.title}"></h6>
-					<th:block th:each="pos: ${user.getUserPositionTitlesByEventId(event.getId())}">
+					<th:block th:each="pos: ${user.getUserPositionsByEventId(event.getId())}">
 						<p th:text="'Position: ' + *{pos.title}"></p>
 						<p th:text="'Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
 						<div class="field">
