@@ -24,8 +24,8 @@
             <div class="column is-one-third event">
                 <div th:class="${event.title}">
                     <div class="card">
-                        <div class="card-image is-flex is-horizontal-center">
-                            <figure class="image is-128x128">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
                                 <th:block th:if="${event.photo} == null or ${event.photo} == ''">
                                     <img th:src="@{/img/eventLocation.jpeg}" alt="event photo"/>
                                 </th:block>
