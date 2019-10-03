@@ -1,6 +1,7 @@
 "use strict";
 (function() {
     document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector('html').classList.add('has-navbar-fixed-top');
         // Get all "navbar-burger" elements
         const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 

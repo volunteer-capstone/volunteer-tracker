@@ -5,7 +5,6 @@
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.css' rel='stylesheet'/>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
     <link rel="stylesheet" th:href="@{/css/mapcss.css}" />
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
@@ -21,7 +20,7 @@
                 <input type="hidden" id="mapToken" name="mapToken" th:value="${mapToken}" />
             </div>
         </div>
-        <div class="column" style="text-align: center;">
+        <div class="column has-text-centered">
             <div class="content">
                 <h1 th:text="${event.title}"></h1>
                 <th:block th:if="${event.photo} == null or ${event.photo} == ''">
@@ -75,14 +74,14 @@
         <th:block th:each="position: ${positions}">
             <div class="tile is-3 is-parent" th:if="((${position.numNeeded}) > 0)">
                 <div class="tile is-child hero is-info is-bold" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 15px 0;">
-                    <h6 class="title is-6" style="text-align: center" th:text="${position.title}"></h6>
-                    <h6 class="title is-6" style="text-align: center" th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + ${#dates.format(position.end, 'HH:mm')}"></h6>
-                    <h6 class="title is-6" style="text-align: center" th:text="${position.numNeeded} + ' positions open'"></h6>
+                    <h6 class="title is-6 has-text-centered" th:text="${position.title}"></h6>
+                    <h6 class="title is-6 has-text-centered" th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + ${#dates.format(position.end, 'HH:mm')}"></h6>
+                    <h6 class="title is-6 has-text-centered" th:text="${position.numNeeded} + ' positions open'"></h6>
 
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
                     <div class="field">
-                        <div class="control" style="text-align: center">
-                            <a class="open-modal button is-light" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">Text Message Position Volunteers</a>
+                        <div class="control has-text-centered">
+                            <a class="open-modal button is-light" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">Text Position Volunteers</a>
                             <div class="modal">
                                 <div class="modal-background close"></div>
                                 <div class="modal-card">
@@ -116,7 +115,7 @@
 
                 <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})">
                     <div class="field">
-                        <div class="control" style="text-align: center; color: black">
+                        <div class="control has-text-centered has-text-black">
                             <a class="open-modal button" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">View Details</a>
                             <div class="modal">
                                 <div class="modal-background"></div>

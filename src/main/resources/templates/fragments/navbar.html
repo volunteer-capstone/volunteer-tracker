@@ -2,11 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
-<nav class="navbar is-info" role="navigation" aria-label="main navigation" th:fragment="bulma-navbar">
+<nav class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation" th:fragment="bulma-navbar">
     <div class="navbar-brand">
-        <a class="navbar-item" href="/">
-            <img th:src="@{/img/personIcon.png}" />
-        </a>
+<!--        <a class="navbar-item is-size-3 has-text-weight-semibold" href="/">-->
+<!--            <img th:src="@{/img/personIcon.png}" style="padding-right: 10px;"/>-->
+<!--            Path of the Volunteer-->
+<!--        </a>-->
 
         <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
@@ -17,13 +18,16 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-            <a href="/" class="navbar-item has-text-weight-semibold">Home</a>
-            <a href="/events" class="navbar-item has-text-weight-semibold">Search Events</a>
-            <a href="/about-us" class="navbar-item has-text-weight-semibold">About Us</a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/users/{id}/profile(id=${#authentication.principal.id})}" class="navbar-item has-text-weight-semibold">View Profile
+            <a href="/" class="navbar-item is-size-4">Home</a>
+            <a href="/events" class="navbar-item is-size-4">Search Events</a>
+            <a href="/about-us" class="navbar-item is-size-4">About Us</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/users/{id}/profile(id=${#authentication.principal.id})}" class="navbar-item is-size-4">View Profile
             </a>
         </div>
-
+        <div class="navbar-item is-size-3 has-text-weight-semibold has-text-white">
+            <img th:src="@{/img/personIcon.png}" style="padding-right: 10px;"/>
+            Path of the Volunteer
+        </div>
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
