@@ -9,7 +9,7 @@
 <div class="container">
 	<div class="content">
 		<h3 th:if="${user.id} == ${userId}">This is your profile: &emsp;<a class="button is-info" th:href="@{/profile/edit}">Edit</a></h3>
-		<h3 th:unless="${user.id} == ${userId}" th:text="'This is '+${user.username}+'\'s profile: '"></h3>
+		<h3 class="title is-2 has-text-black" th:unless="${user.id} == ${userId}" th:text="${user.username}+'\'s profile'"></h3>
 		<div class="columns is-mobile">
 			<div class="column is-half">
 				<div class="content is-flex is-horizontal-center">
