@@ -203,22 +203,22 @@ public class User {
     }
 
 
-    public long addHours() {
-        List<UserPosition> posList = userPosition;
-        long totalHours = 0;
-        for (int i = 0; i < posList.size(); i++) {
-
-            if (posList.get(i).isApproved()) {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-                Date firstDate = posList.get(i).getPosition().getStart();
-                Date secondDate = posList.get(i).getPosition().getEnd();
-
-                long diffInMillis = Math.abs(secondDate.getTime() - firstDate.getTime());
-                long diff = TimeUnit.MINUTES.convert(diffInMillis, TimeUnit.MILLISECONDS);
-
-                totalHours += diff;
-            }
-        }
-        return (totalHours/60);
-    }
+//    public long addHours() {
+//        List<UserPosition> posList = userPosition;
+//        long totalHours = 0;
+//        for (int i = 0; i < posList.size(); i++) {
+//
+//            if (posList.get(i).isApproved()) {
+//                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+//                Date firstDate = posList.get(i).getPosition().getStart();
+//                Date secondDate = posList.get(i).getPosition().getEnd();
+//
+//                long diffInMillis = Math.abs(secondDate.getTime() - firstDate.getTime());
+//                long diff = TimeUnit.MINUTES.convert(diffInMillis, TimeUnit.MILLISECONDS);
+//
+//                totalHours += diff;
+//            }
+//        }
+//        return (totalHours/60);
+//    }
 }
