@@ -3,7 +3,7 @@ const calOptions = {
     color: 'primary',
     isRange: true,
     allowSameDayRange: true,
-    lang: "fr",
+    lang: "en",
     dateFormat: 'MM/DD/YYYY',
     timeFormat: 'HH:mm',
     displayMode: 'default',
