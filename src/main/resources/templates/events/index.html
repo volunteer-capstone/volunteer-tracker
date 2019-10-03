@@ -13,12 +13,11 @@
         <div class="control">
             <input class="input" id="eventSearch" type="text" onkeyup="searchEvents()" placeholder="Enter event title" />
         </div>
-        <div class="control" style="text-align: center">
-            <input id="posCheckbox" type="checkbox" onclick="searchEvents()" checked="checked"/>
-            <label class="checkbox" for="posCheckbox">Filter by Position</label>
+        <div class="field" style="text-align: center">
+            <input class="is-checkradio is-medium" id="posCheckbox" type="checkbox" name="posCheckbox" onclick="searchEvents()"/>
+            <label for="posCheckbox">Filter by Position</label>
         </div>
     </div>
-
     <div class="columns is-multiline is-mobile eventDiv" style="margin-top: 10px;">
         <th:block th:each="event : ${events}" th:if="*{event.getStart().after(execInfo.now)}">
             <div class="column is-one-third event">
