@@ -39,7 +39,7 @@
                     </a>
                     <a sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().isOrganizer()} == true" href="/events/create"  class="button is-light">Create An Event
                         <span class="icon">
-                           <i class="fas fa-screwdriver"></i>
+                            <i class="fas fa-calendar-plus"></i>
                         </span>
                     </a>
                     <form th:action="@{/logout}" th:method="post">
