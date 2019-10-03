@@ -13,8 +13,7 @@
         <h1>Create Position for the event!</h1>
         <h6 class="subtitle is-6">All fields are required</h6>
         <h3 th:text="${event.title}"></h3>
-        <h3 th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')}"></h3>
-        <h3 th:text="${#dates.format(event.stop, 'MMM-dd-yyyy HH:mm')}"></h3>
+        <h3 th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + ${#dates.format(event.stop, 'HH:mm')}"></h3>
     </div>
 
     <form th:action="@{/events/{id}/create-position(id=${event.id})}" th:method="post">

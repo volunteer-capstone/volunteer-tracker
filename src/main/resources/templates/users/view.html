@@ -72,7 +72,7 @@
 									<th:block th:each="pos: ${user.getUserPositionsByEventId(event.getId())}">
 										<h6>Position has ended</h6>
 										<p th:text="'Position: ' + *{pos.title}"></p>
-										<p th:text="'Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
+										<p th:text="'Start: ' + *{#dates.format(pos.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(pos.end, 'HH:mm')}"></p>
 									</th:block>
 									<div class="field">
 										<div class="control">
@@ -92,7 +92,7 @@
 								<h6 th:text="*{event.title}"></h6>
 								<th:block th:each="pos: ${user.getUserPositionsByEventId(event.getId())}">
 									<p th:text="'Position: ' + *{pos.title}"></p>
-									<p th:text="'Start: ' + *{#dates.format(pos.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(pos.end, 'dd-MMM-yyyy HH:mm')}"></p>
+									<p th:text="'Start: ' + *{#dates.format(pos.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(pos.end, 'HH:mm')}"></p>
 									<div class="field">
 										<div class="control">
 											<a class="button is-small is-success" th:href="@{/events/positions/{id}/volunteer/remove(id=${pos.getId()})}">Unregister for Event</a>
@@ -115,7 +115,7 @@
 								<br/>
 								<h5>This Event has ended</h5>
 								<h6 th:text="*{event.title}"></h6>
-								<p th:text="'Start: ' + *{#dates.format(event.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></p>
+								<p th:text="'Start: ' + *{#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(event.stop, 'HH:mm')}"></p>
 								<div class="field">
 									<div class="control">
 										<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>
@@ -141,7 +141,7 @@
 							<div th:if="*{event.getStart().after(execInfo.now)}">
 								<br/>
 								<h5 th:text="*{event.title}"></h5>
-								<p th:text="'Start: ' + *{#dates.format(event.start, 'dd-MMM-yyyy HH:mm')} + ' End: ' + *{#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></p>
+								<p th:text="'Start: ' + *{#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(event.stop, 'HH:mm')}"></p>
 								<div class="field">
 									<div class="control">
 										<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>
