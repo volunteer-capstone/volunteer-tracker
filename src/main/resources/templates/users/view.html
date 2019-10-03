@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 	<th:block th:replace="fragments/header :: my-header(${user.getUsername()+'''s Profile'})" />
-<!--	<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />-->
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
@@ -47,14 +46,14 @@
 			<div class="column">
 				<div class="tabs is-toggle">
 					<ul>
-						<li class="tab"><a class="pastEvents">Past Events Volunteered For</a></li>
-						<li class="tab is-active"><a class="plannedEvents">Future Events Volunteered For</a></li>
+						<li class="tab" style="background: white"><a class="pastEvents">Past Events Volunteered For</a></li>
+						<li class="tab is-active" style="background: white"><a class="plannedEvents">Future Events Volunteered For</a></li>
 					</ul>
 				</div>
 				<div class="tabs is-toggle">
 					<ul>
-						<li class="tab"><a th:if="${user.organizer}" class="pastEventsCreated">Past Events Created</a></li>
-						<li class="tab"><a th:if="${user.organizer}" class="plannedEventsCreated">Future Events Created</a></li>
+						<li class="tab" style="background: white"><a th:if="${user.organizer}" class="pastEventsCreated">Past Events Created</a></li>
+						<li class="tab" style="background: white"><a th:if="${user.organizer}" class="plannedEventsCreated">Future Events Created</a></li>
 					</ul>
 				</div>
 				<hr/>
@@ -122,8 +121,35 @@
 								</div>
 								<th:block th:if="(${user.id} == ${userId}) and (${user.organizer} == true)">
 									<div class="field is-grouped">
-										<div class="control">
-											<a class="button is-small is-info">Text all volunteers</a>
+										<div class="control" >
+											<a class="open-modal button is-small is-success">Text Position Volunteers</a>
+											<div class="modal">
+												<div class="modal-background close"></div>
+												<div class="modal-card">
+													<header class="modal-card-head">
+														<p class="modal-card-title">Write your message</p>
+														<button class="close delete is-large" aria-label="close"></button>
+													</header>
+													<section class="modal-card-body">
+<!--														<form th:action="@{/text/position/{id}(id = ${position.id})}" th:method="post">-->
+<!--															<div class="field">-->
+<!--																<label class="label">Message</label>-->
+<!--																<div class="control">-->
+<!--																	<textarea class="textarea" name="body" cols="30" rows="10"></textarea>-->
+<!--																</div>-->
+<!--															</div>-->
+<!--															<button class="button" type="submit">Send SMS</button>-->
+<!--														</form>-->
+													</section>
+													<footer class="modal-card-foot">
+														<button class="close button">Cancel
+															<span class="icon">
+                                                				<i class="fas fa-backspace"></i>
+                                            				</span>
+														</button>
+													</footer>
+												</div>
+											</div>
 										</div>
 										<div class="control">
 											<a th:href="@{/events/approve/{id}(id=${event.id})}" class="button is-small is-info">Approve hours</a>
@@ -147,9 +173,36 @@
 									</div>
 								</div>
 								<th:block th:if="(${user.id} == ${userId}) and (${user.organizer} == true)">
-									<div class="field is-grouped">
+									<div class="field">
 										<div class="control">
-											<a class="button is-small is-info">Text all volunteers</a>
+											<a class="open-modal button is-small is-success">Text Position Volunteers</a>
+											<div class="modal">
+												<div class="modal-background close"></div>
+												<div class="modal-card">
+													<header class="modal-card-head">
+														<p class="modal-card-title">Write your message</p>
+														<button class="close delete is-large" aria-label="close"></button>
+													</header>
+													<section class="modal-card-body">
+<!--														<form th:action="@{/text/position/{id}(id = ${position.id})}" th:method="post">-->
+<!--															<div class="field">-->
+<!--																<label class="label">Message</label>-->
+<!--																<div class="control">-->
+<!--																	<textarea class="textarea" name="body" cols="30" rows="10"></textarea>-->
+<!--																</div>-->
+<!--															</div>-->
+<!--															<button class="button" type="submit">Send SMS</button>-->
+<!--														</form>-->
+													</section>
+													<footer class="modal-card-foot">
+														<button class="close button">Cancel
+															<span class="icon">
+                                                				<i class="fas fa-backspace"></i>
+                                            				</span>
+														</button>
+													</footer>
+												</div>
+											</div>
 										</div>
 									</div>
 								</th:block>
