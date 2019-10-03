@@ -76,9 +76,8 @@
             <div class="tile is-3 is-parent" th:if="((${position.numNeeded}) > 0)">
                 <div class="tile is-child hero is-info is-bold" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 15px 0;">
                     <h6 class="title is-6" style="text-align: center" th:text="${position.title}"></h6>
-                    <h6 class="title is-6" style="text-align: center" th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></h6>
-                    <h6 class="title is-6" style="text-align: center" th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></h6>
-                    <h6 class="title is-6" style="text-align: center" th:text="${position.numNeeded} + ' positioned open'"></h6>
+                    <h6 class="title is-6" style="text-align: center" th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + ${#dates.format(position.end, 'HH:mm')}"></h6>
+                    <h6 class="title is-6" style="text-align: center" th:text="${position.numNeeded} + ' positions open'"></h6>
 
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
                     <div class="field">
@@ -128,8 +127,7 @@
                                     </header>
                                     <section class="modal-card-body">
                                         <div class="content">
-                                            <p th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')}"></p>
-                                            <p th:text="${#dates.format(position.end, 'MMM-dd-yyyy HH:mm')}"></p>
+                                            <p th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + ${#dates.format(position.end, 'HH:mm')}"></p>
                                             <p th:text="${position.numNeeded}"></p>
                                             <p th:text="${position.description}"></p>
                                         </div>
