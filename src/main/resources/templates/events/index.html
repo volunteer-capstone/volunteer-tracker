@@ -39,6 +39,7 @@
                         </header>
                         <div class="card-content">
                             <div class="content">
+                                <p><strong th:text="${event.organization}"></strong></p>
                                 <p th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + ${#dates.format(event.stop, 'HH:mm')}"></p>
                                 <p>Number of Volunteers Needed: <span th:text="${event.getPositionNumsNeeded()}"></span></p>
                             </div>
