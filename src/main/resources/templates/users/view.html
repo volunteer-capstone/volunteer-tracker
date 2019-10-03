@@ -25,8 +25,8 @@
 				<div class="content">
 					<p>Name: 						<span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></p>
 					<p>Username: 					<span th:text="${user.username}"></span></p>
-					<p>Email: 						<span th:text="${user.email}"></span></p>
-					<p>Phone Number: 				<span th:text="${user.phoneNumber}"></span></p>
+					<p>Email: 						<a th:text="${user.email}"></a></p>
+					<p>Phone Number: 				<a th:text="${user.phoneNumber}"></a></p>
 					<p>Number of Hours Volunteered: <span th:text="${user.getHours()}"></span></p>
 <!--					<p>Number of Hours Planned: 	<span th:text="${user.addHours()}"></span></p>-->
 					<p>Bio: <span th:text="${user.bio}"></span></p>
