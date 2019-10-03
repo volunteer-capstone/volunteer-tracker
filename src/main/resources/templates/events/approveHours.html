@@ -17,8 +17,7 @@
 
     <div class="columns is-mobile">
         <div class="column"><h1 class="title" th:text="${event.title}"></h1></div>
-        <div class="column"><h1 class="title" th:text="${#dates.format(event.start, 'dd-MMM-yyyy HH:mm')}"></h1></div>
-        <div class="column"><h1 class="title" th:text="${#dates.format(event.stop, 'dd-MMM-yyyy HH:mm')}"></h1></div>
+        <div class="column"><h1 class="title" th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - '+${#dates.format(event.stop, 'HH:mm')}"></h1></div>
         <input type="hidden" name="eventId" th:value="${event.id}"/>
     </div>
     <hr/>
@@ -45,8 +44,8 @@
                 <th:block th:each="position : ${volunteers.keySet()}">
                     <tr style="background: lightblue">
                         <td th:text="${position.title}"></td>
-                        <td th:text="${#dates.format(position.start, 'dd-MMM-yyyy HH:mm')}"></td>
-                        <td th:text="${#dates.format(position.end, 'dd-MMM-yyyy HH:mm')}"></td>
+                        <td th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')} + ' - '+${#dates.format(position.end, 'HH:mm')}"></td>
+                        <td th:text=""></td>
                         <td id="hours" th:text="${event.posHours(position.start, position.end)}"></td>
                         <td></td>
                     </tr>
