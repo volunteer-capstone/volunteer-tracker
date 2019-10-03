@@ -39,8 +39,9 @@
                     </a>
                     <a sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().isOrganizer()} == true" href="/events/create"  class="button is-dark">Create An Event
                         <span class="icon">
-                            <i class="fas fa-hammer"></i>
-                        </span></a>
+                           <i class="fas fa-screwdriver"></i>
+                        </span>
+                    </a>
                     <form th:action="@{/logout}" th:method="post">
                         <button sec:authorize="isAuthenticated()" class="button is-warning">Logout
                             <span class="icon">
