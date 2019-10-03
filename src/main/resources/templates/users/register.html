@@ -11,26 +11,26 @@
 <div class="container">
     <div class="content">
         <h2>Register Here</h2>
-        <h6 class="subtitle is-6">All fields are required</h6>
+        <h6 class="subtitle is-6">All fields are required.</h6>
     </div>
 
     <form th:action="@{/register}" th:method="post" th:object="${user}">
         <div class="field">
-            <label class="label" for="firstName">First Name</label>
+            <label class="label" for="firstName">First Name:</label>
             <div class="control">
                 <input type="text" id="firstName" class="input" th:field="*{firstName}" placeholder="First Name" />
             </div>
         </div>
 
         <div class="field">
-            <label class="label" for="lastName">Last Name</label>
+            <label class="label" for="lastName">Last Name:</label>
             <div class="control">
                 <input type="text" id="lastName" class="input" th:field="*{lastName}" placeholder="Last Name"/>
             </div>
         </div>
 
         <div class="field">
-            <label class="label" for="phoneNumber">Phone Number</label>
+            <label class="label" for="phoneNumber">Phone Number:</label>
             <div class="control">
                 <input type="text" id="phoneNumber" class="input" th:field="*{phoneNumber}" placeholder="Phone Number"/>
                 <div id="phoneNumber2" class="content" style="display:none">
@@ -42,14 +42,14 @@
         </div>
 
         <div class="field">
-            <label class="label" for="username">Username</label>
+            <label class="label" for="username">Username:</label>
             <div class="control">
                 <input id="username" class="input" th:field="*{username}" placeholder="Username" />
             </div>
         </div>
 
         <div class="field">
-            <label class="label" for="email">Email</label>
+            <label class="label" for="email">Email:</label>
             <div class="control">
                 <input type="text" id="email" class="input" th:field="*{email}" placeholder="Email"/>
                 <div class="content">
@@ -62,7 +62,7 @@
         </div>
 
         <div class="field">
-            <label class="label" for="password">Password</label>
+            <label class="label" for="password">Password:</label>
             <div class="control">
                 <input type="password" id="password" class="input" th:field="*{password}" placeholder="Password"/>
                 <div id="password2" class="content" style="display:none">
@@ -74,7 +74,7 @@
         </div>
 
         <div class="field">
-            <label class="label" for="passwordConfirm">Confirm Password</label>
+            <label class="label" for="passwordConfirm">Confirm Password:</label>
             <div class="control">
                 <input type="password" id="passwordConfirm" class="input" placeholder="Confirm Password"/>
                 <div id="passwordConfirm2" class="content" style="display: none">
@@ -87,8 +87,8 @@
 
         <div class="field">
             <div class="control">
-                <label class="checkbox">
-                    <input id="organizer" name="organizer" type="checkbox" /> Click if you are an Organization that need Volunteers!
+                <label class="checkbox label is-large">
+                    <input id="organizer" name="organizer" type="checkbox" />     Click if you are an organization that needs volunteers!
                 </label>
             </div>
         </div>
