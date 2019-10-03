@@ -6,14 +6,22 @@
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 <div class="container">
-    <div class="field">
-        <label class="label" for="eventSearch">Search for an Event:</label>
-        <div class="control">
-            <input class="input" id="eventSearch" type="text" onkeyup="searchEvents()" placeholder="Enter event title" />
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label is-size-4" for="eventSearch">Search for an Event:</label>
         </div>
-        <div class="field" style="text-align: center">
-            <input class="is-checkradio is-medium" id="posCheckbox" type="checkbox" name="posCheckbox" onclick="searchEvents()"/>
-            <label for="posCheckbox">Filter by Position</label>
+        <div class="field-body">
+            <div class="field">
+                <div class="control is-expanded">
+                    <input class="input" id="eventSearch" type="text" onkeyup="searchEvents()" placeholder="Enter event title" />
+                </div>
+                <div class="field">
+                    <div class="control" style="text-align: center">
+                        <input class="is-checkradio is-medium" id="posCheckbox" type="checkbox" name="posCheckbox" onclick="searchEvents()"/>
+                        <label for="posCheckbox">Filter by Position</label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="columns is-multiline is-mobile eventDiv" style="margin-top: 10px;">
