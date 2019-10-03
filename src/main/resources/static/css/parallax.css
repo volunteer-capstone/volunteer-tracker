@@ -1,0 +1,43 @@
+/*html{*/
+/*    background-image: url("../img/images (4).jpeg");*/
+/*    background-size: contain;*/
+/*    background-position: center;*/
+/*}*/
+
+.quote{
+    color: black;
+    margin-top: 10px;
+}
+
+.container {
+    width: 100%;
+}
+
+.column1,
+.column2,
+.column3{
+    width: 100%;
+    float: left;
+    height: 200px;
+}
+
+.parallax {
+    position: relative;
+    height: 500px;
+    width: 100%;
+    background-attachment: fixed;
+    background-size: 100%;
+    background-position: right center;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2d/Flickr_-_Official_U.S._Navy_Imagery_-_Volunteer_shows_students_in_Ecuador_how_to_brush_their_teeth_properly_during_a_Continuing_Promise_2011_community_service_project.jpg');
+}
+
+
+
+
+
+
+
+
+
+
+
