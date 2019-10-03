@@ -5,7 +5,7 @@
 <nav class="navbar is-info" role="navigation" aria-label="main navigation" th:fragment="bulma-navbar">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <img th:src="@{/img/profile.png}" width="112" height="28" />
+            <img th:src="@{/img/personIcon.png}" />
         </a>
 
         <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -17,10 +17,10 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-            <a href="/" class="navbar-item">Home</a>
-            <a href="/events" class="navbar-item">Search Events</a>
-            <a href="/about-us" class="navbar-item">About Us</a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/users/{id}/profile(id=${#authentication.principal.id})}" class="navbar-item">View Profile
+            <a href="/" class="navbar-item has-text-weight-semibold">Home</a>
+            <a href="/events" class="navbar-item has-text-weight-semibold">Search Events</a>
+            <a href="/about-us" class="navbar-item has-text-weight-semibold">About Us</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/users/{id}/profile(id=${#authentication.principal.id})}" class="navbar-item has-text-weight-semibold">View Profile
             </a>
         </div>
 
