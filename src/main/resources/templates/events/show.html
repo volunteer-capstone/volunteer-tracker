@@ -137,7 +137,7 @@
                                           <h6 th:if="${userPos.contains(position.getId())}">You have already signed up for this position!</h6>
                                       </th:block>
                                       <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId}) and (!${userPos.contains(position.getId())})">
-                                          <a class="button is-primary" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a>
+                                          <a class="button is-primary volunteer-button" onclick="blockButton()" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a>
                                       </th:block>
                                       <button class="close button">Cancel
                                         <span class="icon">
@@ -166,6 +166,12 @@
 </div>
 
 <!--<div class ="footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>-->
+<script>
+    function blockButton() {
+        let element = document.getElementsByClassName("volunteer-button");
+        element[0].classList.add("is-loading");
+    }
+</script>
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
 <script th:src="@{/js/mapbox-geocoder-utils.js}"></script>
