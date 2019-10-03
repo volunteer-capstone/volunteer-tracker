@@ -14,8 +14,8 @@
     <div class="columns is-mobile">
         <div class="column">
             <div class="content">
-                <h4 th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')}"></h4>
-                <h4 th:text="${#dates.format(event.stop, 'MMM-dd-yyyy HH:mm')}"></h4>
+                <h4 th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - ' ${#dates.format(event.stop, 'HH:mm')}"></h4>
+<!--                <h4 th:text=""></h4>-->
                 <h4 th:text="${event.location}"></h4>
                 <h4 id="address" th:text="${event.address}"></h4>
                 <div id="map"></div>
