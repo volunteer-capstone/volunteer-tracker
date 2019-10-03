@@ -27,24 +27,24 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a sec:authorize="!isAuthenticated()" th:href="@{/register}" class="button is-primary"><strong>Sign up</strong>
+                    <a sec:authorize="!isAuthenticated()" th:href="@{/register}" class="button is-dark"><strong>Sign up</strong>
                         <span class="icon">
                             <i class="fas fa-hands-helping"></i>
                         </span>
                     </a>
-                    <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="button is-light">Log in
+                    <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="button is-dark"><strong>Login</strong>
                         <span class="icon">
-                            <i class="fas fa-sign-in-alt"></i>
+                            <i class="fas fa-door-open"></i>
                         </span>
                     </a>
-                    <a sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().isOrganizer()} == true" href="/events/create"  class="button is-primary">Create An Event
+                    <a sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().isOrganizer()} == true" href="/events/create"  class="button is-dark">Create An Event
                         <span class="icon">
                             <i class="fas fa-hammer"></i>
                         </span></a>
                     <form th:action="@{/logout}" th:method="post">
                         <button sec:authorize="isAuthenticated()" class="button is-warning">Logout
                             <span class="icon">
-                                <i class="fas fa-sign-out-alt"></i>
+                                <i class="fas fa-door-closed"></i>
                             </span>
                         </button>
                     </form>
