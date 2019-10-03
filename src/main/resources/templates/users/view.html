@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-
 	<th:block th:replace="fragments/header :: my-header(${user.getUsername()+'''s Profile'})" />
-	<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+<!--	<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />-->
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
@@ -167,4 +166,5 @@
 <!--<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>-->
 </body>
 <script th:src="@{/js/profilejs.js}"></script>
+<script th:src="@{/js/bulmaModalJs.js}"></script>
 </html>

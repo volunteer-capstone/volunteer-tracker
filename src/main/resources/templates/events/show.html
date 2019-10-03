@@ -5,7 +5,6 @@
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.css' rel='stylesheet'/>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
     <link rel="stylesheet" th:href="@{/css/mapcss.css}" />
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
@@ -82,7 +81,7 @@
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
                     <div class="field">
                         <div class="control" style="text-align: center">
-                            <a class="open-modal button is-light" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">Text Message Position Volunteers</a>
+                            <a class="open-modal button is-light" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">Text Position Volunteers</a>
                             <div class="modal">
                                 <div class="modal-background close"></div>
                                 <div class="modal-card">
