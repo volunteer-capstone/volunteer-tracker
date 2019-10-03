@@ -46,14 +46,14 @@
 			<div class="column">
 				<div class="tabs is-toggle">
 					<ul>
-						<li class="tab" style="background: white"><a class="pastEvents">Past Events Volunteered For</a></li>
-						<li class="tab is-active" style="background: white"><a class="plannedEvents">Future Events Volunteered For</a></li>
+						<li class="tab" style="background: white"><a class="pastEvents">Past Volunteered Events</a></li>
+						<li class="tab is-active" style="background: white"><a class="plannedEvents">Upcoming Volunteered Events</a></li>
 					</ul>
 				</div>
 				<div class="tabs is-toggle">
 					<ul>
-						<li class="tab" style="background: white"><a th:if="${user.organizer}" class="pastEventsCreated">Past Events Created</a></li>
-						<li class="tab" style="background: white"><a th:if="${user.organizer}" class="plannedEventsCreated">Future Events Created</a></li>
+						<li class="tab" style="background: white"><a th:if="${user.organizer}" class="pastEventsCreated">Created Past Events</a></li>
+						<li class="tab" style="background: white"><a th:if="${user.organizer}" class="plannedEventsCreated">Created Upcoming Events</a></li>
 					</ul>
 				</div>
 				<hr/>
