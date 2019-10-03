@@ -25,7 +25,6 @@ $('.pastEventsCreated').on('click', function () {
     $('.pastCreatedEventDiv').css('display', 'inline');
 });
 
-$('li.tab:nth-child(2)').addClass('is-active');
 $('li.tab').click(function() {
     $('li.tab').removeClass('is-active');
     $(this).addClass('is-active');
