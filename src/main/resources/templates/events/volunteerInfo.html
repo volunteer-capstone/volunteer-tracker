@@ -27,25 +27,20 @@
         </thead>
         <tbody>
         <th:block th:each="position : ${volunteers.keySet()}">
-            <tr style="background: lightblue">
+            <tr style="background: lightcyan">
                 <td th:text="${position.title}"></td>
                 <td colspan="2" th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')} + ' - '+${#dates.format(position.end, 'HH:mm')}"></td>
                 <td colspan="2" th:text="${event.posHours(position.start, position.end)}"></td>
             </tr>
-            <th></th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-            <th>Profile</th>
-                <th:block th:each="userPosition : ${volunteers.get(position)}">
+            <th:block th:each="userPosition : ${volunteers.get(position)}">
             <tr>
-                <td><strong>Volunteer</strong></td>
+                <td></td>
                 <td th:text="${userPosition.getUser().getFirstName()} + ' ' + ${userPosition.getUser().getLastName()}"></td>
                 <td th:text="${userPosition.getUser().getEmail()}"></td>
                 <td th:text="${userPosition.getUser().getPhoneNumber()}"></td>
                 <td><a class="button is-info" th:href="@{/users/{id}/profile(id=${userPosition.getUser().getId()})}">View Profile</a></td>
             </tr>
-                </th:block>
+            </th:block>
         </th:block>
         </tbody>
     </table>
