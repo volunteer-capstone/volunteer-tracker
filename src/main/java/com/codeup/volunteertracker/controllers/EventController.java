@@ -237,7 +237,7 @@ public class EventController {
 
             emailService.createdAnAccount(user, "Letter of Appreciation", String.format(user.getFirstName() + " " + user.getLastName() + ",\n\n On behalf of the " + event.getOrganization() + ", we would like to thank you for taking the time to volunteer at the " + event.getTitle() + " that took place on " + dateString + ". We could not have had such an amazing event without your help and support.\n\n By participating for a total of " + shiftHours + " hour(s) as a " + position.getTitle() + " volunteer, you aided us in bringing the community closer together and giving back. We hope to see you again as a volunteer at future events.\n\n If you have any questions or need to get into contact with the organizer of this event, please do so at " + event.getCreator().getEmail() + " or " + event.getCreator().getPhoneNumber() + ". \n\n\n Sincerely,\n\n " + event.getCreator().getFirstName() + " " + event.getCreator().getLastName() + "\n" + event.getOrganization()));
         }
-        return "redirect:/events";
+        return "redirect:/events/" + eventId;
     }
 
 //    Volunteer contact info
