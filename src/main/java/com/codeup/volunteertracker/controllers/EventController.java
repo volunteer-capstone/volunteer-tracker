@@ -141,7 +141,7 @@ public class EventController {
 
     //might need to surround parse with try/catch
     @PostMapping("/events/edit/{id}")
-    public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") String start, @RequestParam(name="stop") String stop, @RequestParam(name="location") String location, @RequestParam(name="address") String address,@RequestParam(name="description") String description) throws ParseException {
+    public String editEvent(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam(name="start") String start, @RequestParam(name="stop") String stop, @RequestParam(name="location") String location, @RequestParam(name="address") String address, @RequestParam(name="file") String photo, @RequestParam(name="description") String description, @RequestParam(name="organization") String organization) throws ParseException {
         Event editedEvent = eventDao.findOne(id);
         DateFormat df = new SimpleDateFormat("MM/dd/yy HH:mm");
         Date newStart = df.parse(start);
@@ -153,6 +153,8 @@ public class EventController {
         editedEvent.setLocation(location);
         editedEvent.setAddress(address);
         editedEvent.setDescription(description);
+        editedEvent.setOrganization(organization);
+        editedEvent.setPhoto(photo);
         eventDao.save(editedEvent);
         return "redirect:/events/" + id;
     }

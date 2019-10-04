@@ -5,75 +5,97 @@
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.css' rel='stylesheet'/>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
     <link rel="stylesheet" th:href="@{/css/geocodecss.css}" />
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" />
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
-<form th:action="@{/events/edit/{id}(id=${event.id})}" th:method="post">
-    <div class="field">
-        <label class="label" for="organization">Organization Name:</label>
-        <div class="control">
-            <p>Current Event Organization: <span th:text="${event.organization}"></span></p>
-            <input type="text"  name="organization" id="organization" class="input" placeholder="Organization..." />
+<div class="container">
+    <form th:action="@{/events/edit/{id}(id=${event.id})}" th:method="post">
+        <div class="field">
+            <label class="label" for="organization">Organization Name:</label>
+            <div class="control">
+                <p>Current Event Organization: <span th:text="${event.organization}"></span></p>
+                <input type="text"  name="organization" id="organization" class="input" placeholder="Organization..." />
+            </div>
         </div>
-    </div>
-    <div class="field">
-        <label class="label" for="title">Event Name:</label>
-        <div class="control">
-            <p>Current Event Name: <span th:text="${event.title}"></span></p>
-            <input type="text"  name="title" id="title" class="input" placeholder="Event Name" />
+        <div class="field">
+            <label class="label" for="title">Event Name:</label>
+            <div class="control">
+                <p>Current Event Name: <span th:text="${event.title}"></span></p>
+                <input type="text"  name="title" id="title" class="input" placeholder="Event Name" />
+            </div>
         </div>
-    </div>
 
-    <div class="field">
-        <label class="label" for="venue">Venue:</label>
-        <div class="control">
-            <p>Current Location: <span th:text="${event.location}"></span></p>
-            <input id="venue" type="text" name="location" class="input" placeholder="Venue" />
+        <div class="field">
+            <label class="label" for="venue">Venue:</label>
+            <div class="control">
+                <p>Current Location: <span th:text="${event.location}"></span></p>
+                <input id="venue" type="text" name="location" class="input" placeholder="Venue" />
+            </div>
         </div>
-    </div>
 
-    <div class="field">
-        <input type="hidden" id="mapToken" name="mapToken" th:value="${mapToken}" />
-        <label class="label" for="address">Address:</label>
-        <div class="control">
-            <p>Current Location: <span th:text="${event.address}"></span></p>
-            <div id='geocoder' class='geocoder'></div>
+        <div class="field">
+            <input type="hidden" id="mapToken" name="mapToken" th:value="${mapToken}" />
+            <label class="label" for="address">Address:</label>
+            <div class="control">
+                <p>Current Location: <span th:text="${event.address}"></span></p>
+                <div id='geocoder' class='geocoder'></div>
+            </div>
         </div>
-    </div>
 
-    <div class="field">
-        <label class="label" for="cal">Start and End Date and Time:</label>
-        <div class="control">
-            <p>Current Start Date and Time:
-                <span th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - '+${#dates.format(event.stop, 'HH:mm')}"></span>
-            </p>
-            <input type="date" id="cal" />
-            <input type="hidden" id="start" name="start" />
-            <input type="hidden" id="stop" name="stop" />
-            <input type="hidden" id="end" />
+        <div class="field">
+            <label class="label" for="cal">Start and End Date and Time:</label>
+            <div class="control">
+                <p>Current Start Date and Time:
+                    <span th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - '+${#dates.format(event.stop, 'HH:mm')}"></span>
+                </p>
+                <input type="date" id="cal" />
+                <input type="hidden" id="start" name="start" />
+                <input type="hidden" id="stop" name="stop" />
+                <input type="hidden" id="end" />
+            </div>
         </div>
-    </div>
 
-    <div class="field">
-        <label class="label" for="description">Description:</label>
-        <div class="control">
-            <p>Current Event Name: <span th:text="${event.description}"></span></p>
-            <textarea id="description" name="description" class="textarea" placeholder="Description"></textarea>
+        <div class="field">
+            <label class="label" for="description">Description:</label>
+            <div class="control">
+                <p>Current Event Name: <span th:text="${event.description}"></span></p>
+                <textarea id="description" name="description" class="textarea" placeholder="Description"></textarea>
+            </div>
         </div>
-    </div>
 
-    <div class="field">
-        <div class="control">
-            <input type="hidden" name="eventId" th:value="${event.id}" />
-            <!--        <button id="create-eventDisabled" class="button is-success" disabled="disabled">Next→</button>-->
-            <button id="create-event" class="button is-success">Next<span class="icon"><i class="far fa-hand-point-right"></i></span></button>
+        <div class="field" id="photo">
+            <input type="hidden" id="filestackAPI" name="filestackAPI" th:value="${filestackAPI}" />
+            <div class="file">
+                <label class="file-label">
+                    <input id="picker" class="file-input" type="file" name="resume" />
+                    <input type="hidden" id="fileupload" name="file" />
+                    <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fas fa-camera-retro"></i>
+                        </span>
+                        <span class="file-label">
+                          Upload Event Photo
+                        </span>
+                        </span>
+                </label>
+            </div>
+            <div id="nameBox"></div>
+            <th:block th:replace="fragments/filestack" />
         </div>
-    </div>
 
-</form>
+        <div class="field">
+            <div class="control">
+                <input type="hidden" name="eventId" th:value="${event.id}" />
+                <!--        <button id="create-eventDisabled" class="button is-success" disabled="disabled">Next→</button>-->
+                <button id="create-event" class="button is-success">Next<span class="icon"><i class="far fa-hand-point-right"></i></span></button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
 <div id="map"></div>
 <!--<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>-->
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
