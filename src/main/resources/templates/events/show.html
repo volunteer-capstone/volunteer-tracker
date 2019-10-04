@@ -24,10 +24,10 @@
             <div class="content">
                 <h1 th:text="${event.title}"></h1>
                 <th:block th:if="${event.photo} == null or ${event.photo} == ''">
-                    <img th:src="@{/img/eventLocation.jpeg}" alt="event photo"/>
+                    <img style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border-radius: 20px;" th:src="@{/img/eventLocation.jpeg}" alt="event photo"/>
                 </th:block>
                 <th:block th:unless="${event.photo} == null or ${event.photo} == ''">
-                    <img th:src="@{${event.photo}}" alt="event photo"/>
+                    <img style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border-radius: 20px;" th:src="@{${event.photo}}" alt="event photo"/>
                 </th:block>
                 <p class="is-size-5 has-text-black"><i>Description: </i><span th:text="${event.description}"></span></p>
             </div>
