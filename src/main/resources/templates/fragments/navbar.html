@@ -2,13 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
-<nav class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation" th:fragment="bulma-navbar">
+<nav class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation" th:fragment="bulma-navbar" style="padding-top: 6px;">
     <div class="navbar-brand">
-<!--        <a class="navbar-item is-size-3 has-text-weight-semibold" href="/">-->
-<!--            <img th:src="@{/img/personIcon.png}" style="padding-right: 10px;"/>-->
-<!--            Path of the Volunteer-->
-<!--        </a>-->
-
         <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -24,11 +19,15 @@
             <a sec:authorize="isAuthenticated()" th:href="@{/users/{id}/profile(id=${#authentication.principal.id})}" class="navbar-item is-size-4">View Profile
             </a>
         </div>
-        <figure class="image is-16x16">
-            <img th:src="@{/img/personIcon.png}" style="margin-top: 2px;"/>
-        </figure>
-        <div class="navbar-item is-size-3 has-text-weight-semibold has-text-white">
-            Path of the Volunteer
+        <div style="position:absolute; left: 35rem;">
+            <figure class="image is-48x48">
+                <img th:src="@{/img/newRaisedHand.png}"/>
+            </figure>
+        </div>
+        <div style="position: absolute; left: 37rem; bottom: 0; top: 0;">
+            <div class="navbar-item is-size-3 has-text-weight-semibold has-text-white">
+                Path of the Volunteer
+            </div>
         </div>
         <div class="navbar-end">
             <div class="navbar-item">
