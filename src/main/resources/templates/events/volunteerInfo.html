@@ -27,7 +27,7 @@
         </thead>
         <tbody>
         <th:block th:each="position : ${volunteers.keySet()}">
-            <tr style="background: lightcyan">
+            <tr style="background: lightgrey">
                 <td th:text="${position.title}"></td>
                 <td colspan="2" th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')} + ' - '+${#dates.format(position.end, 'HH:mm')}"></td>
                 <td colspan="2" th:text="${event.posHours(position.start, position.end)}"></td>
