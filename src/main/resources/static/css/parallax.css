@@ -60,6 +60,7 @@
     background-position: center;
     position: relative;
     margin-left: 77px;
+    box-shadow: 5px 5px darkgrey;
 }
 .blurb:before{
     content: '';
@@ -89,6 +90,7 @@ h3{
     width: 30%;
     float: left;
     margin-left: 112px;
+    box-shadow: 5px 5px darkgrey;
 }
 
 
