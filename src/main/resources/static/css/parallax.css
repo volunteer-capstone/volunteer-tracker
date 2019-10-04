@@ -1,0 +1,98 @@
+/*html{*/
+/*    background-image: url("../img/images (4).jpeg");*/
+/*    background-size: contain;*/
+/*    background-position: center;*/
+/*}*/
+
+.quote{
+    color: black;
+    margin-top: 10px;
+}
+
+.container {
+    width: 100%;
+    color: black;
+}
+
+.column1,
+.column2,
+.column3{
+    width: 100%;
+    float: left;
+    height: 200px;
+}
+
+.parallax {
+    position: relative;
+    height: 500px;
+    width: 100%;
+    background-attachment: fixed;
+    background-size: 100%;
+    background-position: right center;
+    background-image: url("../img/parallax.jpg");
+}
+
+.column4{
+    width:50%;
+    float: left;
+    /*height: 400px;*/
+}
+
+.container2{
+    margin: 15px;
+}
+
+/*.blurb{*/
+/*    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdwjeCv-SlbtOHV0oS1D0cxKbWQwfq-prWmQ8FzSOzsnD2cMWW");*/
+/*    background-position: center;*/
+/*    opacity: 0.2;*/
+/*    z-index: -1;*/
+/*}*/
+
+/*p{*/
+/*    z-index: 5;*/
+/*}*/
+
+.column4{
+    background-image: url("../img/whatWeDo.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    margin-left: 77px;
+}
+.blurb:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+}
+.what {
+    color: #FFF;
+    position: relative;
+}
+h3{
+    color: white;
+}
+
+.blurb{
+    margin: 10px;
+}
+
+.column5{
+    background: #00B4DB;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #0083B0, #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    width: 30%;
+    float: left;
+    margin-left: 112px;
+}
+
+
+
+
+
+

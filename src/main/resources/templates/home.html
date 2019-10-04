@@ -2,48 +2,57 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/header :: my-header('Path of the Volunteer')" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="stylesheet" th:href="@{/css/parallax.css}"/>
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
+<!--    <header>-->
+<!--        <h1>Parallax Effect</h1>-->
+<!--        <p>content content content</p>-->
+<!--    </header>-->
 
-<!-- Start Hero Carousel -->
-<section class="hero is-medium has-carousel">
-    <div id="carousel-demo" class="hero-carousel">
-        <div class="item-1">
-            <!-- Slide Content -->
-            <figure class="image is-fullwidth">
-                <img th:src="@{/img/cover.png}"/>
-            </figure>
-        </div>
-        <div class="item-2">
-            <!-- Slide Content -->
-            <figure class="image is-fullwidth">
-                <img th:src="@{http://www.arc-sa.org/wp-content/uploads/2014/01/IMG_3139.jpg}"/>
-            </figure>
-        </div>
-        <div class="item-3">
-            <!-- Slide Content -->
-            <figure class="image is-fullwidth">
-                <img th:src="@{https://www.soill.org/wp-content/uploads/2018/05/volunteer.jpg}"/>
-            </figure>
+<!--<div class="container">-->
+    <div class="column1 columns"  style="margin-top: 5px;">
+        <div class="container column quote" style="text-align:right;">
+            <div class="w3-panel w3-light-grey">
+                <span style="font-size:150px;line-height:0.6em;opacity:0.2">&#10077;</span>
+                <p class="w3-xlarge" style="margin-top:-40px">
+                    <i>“You make a living by what you get. You make a life by what you give.”</i></p>
+                <p>Winston Churchill</p>
+            </div>
         </div>
     </div>
-    <div class="hero-head"></div>
-    <div class="hero-body"></div>
-    <div class="hero-foot"></div>
-</section>
-<!-- End Hero Carousel -->
-<div class="container">
-    <div class="content">
-<!--        <h1>THIS IS THE HOME PAGE :)</h1>-->
+    <div class="column2">
+        <div class="parallax"></div>
     </div>
-</div>
-<div class="orgList" th:each="org: ${orgList}">
-    <p th:text="${org}"></p>
-</div>
+    <div class="column3">
+    </div>
+    <div class="column1">
+    </div>
 
-<!--<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>-->
-<script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
+    <div class="container">
+                <div class="column4">
+                    <div class="container2 ">
+                        <div class="blurb">
+                        <h3 class="what" style="text-align: center"><i><strong class="what">What We Do</strong></i></h3>
+                        <p class="what">&emsp; &emsp;Path of the Volunteer helps volunteers get back in the community while helping event organizers focus on the events.</p>
+                        <p class="what">&emsp; &emsp;Many volunteers want to be involved in their communities but maybe need to keep track of their hours for scholarships, promotions, awards, badges, etc.  We make things simple.  Once an organizer clicks to approve (or verify) the hours  a volunteer signed up for, an email is instantly generated and sent to the volunteer with their full name, the event and volunteer position information, and a thank you from the event organizer.  The volunteer hours are then combined to the volunteers total hours on their profile page to display their grand total.  Anyone else who would like to see the volunteer's profile is able to by simply visiting their profile.</p>
+                        <p class="what">&emsp; &emsp;Event organizers can have a hard time gathering volunteers, communicating with all volunteers and different position volunteers, and usually have a to keep up with forms and can sometimes forget to send out thank you letters or acknowledgement of time due to having to plan for another event the next day or around the corner.  Simply giving out the link to the event, a volunteer can have all needed information a click away.  When volunteers sign up for an event, emails are automatically generated to send all information to the volunteer for safe keeping, as well as adding the event and position information to the volunteer's profile.  Weather alerts? Have to delay an event? Easy.  Simply text a message to your volunteers through your profile either on your profile page or the event page itself.  We have the solution to make volunteer contact info a click away and accessible anywhere.</p>
+                        <p class="what">&emsp; &emsp;Enjoy your community.  Be involved. Give back. Don't stress about the paperwork and communication, it's all possible by being on the path of the volunteer.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column5">
+                    <div class="container2">
+                        <h3 style="text-align: center"><i><strong class="what">Our Organizations</strong></i></h3>
+                        <div class="orgList" th:each="org: ${orgList}">
+                            <p class="what" style="text-align: center" th:text="${org}"></p>
+                        </div>
+                    </div>
+                </div>
+    </div>
+<div class="column1"></div>
+
 </body>
 </html>
