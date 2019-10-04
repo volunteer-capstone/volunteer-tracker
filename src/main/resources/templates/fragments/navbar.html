@@ -24,8 +24,10 @@
             <a sec:authorize="isAuthenticated()" th:href="@{/users/{id}/profile(id=${#authentication.principal.id})}" class="navbar-item is-size-4">View Profile
             </a>
         </div>
+        <figure class="image is-16x16">
+            <img th:src="@{/img/personIcon.png}" style="margin-top: 2px;"/>
+        </figure>
         <div class="navbar-item is-size-3 has-text-weight-semibold has-text-white">
-            <img th:src="@{/img/personIcon.png}" style="padding-right: 10px;"/>
             Path of the Volunteer
         </div>
         <div class="navbar-end">
