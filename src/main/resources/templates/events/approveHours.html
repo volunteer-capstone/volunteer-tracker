@@ -14,7 +14,7 @@
     </div>
     <form th:action="@{/events/approve}" th:method="post">
 
-    <div class="columns is-mobile">
+    <div class="columns">
         <div class="column"><h1 class="title" th:text="${event.title}"></h1></div>
         <div class="column"><h1 class="title" th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - '+${#dates.format(event.stop, 'HH:mm')}"></h1></div>
         <input type="hidden" name="eventId" th:value="${event.id}"/>

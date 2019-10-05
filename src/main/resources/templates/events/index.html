@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="columns is-multiline is-mobile eventDiv" style="margin-top: 10px;">
+    <div class="columns is-multiline eventDiv" style="margin-top: 10px;">
         <th:block th:each="event : ${events}" th:if="*{event.getStart().after(execInfo.now)}">
             <div class="column is-one-third event">
                 <div th:class="${event.title}">

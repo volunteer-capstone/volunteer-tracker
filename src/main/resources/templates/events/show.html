@@ -10,15 +10,17 @@
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
 <div class="container">
-    <div class="columns is-mobile">
+    <div class="columns">
         <div class="column" style="margin: auto">
-            <div class="content">
-                <h4 th:text="${#dates.format(event.start, 'MMMM d, yyyy HH:mm')} + ' - ' + ${#dates.format(event.stop, 'HH:mm')}"></h4>
-                <h4 th:text="${event.location}"></h4>
-                <h4 id="address" th:text="${event.address}"></h4>
-                <div id="map" class="btnShadow"></div>
-                <input type="hidden" id="mapToken" name="mapToken" th:value="${mapToken}" />
+            <div class="card btnShadow">
+                <div class="card-content has-text-black bg">
+                    <p class="title is-5" th:text="${#dates.format(event.start, 'MMMM d, yyyy HH:mm')} + ' - ' + ${#dates.format(event.stop, 'HH:mm')}"></p>
+                    <p class="title is-5" th:text="${event.location}"></p>
+                    <p class="title is-5" id="address" th:text="${event.address}"></p>
+                </div>
             </div>
+            <div id="map" class="btnShadow"></div>
+            <input type="hidden" id="mapToken" name="mapToken" th:value="${mapToken}" />
         </div>
         <div class="column has-text-centered" style="margin: auto">
             <div class="content">
@@ -33,7 +35,7 @@
             </div>
         </div>
         <div class="column" style="margin: auto">
-            <div class="card">
+            <div class="card btnShadow">
                 <div class="card-content has-text-black bg">
                     <p class="title is-4">Organizer Contact Information:</p>
                     <p class="title is-4" th:text="${event.organization}"></p>
@@ -48,7 +50,7 @@
         </div>
     </div>
 
-    <div class="columns is-mobile">
+    <div class="columns">
         <div class="column is-half is-offset-one-quarter">
             <div class="field is-grouped">
                 <div class="control btnShadow">
