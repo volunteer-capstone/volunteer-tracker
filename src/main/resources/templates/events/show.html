@@ -11,59 +11,63 @@
 
 <div class="container">
     <div class="columns is-mobile">
-        <div class="column">
+        <div class="column" style="margin: auto">
             <div class="content">
                 <h4 th:text="${#dates.format(event.start, 'MMMM d, yyyy HH:mm')} + ' - ' + ${#dates.format(event.stop, 'HH:mm')}"></h4>
                 <h4 th:text="${event.location}"></h4>
                 <h4 id="address" th:text="${event.address}"></h4>
-                <div id="map" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></div>
+                <div id="map" class="btnShadow"></div>
                 <input type="hidden" id="mapToken" name="mapToken" th:value="${mapToken}" />
             </div>
         </div>
-        <div class="column has-text-centered">
+        <div class="column has-text-centered" style="margin: auto">
             <div class="content">
                 <h1 th:text="${event.title}"></h1>
                 <th:block th:if="${event.photo} == null or ${event.photo} == ''">
-                    <img style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border-radius: 20px;" th:src="@{/img/eventLocation.jpeg}" alt="event photo"/>
+                    <img class="btnShadow" th:src="@{/img/eventLocation.jpeg}" alt="event photo"/>
                 </th:block>
                 <th:block th:unless="${event.photo} == null or ${event.photo} == ''">
-                    <img style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border-radius: 20px;" th:src="@{${event.photo}}" alt="event photo"/>
+                    <img class="btnShadow" th:src="@{${event.photo}}" alt="event photo"/>
                 </th:block>
                 <p class="is-size-5 has-text-black"><i>Description: </i><span th:text="${event.description}"></span></p>
             </div>
         </div>
-        <div class="column">
-            <div class="content">
-                <h3>Organizer Contact Information:</h3>
-                <h5 th:text="${event.organization}"></h5>
-                <h5 th:text="${event.creator.firstName} + ' ' + ${event.creator.lastName}"></h5>
-                <h5 th:text="${event.creator.email}"></h5>
-                <h5 th:text="${event.creator.phoneNumber}"></h5>
-                <a style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" class="button is-light" th:href="@{/users/{id}/profile(id=${event.creator.id})}">View Organizer Profile</a>
-          </div>
+        <div class="column" style="margin: auto">
+            <div class="card">
+                <div class="card-content has-text-black bg">
+                    <p class="title is-4">Organizer Contact Information:</p>
+                    <p class="title is-4" th:text="${event.organization}"></p>
+                    <p class="title is-4" th:text="${event.creator.firstName} + ' ' + ${event.creator.lastName}"></p>
+                    <p class="title is-4" th:text="${event.creator.email}"></p>
+                    <p class="title is-4" th:text="${event.creator.phoneNumber}"></p>
+                </div>
+                <footer class="card-footer has-background-link">
+                    <a class="card-footer-item has-text-white" th:href="@{/users/{id}/profile(id=${event.creator.id})}"><strong>View Organizer Profile</strong></a>
+                </footer>
+            </div>
         </div>
     </div>
 
     <div class="columns is-mobile">
         <div class="column is-half is-offset-one-quarter">
             <div class="field is-grouped">
-                <div class="control" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <div class="control btnShadow">
                     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-success" th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a></th:block>
                 </div>
 
-                <div class="control" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <div class="control btnShadow">
                     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true) and ${event.getStart().before(execInfo.now)}"><a class="button is-info" th:href="@{/events/approve/{id}(id=${event.id})}">Approve Volunteer Hours</a></th:block>
                 </div>
 
-                <div class="control" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <div class="control btnShadow">
                     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-info" th:href="@{/events/volunteers/{id}(id=${event.id})}">Volunteer Contact Info</a></th:block>
                 </div>
 
-                <div class="control" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <div class="control btnShadow">
                     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-warning" th:href="@{/events/edit/{id}(id=${event.id})}">Edit Event</a></th:block>
                 </div>
 
-                <div class="control" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <div class="control btnShadow">
                     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-danger is-outlined" th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a></th:block>
                 </div>
             </div>
@@ -73,11 +77,11 @@
     <div class="tile is-ancestor">
         <th:block th:each="position: ${positions}">
             <div class="tile is-3 is-parent">
-                <div class="tile is-child hero is-info is-bold" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 15px 0;">
+                <div class="tile is-child hero is-info is-bold btnShadow">
                     <h6 class="title is-6 has-text-centered" th:text="${position.title}"></h6>
                     <h6 class="title is-6 has-text-centered" th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + ${#dates.format(position.end, 'HH:mm')}"></h6>
                     <th:block th:if="${position.numNeeded} == 0">
-                        <h6 class="title is-6 has-text-centered">This position is filled up, contact the event organizer if you're still interested.</h6>
+                        <h6 class="title is-6 has-text-centered">This position is filled up, contact the event organizer if you are still interested.</h6>
                     </th:block>
                     <th:block th:unless="${position.numNeeded} == 0">
                         <h6 class="title is-6 has-text-centered" th:text="${position.numNeeded} + ' positions open'"></h6>
@@ -86,7 +90,7 @@
                 <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
                     <div class="field">
                         <div class="control has-text-centered">
-                            <a class="open-modal button is-light" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">Text Position Volunteers</a>
+                            <a class="open-modal button is-light btnShadow">Text Position Volunteers</a>
                             <div class="modal">
                                 <div class="modal-background close"></div>
                                 <div class="modal-card">
@@ -121,7 +125,7 @@
                 <th:block sec:authorize="isAuthenticated()" th:if="(${eventUser.id} != ${userId})">
                     <div class="field">
                         <div class="control has-text-centered has-text-black">
-                            <a class="open-modal button" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">View Details</a>
+                            <a class="open-modal button btnShadow">View Details</a>
                             <div class="modal">
                                 <div class="modal-background"></div>
                                 <div class="modal-card">
@@ -161,10 +165,10 @@
                 </th:block>
 
                     <div class="field is-grouped" style="margin: auto">
-                        <div class="control" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                        <div class="control btnShadow">
                            <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-small is-success" th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a></th:block>
                         </div>
-                        <div class="control" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                        <div class="control btnShadow">
                             <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-small is-danger" th:href="@{/events/positions/delete/{id}(id = ${position.id})}">Delete Position</a></th:block>
                         </div>
                     </div>

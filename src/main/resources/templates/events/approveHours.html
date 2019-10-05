@@ -85,7 +85,7 @@
     </th:block>
 
     <th:block th:if="(${eventUser.id} != ${userId}) and (${eventUser.isOrganizer()} == false)">
-        <div class="content">
+        <div class="content has-text-black">
             <h3>You did <strong>NOT</strong> create this event and cannot update hours.</h3>
         </div>
     </th:block>
