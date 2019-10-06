@@ -100,7 +100,7 @@
             <div class="field">
                 <div class="control has-text-centered">
                     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
-                        <a class="button btnShadow is-danger" th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a>
+                        <a class="button btnShadow is-danger deleteEvent" th:href="@{/events/delete/{id}(id=${event.id})}">Delete Event</a>
                     </th:block>
                 </div>
             </div>
@@ -182,7 +182,7 @@
                                               <h6 class="title is-4 has-text-black">This position is full, contact the event organizer if you are still interested.</h6>
                                           </th:block>
                                           <th:block th:unless="${position.numNeeded} == 0">
-                                              <a class="button is-primary volunteer-button" onclick="blockButton()" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a>
+                                              <a class="button is-primary volunteer-button" th:href="@{/events/positions/{id}/volunteer(id = ${position.id})}">Volunteer Here</a>
                                           </th:block>
                                       </th:block>
                                       <button class="close button">Cancel
@@ -199,10 +199,14 @@
 
                     <div class="field is-grouped" style="margin: auto">
                         <div class="control btnShadow">
-                           <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-small is-success" th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a></th:block>
+                           <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
+                               <a class="button is-small is-success" th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a>
+                           </th:block>
                         </div>
                         <div class="control btnShadow">
-                            <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)"><a class="button is-small is-danger" th:href="@{/events/positions/delete/{id}(id = ${position.id})}">Delete Position</a></th:block>
+                            <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
+                                <a class="button is-small is-danger deletePosition" th:href="@{/events/positions/delete/{id}(id = ${position.id})}">Delete Position</a>
+                            </th:block>
                         </div>
                     </div>
                 </div>
@@ -213,10 +217,7 @@
 
 <!--<div class ="footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>-->
 <script>
-    function blockButton() {
-        let element = document.getElementsByClassName("volunteer-button");
-        element[0].classList.add("is-loading");
-    }
+
 </script>
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>

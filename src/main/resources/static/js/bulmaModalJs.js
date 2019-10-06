@@ -10,7 +10,6 @@
             modalButtons.forEach(function (el, i) {
                 el.addEventListener('click', function () {
                     let target = allModals[i];
-                    console.log(target);
                     html.classList.add('is-clipped');
                     target.classList.add('is-active');
                 });
@@ -41,6 +40,15 @@
 
         function getAll(selector) {
             return Array.prototype.slice.call(document.querySelectorAll(selector), 0)
+        }
+
+        let volunteerBtns = getAll(".volunteer-button, .deletePosition, .deleteEvent");
+        if (volunteerBtns.length > 0) {
+            volunteerBtns.forEach(function (el, i) {
+                el.addEventListener('click', function () {
+                    el.classList.add('is-loading');
+                })
+            })
         }
     })
 })();
