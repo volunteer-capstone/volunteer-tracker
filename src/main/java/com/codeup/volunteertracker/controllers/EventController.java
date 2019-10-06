@@ -99,10 +99,17 @@ public class EventController {
 //    CREATE EVENT
     @GetMapping("/events/create")
     public String createEvent(Model viewModel){
-        viewModel.addAttribute("event", new Event());
-        viewModel.addAttribute("mapToken", mapToken);
-        viewModel.addAttribute("filestackAPI", filestackAPI);
-        return "events/create-event";
+        // this validates the user\\
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long id = userSession.getId();
+        if(userSession !=null && userSession.isOrganizer()){
+            viewModel.addAttribute("event", new Event());
+            viewModel.addAttribute("mapToken", mapToken);
+            viewModel.addAttribute("filestackAPI", filestackAPI);
+            return "events/create-event";
+        }else {
+            return "/login";
+        }
     }
 
     @PostMapping("/events/create")
@@ -132,11 +139,16 @@ public class EventController {
 //    EDIT EVENT
     @GetMapping("/events/edit/{id}")
     public String editEvent(@PathVariable long id, Model viewModel){
-        viewModel.addAttribute("event", eventDao.findOne(id));
-        viewModel.addAttribute("mapToken", mapToken);
-        viewModel.addAttribute("filestackAPI", filestackAPI);
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(userSession != null && userSession.isOrganizer()) {
+            viewModel.addAttribute("event", eventDao.findOne(id));
+            viewModel.addAttribute("mapToken", mapToken);
+            viewModel.addAttribute("filestackAPI", filestackAPI);
+            return "events/edit-event";
+        }else{
+            return "/login";
+        }
 
-        return "events/edit-event";
     }
 
     //might need to surround parse with try/catch
@@ -162,23 +174,26 @@ public class EventController {
 //    DELETE EVENT
     @GetMapping("/events/delete/{id}")
     public String deleteEvent(@PathVariable long id) {
-        Event toDelete = eventDao.findOne(id);
-        long eventId = toDelete.getId();
-        List<Position> positions = positionDao.findAllByEvent_Id(eventId);
-        for ( Position position : positions) {
-            long positionId = position.getId();
-            List<UserPosition> userPositions = userPositionDao.findAllByPosition_Id(positionId);
-            for (UserPosition userPosition : userPositions){
-                long userPositionId = userPosition.getId();
-                userPositionDao.delete(userPositionId);
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(userSession != null && userSession.isOrganizer()) {
+            Event toDelete = eventDao.findOne(id);
+            long eventId = toDelete.getId();
+            List<Position> positions = positionDao.findAllByEvent_Id(eventId);
+            for (Position position : positions) {
+                long positionId = position.getId();
+                List<UserPosition> userPositions = userPositionDao.findAllByPosition_Id(positionId);
+                for (UserPosition userPosition : userPositions) {
+                    long userPositionId = userPosition.getId();
+                    userPositionDao.delete(userPositionId);
+                }
+                positionDao.delete(positionId);
             }
-            positionDao.delete(positionId);
+            eventDao.delete(eventId);
+            emailService.createdEvent(toDelete, "Deletion of Volunteer Event", String.format("An event has been removed under your profile.\n\n  If you would like to create any future events please visit our website at https://pathofthevolunteer.com ."));
+            return "redirect:/events";
+        }else{
+            return "redirect:/login";
         }
-        eventDao.delete(eventId);
-
-        emailService.createdEvent(toDelete, "Deletion of Volunteer Event", String.format("An event has been removed under your profile.\n\n  If you would like to create any future events please visit our website at https://pathofthevolunteer.com ."));
-
-        return "redirect:/events";
     }
 
     @PostMapping("/events/delete/{id}")
@@ -189,29 +204,31 @@ public class EventController {
 //    Approve hours
     @GetMapping("/events/approve/{id}")
     public String showApprovePage(@PathVariable long id, Model model) {
-        Event event = eventDao.findOne(id);
-        model.addAttribute("event", event);
-        User eventUser = event.getCreator();
-
-        model.addAttribute("eventUser", eventUser);
-
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
-            String userId = "";
-            model.addAttribute("userId", userId);
-        } else {
-            User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            long userId = userSession.getId();
-            model.addAttribute("userId", userId);
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(authUser != null && authUser.isOrganizer()) {
+            Event event = eventDao.findOne(id);
+            model.addAttribute("event", event);
+            User eventUser = event.getCreator();
+            model.addAttribute("eventUser", eventUser);
+            if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
+                String userId = "";
+                model.addAttribute("userId", userId);
+            } else {
+                User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                long userId = userSession.getId();
+                model.addAttribute("userId", userId);
+            }
+            List<Position> positions = positionDao.findAllByEvent_Id(id);
+            Map<Position, List> volunteers = new HashMap<>();
+            for (Position position : positions) {
+                List<UserPosition> userPositions = userPositionDao.findAllByPosition(position);
+                volunteers.put(position, userPositions);
+            }
+            model.addAttribute("volunteers", volunteers);
+            return "events/approveHours";
+        }else{
+            return "/login";
         }
-
-        List<Position> positions = positionDao.findAllByEvent_Id(id);
-        Map<Position, List> volunteers = new HashMap<>();
-        for(Position position : positions) {
-            List<UserPosition> userPositions = userPositionDao.findAllByPosition(position);
-            volunteers.put(position, userPositions);
-        }
-        model.addAttribute("volunteers", volunteers);
-        return "events/approveHours";
     }
 
     @PostMapping("/events/approve")
@@ -243,15 +260,22 @@ public class EventController {
 //    Volunteer contact info
     @GetMapping("/events/volunteers/{id}")
     public String showVolunteersPage(@PathVariable long id, Model model) {
-        Event event = eventDao.findOne(id);
-        model.addAttribute("event", event);
-        List<Position> positions = positionDao.findAllByEvent_Id(id);
-        Map<Position, List> volunteers = new HashMap<>();
-        for(Position position : positions) {
-            List<UserPosition> userPositions = userPositionDao.findAllByPosition(position);
-            volunteers.put(position, userPositions);
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(userSession != null && userSession.isOrganizer()) {
+            Event event = eventDao.findOne(id);
+            model.addAttribute("event", event);
+            List<Position> positions = positionDao.findAllByEvent_Id(id);
+            Map<Position, List> volunteers = new HashMap<>();
+            for (Position position : positions) {
+                List<UserPosition> userPositions = userPositionDao.findAllByPosition(position);
+                volunteers.put(position, userPositions);
+            }
+            model.addAttribute("volunteers", volunteers);
+            return "events/volunteerInfo";
+        }else{
+            return "/login";
         }
-        model.addAttribute("volunteers", volunteers);
-        return "events/volunteerInfo";
     }
+
+
 }
