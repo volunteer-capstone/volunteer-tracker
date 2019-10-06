@@ -36,7 +36,6 @@ const calendars = bulmaCalendar.attach('[type="date"]', calOptions);
 calendars.forEach(calendar => {
     // Add listener to date:selected event
     calendar.on('date:selected', date => {
-        console.log(date);
     });
 });
 
@@ -50,7 +49,5 @@ if (element) {
         document.getElementById('start').value = array[0];
         document.getElementById('stop').value = array[1];
         document.getElementById('end').value = array[1];
-        console.log(array);
-        console.log(datepicker.data.value());
     });
 }
