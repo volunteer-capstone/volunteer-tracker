@@ -14,7 +14,7 @@
     </div>
     <form th:action="@{/events/approve}" th:method="post">
 
-    <div class="columns is-mobile">
+    <div class="columns">
         <div class="column"><h1 class="title" th:text="${event.title}"></h1></div>
         <div class="column"><h1 class="title" th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - '+${#dates.format(event.stop, 'HH:mm')}"></h1></div>
         <input type="hidden" name="eventId" th:value="${event.id}"/>
@@ -78,14 +78,14 @@
 
         <div class="field">
             <div class="control" style="text-align: center; margin-top: 5px">
-                <button class="button is-link">Submit Hours</button>
+                <button class="button is-link changeBtn">Submit Hours</button>
             </div>
         </div>
     </form>
     </th:block>
 
     <th:block th:if="(${eventUser.id} != ${userId}) and (${eventUser.isOrganizer()} == false)">
-        <div class="content">
+        <div class="content has-text-black">
             <h3>You did <strong>NOT</strong> create this event and cannot update hours.</h3>
         </div>
     </th:block>

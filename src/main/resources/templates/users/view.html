@@ -10,16 +10,18 @@
 	<div class="content">
 		<h3 th:if="${user.id} == ${userId}">This is your profile: &emsp;<a class="button is-info" th:href="@{/profile/edit}">Edit</a></h3>
 		<h3 class="title is-2 has-text-black" th:unless="${user.id} == ${userId}" th:text="${user.username}+'\'s profile'"></h3>
-		<div class="columns is-mobile">
+		<div class="columns">
 			<div class="column is-half">
 				<div class="content is-flex is-horizontal-center">
 					<th:block th:if="${user.photo} == null">
 						<figure class="image">
-							<img class="is-rounded" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" th:src="@{/img/profilePlaceholder.png}" alt="profile photo" />
+							<img class="is-rounded btnShadow" th:src="@{/img/profilePlaceholder.png}" alt="profile photo" />
 						</figure>
 					</th:block>
 					<th:block th:unless="${user.photo} == null">
-						<img style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" th:src="@{${user.photo}}" alt="profile photo" width="250rem" height="200rem"/>
+						<figure class="image">
+							<img class="is-rounded btnShadow" th:src="@{${user.photo}}" alt="profile photo" width="250rem" height="200rem"/>
+						</figure>
 					</th:block>
 				</div>
 				<div class="content has-text-centered">
@@ -74,7 +76,7 @@
 				<th:block th:if="!${user.organizer}">
 					<div class="content">
 						<h4 class="title is-4">Events:</h4>
-						<div class="columns is-mobile is-multiple">
+						<div class="columns is-multiple">
 							<div th:each="event: ${user.getUserEvents()}" class="pastEventDiv" style="display: none">
 								<div class="column">
 									<div th:if="*{event.getStart().before(execInfo.now)}">
@@ -126,7 +128,7 @@
 				<th:block th:unless="!${user.organizer}">
 					<div class="content">
 						<h4 class="title is-4">Events:</h4>
-						<div class="columns is-mobile is-multiple">
+						<div class="columns is-multiple">
 
 							<div th:each="event: ${user.getUserEvents()}" class="pastEventDiv" style="display: none">
 								<div class="column">

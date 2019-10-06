@@ -49,18 +49,18 @@
 
         <div class="field is-grouped">
             <div class="control">
-                <button name="action" value="another" class="button is-info">Create Another Position</button>
+                <button id="create-another-position" name="action" value="another" class="button is-info createPosition">Create Another Position</button>
             </div>
             <div class="control">
                 <input type="hidden" name="eventId" th:value="${event.id}" />
-                <button id="create-event" name="action" value="continue" class="button is-success">Create Position</button>
+                <button id="create-position" name="action" value="continue" class="button is-success createPosition">Create Position</button>
             </div>
         </div>
 
     </form>
 </div>
 <!--<div class = "footerSpace"><th:block th:replace="fragments/footer :: footer" /></div>-->
-<script type="text/javascript" th:src="@{/js/enablePositionButton.js}"></script>
+<script type="text/javascript" th:src="@{/js/enablePositionButtonjs.js}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
 <script th:src="@{/js/bulmaCalendarjs.js}"></script>
 </body>

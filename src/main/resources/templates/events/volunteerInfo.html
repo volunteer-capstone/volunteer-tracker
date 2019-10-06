@@ -11,7 +11,7 @@
         <h3>Volunteers signed up for <span th:text="${event.title}"></span></h3>
     </div>
 
-    <div class="columns is-mobile">
+    <div class="columns">
         <div class="column"><h1 class="title" th:text="${event.title}"></h1></div>
         <div class="column"><h1 class="title" th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - '+ ${#dates.format(event.stop, 'HH:mm')}"></h1></div>
     </div>

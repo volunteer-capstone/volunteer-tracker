@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="columns is-multiline is-mobile eventDiv" style="margin-top: 10px;">
+    <div class="columns is-multiline eventDiv" style="margin-top: 10px;">
         <th:block th:each="event : ${events}" th:if="*{event.getStart().after(execInfo.now)}">
             <div class="column is-one-third event">
                 <div th:class="${event.title}">
@@ -41,10 +41,7 @@
                         <header class="card-header">
                             <p class="card-header-title is-centered" th:text="${event.title}"></p>
                         </header>
-                        <div class="card-content" style="background: #C9D6FF;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #E2E2E2, #C9D6FF);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #E2E2E2, #C9D6FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-">
+                        <div class="card-content bg">
                             <div class="content has-text-black">
                                 <p><strong th:text="${event.organization}"></strong></p>
                                 <p th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + ${#dates.format(event.stop, 'HH:mm')}"></p>
@@ -52,7 +49,7 @@ background: linear-gradient(to right, #E2E2E2, #C9D6FF); /* W3C, IE 10+/ Edge, F
                                     <p>Number of Volunteers Needed: <span th:text="${event.getPositionNumsNeeded()}"></span></p>
                                 </th:block>
                                 <th:block th:unless="${event.getPositionNumsNeeded()} != 0">
-                                    <p>All positions have been filled, contact the organizer for this event if you're interested in it.</p>
+                                    <p>All positions have been filled, contact the organizer for this event if you are interested in it.</p>
                                 </th:block>
                             </div>
                         </div>
