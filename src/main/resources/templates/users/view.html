@@ -191,7 +191,7 @@
 									<th:block th:if="(${user.id} == ${userId}) and (${user.organizer} == true)">
 										<div class="field is-grouped">
 											<div class="control" >
-												<a class="open-modal button is-small is-success">Text Position Volunteers</a>
+												<a class="open-modal button is-small is-success">Text All Event Volunteers</a>
 												<div class="modal">
 													<div class="modal-background close"></div>
 													<div class="modal-card">
@@ -200,15 +200,15 @@
 															<button class="close delete is-large" aria-label="close"></button>
 														</header>
 														<section class="modal-card-body">
-<!--															<form th:action="@{/text/position/{id}(id = ${position.id})}" th:method="post">-->
-<!--																<div class="field">-->
-<!--																	<label class="label">Message</label>-->
-<!--																	<div class="control">-->
-<!--																		<textarea class="textarea" name="body" cols="30" rows="10"></textarea>-->
-<!--																	</div>-->
-<!--																</div>-->
-<!--																<button class="button" type="submit">Send SMS</button>-->
-<!--															</form>-->
+															<form th:action="@{/text/event/{id}(id = ${event.id})}" th:method="post">
+																<div class="field">
+																	<label class="label">Message</label>
+																	<div class="control">
+																		<textarea class="textarea" name="body" cols="30" rows="10"></textarea>
+																	</div>
+																</div>
+																<button class="button" type="submit">Send SMS</button>
+															</form>
 														</section>
 														<footer class="modal-card-foot">
 															<button class="close button">Cancel
@@ -244,7 +244,7 @@
 									<th:block th:if="(${user.id} == ${userId}) and (${user.organizer} == true)">
 										<div class="field">
 											<div class="control">
-												<a class="open-modal button is-small is-success">Text Position Volunteers</a>
+												<a class="open-modal button is-small is-success">Text All Event Volunteers</a>
 												<div class="modal">
 													<div class="modal-background close"></div>
 													<div class="modal-card">
@@ -253,15 +253,15 @@
 															<button class="close delete is-large" aria-label="close"></button>
 														</header>
 														<section class="modal-card-body">
-<!--															<form th:action="@{/text/position/{id}(id = ${position.id})}" th:method="post">-->
-<!--																<div class="field">-->
-<!--																	<label class="label">Message</label>-->
-<!--																	<div class="control">-->
-<!--																		<textarea class="textarea" name="body" cols="30" rows="10"></textarea>-->
-<!--																	</div>-->
-<!--																</div>-->
-<!--																<button class="button" type="submit">Send SMS</button>-->
-<!--															</form>-->
+															<form th:action="@{/text/event/{id}(id = ${event.id})}" th:method="post">
+																<div class="field">
+																	<label class="label">Message</label>
+																	<div class="control">
+																		<textarea class="textarea" name="body" cols="30" rows="10"></textarea>
+																	</div>
+																</div>
+																<button class="button" type="submit">Send SMS</button>
+															</form>
 														</section>
 														<footer class="modal-card-foot">
 															<button class="close button">Cancel
