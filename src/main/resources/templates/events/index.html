@@ -56,9 +56,13 @@ background: linear-gradient(to right, #E2E2E2, #C9D6FF); /* W3C, IE 10+/ Edge, F
                                 </th:block>
                             </div>
                         </div>
-                        <div class="positionDiv" th:each="pos: ${event.getPositions()}" hidden="hidden">
-                            <p th:text="${pos.getTitle()}"></p>
-                        </div>
+<!--                        <div class="positionDiv" th:each="{pos, iterStat: ${event.getPositions}" th:if="{iterStat.index} < 3">-->
+                        <p th:if="${event.getPositions().get(0) != null}"><span th:text="${event.getPositions().get(0).getTitle()}"></span></p>
+                            <p th:if="${event.getPositions().get(1) != null}"><span th:text="${event.getPositions().get(1).getTitle()}"></span></p>
+<!--                            <p th:text="${event.getPositions().get(2).getTitle()}"></p>-->
+
+
+                        <!--                        </div>-->
                         <footer class="card-footer has-background-link">
                             <a class="card-footer-item has-text-white" th:href="@{/events/{id}(id=${event.id})}"><strong>View Event</strong></a>
                         </footer>
