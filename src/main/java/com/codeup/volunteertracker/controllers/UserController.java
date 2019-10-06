@@ -105,10 +105,14 @@ public class UserController {
     public String editProfile(Model viewModel){
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         long id = userSession.getId();
+        if(userSession == null){
+            return "/login";
+        }else {
 //        User user = userRepo.findOne(id);
-        viewModel.addAttribute("user", userSession);
-        viewModel.addAttribute("filestackAPI", filestackAPI);
-        return "users/edit";
+            viewModel.addAttribute("user", userSession);
+            viewModel.addAttribute("filestackAPI", filestackAPI);
+            return "users/edit";
+        }
     }
 
 //    WILL HAVE TO GO BACK AND ADD ABILITY TO EDIT PHOTO
@@ -141,50 +145,59 @@ public class UserController {
     @GetMapping("profile/delete")
     public String deleteProfile(Model viewModel){
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        long userId = userSession.getId();
-        User user = userRepo.findOne(userId);
-        if(!user.isOrganizer()){
-            List<UserPosition> userPositions = userPositionDao.findByUser(user);
-            for(UserPosition userPosition: userPositions){
-                Position position = positionDao.findOne(userPosition.getPosition().getId());
-                position.setNumNeeded(position.getNumNeeded() + 1);
-                positionDao.save(position);
-            }
-            userPositionDao.delete(userPositions);
-            userRepo.delete(userId);
-        }else{
-            List<Event> events = eventDao.findAllByCreator(user);
-            for(Event event: events){
-                List<Position> createdPositions = positionDao.findAllByEvent_Id(event.getId());
-                for(Position createdPosition: createdPositions){
-                    List<UserPosition> createdPositionUserPositions = userPositionDao.findAllByPosition(createdPosition);
-                    userPositionDao.delete(createdPositionUserPositions);
-                    List<UserPosition> userPositions = userPositionDao.findByUser(user);
-                    for(UserPosition userPosition: userPositions){
-                        Position position = positionDao.findOne(userPosition.getPosition().getId());
-                        position.setNumNeeded(position.getNumNeeded() + 1);
-                        positionDao.save(position);
-                    }
-                    userPositionDao.delete(userPositions);
+        if(userSession != null) {
+            long userId = userSession.getId();
+            User user = userRepo.findOne(userId);
+            if (!user.isOrganizer()) {
+                List<UserPosition> userPositions = userPositionDao.findByUser(user);
+                for (UserPosition userPosition : userPositions) {
+                    Position position = positionDao.findOne(userPosition.getPosition().getId());
+                    position.setNumNeeded(position.getNumNeeded() + 1);
+                    positionDao.save(position);
                 }
-                positionDao.delete(createdPositions);
+                userPositionDao.delete(userPositions);
+                userRepo.delete(userId);
+            } else {
+                List<Event> events = eventDao.findAllByCreator(user);
+                for (Event event : events) {
+                    List<Position> createdPositions = positionDao.findAllByEvent_Id(event.getId());
+                    for (Position createdPosition : createdPositions) {
+                        List<UserPosition> createdPositionUserPositions = userPositionDao.findAllByPosition(createdPosition);
+                        userPositionDao.delete(createdPositionUserPositions);
+                        List<UserPosition> userPositions = userPositionDao.findByUser(user);
+                        for (UserPosition userPosition : userPositions) {
+                            Position position = positionDao.findOne(userPosition.getPosition().getId());
+                            position.setNumNeeded(position.getNumNeeded() + 1);
+                            positionDao.save(position);
+                        }
+                        userPositionDao.delete(userPositions);
+                    }
+                    positionDao.delete(createdPositions);
+                }
+                eventDao.delete(events);
+                userRepo.delete(userId);
             }
-            eventDao.delete(events);
-            userRepo.delete(userId);
+            emailService.createdAnAccount(user, "Account Deleted with Path of the Volunteer", String.format("Thank you, %s %s for being a member of Path of the Volunteer.\n\n If you would like to use our services again in the future, please feel free to visit our site at https://pathofthevolunteer.com.", user.getFirstName(), user.getLastName()));
+            return "redirect:/login?logout";
+        }else{
+            return "redirect:/login";
         }
-
-        emailService.createdAnAccount(user, "Account Deleted with Path of the Volunteer", String.format("Thank you, %s %s for being a member of Path of the Volunteer.\n\n If you would like to use our services again in the future, please feel free to visit our site at https://pathofthevolunteer.com.", user.getFirstName(), user.getLastName())) ;
-
-        return "redirect:/login?logout";
     }
 
 
 //    MAKE USER AN ORGANIZER
     @PostMapping("profile/organizer/{id}")
     public String makeOrganizer(@PathVariable long id) {
-        User user = userRepo.findOne(id);
-        user.setOrganizer(true);
-        userRepo.save(user);
-        return "redirect:/users/"+ user.getId() + "/profile";
+        User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(userSession != null && userSession.isOrganizer()) {
+            User user = userRepo.findOne(id);
+            user.setOrganizer(true);
+            userRepo.save(user);
+            return "redirect:/users/" + user.getId() + "/profile";
+        }else{
+            return "redirect:/login";
+        }
     }
+
+
 }
