@@ -91,7 +91,7 @@
 										</th:block>
 										<div class="field">
 											<div class="control">
-												<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>
+												<a th:href="@{/events/{id}(id=${event.id})}" class="button is-large is-info">View Event</a>
 											</div>
 										</div>
 										<hr/>
@@ -110,13 +110,13 @@
 										<p class="title is-5" th:text="'Start: ' + *{#dates.format(pos.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(pos.end, 'HH:mm')}"></p>
 										<div class="field">
 											<div class="control">
-												<a class="button is-small is-success" th:href="@{/events/positions/{id}/volunteer/remove(id=${pos.getId()})}">Unregister for Event</a>
+												<a class="button is-large is-success" th:href="@{/events/positions/{id}/volunteer/remove(id=${pos.getId()})}">Unregister for Event</a>
 											</div>
 										</div>
 									</th:block>
 									<div class="field">
 										<div class="control">
-											<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>
+											<a th:href="@{/events/{id}(id=${event.id})}" class="button is-large is-info">View Event</a>
 										</div>
 									</div>
 									<hr/>
@@ -144,7 +144,7 @@
 										</th:block>
 										<div class="field">
 											<div class="control">
-												<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>
+												<a th:href="@{/events/{id}(id=${event.id})}" class="button is-large is-info">View Event</a>
 											</div>
 										</div>
 										<hr/>
@@ -163,13 +163,13 @@
 										<p class="title is-" th:text="'Start: ' + *{#dates.format(pos.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(pos.end, 'HH:mm')}"></p>
 										<div class="field">
 											<div class="control">
-												<a class="button is-small is-success" th:href="@{/events/positions/{id}/volunteer/remove(id=${pos.getId()})}">Unregister for Event</a>
+												<a class="button is-large is-success" th:href="@{/events/positions/{id}/volunteer/remove(id=${pos.getId()})}">Unregister for Event</a>
 											</div>
 										</div>
 									</th:block>
 									<div class="field">
 										<div class="control">
-											<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>
+											<a th:href="@{/events/{id}(id=${event.id})}" class="button is-large is-info">View Event</a>
 										</div>
 									</div>
 									<hr/>
@@ -186,13 +186,13 @@
 									<p class="title is-5" th:text="'Start: ' + *{#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(event.stop, 'HH:mm')}"></p>
 									<div class="field">
 										<div class="control">
-											<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>
+											<a th:href="@{/events/{id}(id=${event.id})}" class="button is-large is-info">View Event</a>
 										</div>
 									</div>
 									<th:block th:if="(${user.id} == ${userId}) and (${user.organizer} == true)">
 										<div class="field is-grouped">
 											<div class="control" >
-												<a class="open-modal button is-small is-success">Text All Event Volunteers</a>
+												<a class="open-modal button is-large is-success">Text All Event Volunteers</a>
 												<div class="modal">
 													<div class="modal-background close"></div>
 													<div class="modal-card">
@@ -222,7 +222,7 @@
 												</div>
 											</div>
 											<div class="control">
-												<a th:href="@{/events/approve/{id}(id=${event.id})}" class="button is-small is-info">Approve hours</a>
+												<a th:href="@{/events/approve/{id}(id=${event.id})}" class="button is-large is-info">Approve hours</a>
 											</div>
 										</div>
 									</th:block>
@@ -239,13 +239,13 @@
 									<p class="title is-5" th:text="'Start: ' + *{#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(event.stop, 'HH:mm')}"></p>
 									<div class="field">
 										<div class="control">
-											<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>
+											<a th:href="@{/events/{id}(id=${event.id})}" class="button is-large is-info">View Event</a>
 										</div>
 									</div>
 									<th:block th:if="(${user.id} == ${userId}) and (${user.organizer} == true)">
 										<div class="field">
 											<div class="control">
-												<a class="open-modal button is-small is-success">Text All Event Volunteers</a>
+												<a class="open-modal button is-large is-success">Text All Event Volunteers</a>
 												<div class="modal">
 													<div class="modal-background close"></div>
 													<div class="modal-card">

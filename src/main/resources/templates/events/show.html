@@ -56,8 +56,11 @@
         <div class="column is-2 is-offset-2">
             <div class="field">
                 <div class="control has-text-centered">
-                    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
-                        <a class="button btnShadow is-success" th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a>
+                    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true) and ${event.getStart().before(execInfo.now)}">
+                        <a class="button btnShadow is-success" th:href="@{/events/approve/{id}(id=${event.id})}">Approve Volunteer Hours</a>
+                    </th:block>
+                    <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true) and ${event.getStart().after(execInfo.now)}">
+                        <a class="button btnShadow is-success" disabled="disabled">Approve Volunteer Hours</a>
                     </th:block>
                 </div>
             </div>
@@ -66,11 +69,8 @@
             <div class="column is-2">
                 <div class="field">
                     <div class="control has-text-centered">
-                        <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true) and ${event.getStart().before(execInfo.now)}">
-                            <a class="button btnShadow is-info" th:href="@{/events/approve/{id}(id=${event.id})}">Approve Volunteer Hours</a>
-                        </th:block>
-                        <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true) and ${event.getStart().after(execInfo.now)}">
-                            <a class="button btnShadow is-info" disabled="disabled">Approve Volunteer Hours</a>
+                        <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
+                            <a class="button btnShadow is-success" th:href="@{/events/volunteers/{id}(id=${event.id})}">Volunteer Contact Info</a>
                         </th:block>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
             <div class="field">
                 <div class="control has-text-centered">
                     <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
-                        <a class="button btnShadow is-info" th:href="@{/events/volunteers/{id}(id=${event.id})}">Volunteer Contact Info</a>
+                        <a class="button btnShadow is-warning" th:href="@{/events/{id}/create-position(id=${event.id})}">Add Volunteer Positions</a>
                     </th:block>
                 </div>
             </div>
@@ -110,7 +110,7 @@
     <div class="tile is-ancestor" style="flex-wrap: wrap;">
         <th:block th:each="position: ${positions}">
             <div class="tile is-3 is-parent" style="margin: auto">
-                <div class="tile is-child hero is-info is-bold btnShadow">
+                <div class="tile is-child hero is-info is-bold btnShadow" style="padding: 15px 0;">
                     <h6 class="title is-6 has-text-centered" th:text="${position.title}"></h6>
                     <h6 class="title is-6 has-text-centered" th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + ${#dates.format(position.end, 'HH:mm')}"></h6>
                     <th:block th:if="${position.numNeeded} == 0">
@@ -200,7 +200,7 @@
                     <div class="field is-grouped" style="margin: auto">
                         <div class="control btnShadow">
                            <th:block th:if="(${eventUser.id} == ${userId}) and (${eventUser.isOrganizer()} == true)">
-                               <a class="button is-small is-success" th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a>
+                               <a class="button is-small is-warning" th:href="@{/events/positions/edit/{id}(id = ${position.id})}">Edit Position</a>
                            </th:block>
                         </div>
                         <div class="control btnShadow">
