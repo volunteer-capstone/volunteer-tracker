@@ -4,21 +4,27 @@
 /*    background-position: center;*/
 /*}*/
 
+#font {
+    font-family: 'Fredericka the Great', cursive;
+    font-size: 7rem;
+    position: relative;
+    top: 180px;
+}
+
 .quote{
     color: black;
     margin-top: 10px;
 }
 
-.container {
-    width: 100%;
-    color: black;
-}
+/*.container {*/
+/*    width: 100%;*/
+/*    color: black;*/
+/*}*/
 
 .column1,
 .column2,
 .column3{
     width: 100%;
-    float: left;
     height: 200px;
 }
 
