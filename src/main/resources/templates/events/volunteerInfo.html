@@ -13,7 +13,7 @@
 
     <div class="columns">
         <div class="column"><h1 class="title" th:text="${event.title}"></h1></div>
-        <div class="column"><h1 class="title" th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - '+ ${#dates.format(event.stop, 'HH:mm')}"></h1></div>
+        <div class="column"><h1 class="title" th:text="${#dates.format(event.start, 'MMMM d, yyyy hh:mm a')} + ' - '+ ${#dates.format(event.stop, 'MMMM d, yyyy hh:mm a')}"></h1></div>
     </div>
     <hr/>
 
@@ -29,7 +29,7 @@
         <th:block th:each="position : ${volunteers.keySet()}">
             <tr style="background: lightgrey">
                 <td th:text="${position.title}"></td>
-                <td colspan="2" th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')} + ' - '+${#dates.format(position.end, 'HH:mm')}"></td>
+                <td colspan="2" th:text="${#dates.format(event.start, 'MMMM d, yyyy hh:mm a')} + ' - ' + ${#dates.format(event.stop, 'MMMM d, yyyy hh:mm a')}"></td>
                 <td colspan="2" th:text="${event.posHours(position.start, position.end)}"></td>
             </tr>
             <th:block th:each="userPosition : ${volunteers.get(position)}">
