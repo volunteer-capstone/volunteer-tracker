@@ -53,7 +53,8 @@ public class EventController {
 // LIST OF EVENTS
     @GetMapping("/events")
     public String eventIndex(Model viewModel){
-        Iterable<Event> events = eventDao.findAll();
+        List<Event> events = (List<Event>) eventDao.findAll();
+        events.sort(Comparator.comparing(Event::getStart));
         viewModel.addAttribute("events", events);
         Iterable<Position> positions = positionDao.findAll();
         viewModel.addAttribute("positions", positions);
