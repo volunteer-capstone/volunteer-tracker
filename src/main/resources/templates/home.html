@@ -5,7 +5,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
     <link rel="stylesheet" th:href="@{/css/parallax.css}"/>
 </head>
-<body>
+<body style="padding-bottom: 50px;">
 <th:block th:replace="fragments/navbar :: bulma-navbar" />
 
 
@@ -32,8 +32,8 @@
 
     <div class="container">
         <div class="tile is-ancestor">
-            <div class="tile is-parent has-text-black has-text-centered" style="margin: auto">
-                <div class="tile is-child hero is-info is-bold btnShadow">
+            <div class="tile is-parent has-text-black has-text-centered" style="margin: auto;">
+                <div class="tile is-child hero is-info is-bold btnShadow" style="padding: 15px 0;">
                     <p class="title is-3 has-text-semibold"><i>What We Do</i></p>
                     <p class="subtitle is-4">We provide focus on events...</p>
                     <p class="subtitle is-4">We provide communication to your volunteers...</p>
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="tile is-parent has-text-black has-text-centered" style="margin: auto">
-                <div class="tile is-child hero is-info is-bold btnShadow">
+                <div class="tile is-child hero is-info is-bold btnShadow" style="padding: 15px 0;">
                     <p class="title is-3 has-text-semibold"><i>Our Organizations</i></p>
                     <th:block th:each="org: ${orgList}">
                         <p class="subtitle is-4" th:text="${org}"></p>
