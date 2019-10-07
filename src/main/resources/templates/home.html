@@ -14,15 +14,16 @@
         <div class="container column quote" style="text-align:right;">
             <div class="w3-panel w3-light-grey">
                 <span style="font-size:150px;line-height:0.6em;opacity:0.2">&#10077;</span>
-                <p class="w3-xlarge" style="margin-top:-40px">
+                <p class="title has-text-black" style="margin-top:-40px">
                     <i>“You make a living by what you get. You make a life by what you give.”</i></p>
-                <p>Winston Churchill</p>
+                <p class="title is-4 has-text-black">Winston Churchill</p>
             </div>
         </div>
     </div>
     <div class="column2">
-        <div class="parallax"></div>
-<!--        <div class="parallax2"></div>-->
+        <div class="parallax">
+            <p id="font" class="title is-1 has-text-white has-text-centered">Path of the Volunteer</p>
+        </div>
     </div>
     <div class="column3">
     </div>
@@ -30,25 +31,26 @@
     </div>
 
     <div class="container">
-                <div class="column4">
-                    <div class="container2">
-                        <h3><i><strong class="what">What We Do</strong></i></h3>
-                        <p>We provide focus on events...</p>
-                        <p>We provide communication to your volunteers...</p>
-                        <p>We eliminate the hassle of paperwork...</p>
-                        <p>We help you be involved...</p>
-                    </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent has-text-black has-text-centered" style="margin: auto">
+                <div class="tile is-child hero is-info is-bold btnShadow">
+                    <p class="title is-3 has-text-semibold"><i>What We Do</i></p>
+                    <p class="subtitle is-4">We provide focus on events...</p>
+                    <p class="subtitle is-4">We provide communication to your volunteers...</p>
+                    <p class="subtitle is-4">We eliminate the hassle of paperwork...</p>
+                    <p class="subtitle is-4">We help you be involved...</p>
                 </div>
-                <div class="column5">
-                    <div class="container2">
-                        <h3 style="text-align: center"><i><strong class="what">Our Organizations</strong></i></h3>
-                        <div class="orgList" th:each="org: ${orgList}">
-                            <p class="what" style="text-align: center" th:text="${org}"></p>
-                        </div>
-                    </div>
+            </div>
+            <div class="tile is-parent has-text-black has-text-centered" style="margin: auto">
+                <div class="tile is-child hero is-info is-bold btnShadow">
+                    <p class="title is-3 has-text-semibold"><i>Our Organizations</i></p>
+                    <th:block th:each="org: ${orgList}">
+                        <p class="subtitle is-4" th:text="${org}"></p>
+                    </th:block>
                 </div>
+            </div>
+        </div>
     </div>
-<div class="column1"></div>
 
 </body>
 </html>
