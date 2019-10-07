@@ -29,7 +29,7 @@
     background-attachment: fixed;
     background-size: 100%;
     background-position: right center;
-    background-image: url("https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80");
+    background-image: url("../img/volunteerhands.jpeg");
 }
 
 .column4{
@@ -40,6 +40,8 @@
 
 .container2{
     margin: 15px;
+    color: white;
+
 }
 
 /*.blurb{*/
@@ -53,15 +55,15 @@
 /*    z-index: 5;*/
 /*}*/
 
-.column4{
-    background-image: url("../img/whatWeDo.jpeg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    margin-left: 77px;
-    box-shadow: 5px 5px darkgrey;
-}
+/*.column4{*/
+/*    background-image: url("../img/whatWeDo.jpeg");*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: cover;*/
+/*    background-position: center;*/
+/*    position: relative;*/
+/*    margin-left: 77px;*/
+/*    box-shadow: 5px 5px darkgrey;*/
+/*}*/
 .blurb:before{
     content: '';
     position: absolute;
@@ -83,7 +85,8 @@ h3{
     margin: 10px;
 }
 
-.column5{
+.column5,
+.column4{
     background: #00B4DB;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to left, #0083B0, #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to left, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -91,6 +94,8 @@ h3{
     float: left;
     margin-left: 112px;
     box-shadow: 5px 5px darkgrey;
+    color: #FFF;
+
 }
 
 

@@ -25,6 +25,8 @@
 					</th:block>
 				</div>
 				<div class="content has-text-centered">
+					<p class="subtitle is-4 has-text-black" th:if="${user.organizer}"><strong>Organizer</strong></p>
+					<p class="subtitle is-4 has-text-black" th:if="!${user.organizer}"><strong>Volunteer</strong></p>
 					<p class="subtitle is-4 has-text-black">Name: 		<span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></p>
 					<p class="subtitle is-4 has-text-black">Username: 					<span th:text="${user.username}"></span></p>
 					<p class="subtitle is-4 has-text-black">Email: 						<a th:text="${user.email}"></a></p>
@@ -32,7 +34,6 @@
 					<p class="subtitle is-4 has-text-black">Number of Hours Volunteered: <span th:text="${user.getHours()}"></span></p>
 					<p class="subtitle is-4 has-text-black">Number of Hours Planned:		<span th:text="${user.plannedHours()}"></span></p>
 					<p class="subtitle is-4 has-text-black">Bio: <span th:text="${user.bio}"></span></p>
-					<p class="subtitle is-4 has-text-black" th:if="${user.organizer}"><strong>Organizer</strong></p>
 
 					<th:block sec:authorize="isAuthenticated()">
 						<th:block th:if="(${user.id} != ${userId}) and (${curUser.organizer})"><p>Would you like to make this user an Organizer? </p>
