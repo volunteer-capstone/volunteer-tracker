@@ -132,6 +132,7 @@ public class UserController {
             user.setPassword(userSession.getPassword());
             user.setPhoto(photo);
             user.setBio(bio);
+            user.setOrganizer(userSession.isOrganizer());
             User editedUser = userRepo.save(user);
             emailService.createdAnAccount(editedUser, "Account Changes with Path of the Volunteer", String.format("Notification: Changes were made to your account. \n\n If you feel that you are receiving this email in error, please visit https://pathofthevolunteer.com to contact us.")) ;
             return "redirect:/users/" + user.getId() + "/profile";
