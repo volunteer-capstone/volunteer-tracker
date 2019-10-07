@@ -87,7 +87,7 @@
 										<th:block th:each="pos: ${user.getUserPositionsByEventId(event.getId())}">
 											<h6 class="title is-4">Position has ended</h6>
 											<p class="title is-5" th:text="'Position: ' + *{pos.title}"></p>
-											<p class="title is-5" th:text="'Start: ' + *{#dates.format(pos.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(pos.end, 'HH:mm')}"></p>
+											<p class="title is-5" th:text="${#dates.format(pos.start, 'MMMM d, yyyy hh:mm a')} + ' - ' + ${#dates.format(pos.end, 'MMMM d, yyyy hh:mm a')}"></p>
 										</th:block>
 										<div class="field">
 											<div class="control">
@@ -107,7 +107,7 @@
 									<h6 class="title is-4" th:text="*{event.title}"></h6>
 									<th:block th:each="pos: ${user.getUserPositionsByEventId(event.getId())}">
 										<p class="title is-4" th:text="'Position: ' + *{pos.title}"></p>
-										<p class="title is-5" th:text="'Start: ' + *{#dates.format(pos.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(pos.end, 'HH:mm')}"></p>
+										<p class="title is-5" th:text=" ${#dates.format(pos.start, 'MMMM d, yyyy hh:mm a')} + ' - ' + ${#dates.format(pos.end, 'MMMM d, yyyy hh:mm a')}"></p>
 										<div class="field">
 											<div class="control">
 												<a class="button is-small is-success" th:href="@{/events/positions/{id}/volunteer/remove(id=${pos.getId()})}">Unregister for Event</a>
@@ -140,7 +140,7 @@
 										<th:block th:each="pos: ${user.getUserPositionsByEventId(event.getId())}">
 											<h6 class="title is-4">Position has ended</h6>
 											<p class="title is-5" th:text="'Position: ' + *{pos.title}"></p>
-											<p class="title is-5" th:text="'Start: ' + *{#dates.format(pos.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(pos.end, 'HH:mm')}"></p>
+											<p class="title is-5" th:text=" ${#dates.format(pos.start, 'MMMM d, yyyy hh:mm a')} + ' - ' + ${#dates.format(pos.end, 'MMMM d, yyyy hh:mm a')}"></p>
 										</th:block>
 										<div class="field">
 											<div class="control">
@@ -160,7 +160,7 @@
 									<h6 class="title is-4" th:text="*{event.title}"></h6>
 									<th:block th:each="pos: ${user.getUserPositionsByEventId(event.getId())}">
 										<p class="title is-5" th:text="'Position: ' + *{pos.title}"></p>
-										<p class="title is-" th:text="'Start: ' + *{#dates.format(pos.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(pos.end, 'HH:mm')}"></p>
+										<p class="title is-" th:text=" ${#dates.format(pos.start, 'MMMM d, yyyy hh:mm a')} + ' - ' + ${#dates.format(pos.end, 'MMMM d, yyyy hh:mm a')}"></p>
 										<div class="field">
 											<div class="control">
 												<a class="button is-small is-success" th:href="@{/events/positions/{id}/volunteer/remove(id=${pos.getId()})}">Unregister for Event</a>
@@ -183,7 +183,7 @@
 									<br/>
 									<h5 class="title is-4">This Event has ended</h5>
 									<h6 class="title is-4" th:text="*{event.title}"></h6>
-									<p class="title is-5" th:text="'Start: ' + *{#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(event.stop, 'HH:mm')}"></p>
+									<p class="title is-5" th:text=" ${#dates.format(event.start, 'MMMM d, yyyy hh:mm a')} + ' - ' + ${#dates.format(event.stop, 'MMMM d, yyyy hh:mm a')}"></p>
 									<div class="field">
 										<div class="control">
 											<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>
@@ -236,7 +236,7 @@
 								<div th:if="*{event.getStart().after(execInfo.now)}">
 									<br/>
 									<h5 class="title is-4" th:text="*{event.title}"></h5>
-									<p class="title is-5" th:text="'Start: ' + *{#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + *{#dates.format(event.stop, 'HH:mm')}"></p>
+									<p class="title is-5" th:text="${#dates.format(event.start, 'MMMM d, yyyy hh:mm a')} + ' - ' + ${#dates.format(event.stop, 'MMMM d, yyyy hh:mm a')}"></p>
 									<div class="field">
 										<div class="control">
 											<a th:href="@{/events/{id}(id=${event.id})}" class="button is-small is-info">View Event</a>

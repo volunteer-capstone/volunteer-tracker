@@ -44,7 +44,7 @@
                         <div class="card-content bg">
                             <div class="content has-text-black">
                                 <p><strong th:text="${event.organization}"></strong></p>
-                                <p th:text="${#dates.format(event.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + ${#dates.format(event.stop, 'HH:mm')}"></p>
+                                <p th:text="${#dates.format(event.start, 'MMMM d, yyyy hh:mm a')} + ' - ' + ${#dates.format(event.stop, 'MMMM d, yyyy hh:mm a')}"></p>
                                 <th:block th:if="${event.getPositionNumsNeeded()} != 0">
                                     <p>Number of Volunteers Needed: <span th:text="${event.getPositionNumsNeeded()}"></span></p>
                                 </th:block>

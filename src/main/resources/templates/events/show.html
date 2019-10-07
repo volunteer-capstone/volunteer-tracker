@@ -11,6 +11,29 @@
 
 <div class="container">
     <div class="columns">
+        <div class="column has-text-centered" style="margin: auto">
+            <div class="card btnShadow">
+                <div class="card-content has-text-black bg">
+                    <div class="columns">
+                    <div class = "column">
+                        <p class="title is-2" th:text="${event.title}"></p>
+                        <th:block th:if="${event.photo} == null or ${event.photo} == ''">
+                            <img class="btnShadow" th:src="@{/img/eventLocation.jpeg}" alt="event photo"/>
+                        </th:block>
+                        <th:block th:unless="${event.photo} == null or ${event.photo} == ''">
+                            <img class="btnShadow" th:src="@{${event.photo}}" alt="event photo"/>
+                        </th:block>
+                    </div>
+                    <div class="column">
+                        <p class="title is-5" th:text="${#dates.format(event.start, 'MMMM d, yyyy hh:mm a')} + ' - ' + ${#dates.format(event.stop, 'MMMM d, yyyy hh:mm a')}"></p>
+                        <p class="is-size-5"><i>Description: </i><span th:text="${event.description}"></span></p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="columns">
         <div class="column" style="margin: auto">
             <div class="card btnShadow">
                 <div class="card-content has-text-black bg">
@@ -21,24 +44,10 @@
             <div id="map" class="btnShadow"></div>
             <input type="hidden" id="mapToken" name="mapToken" th:value="${mapToken}" />
         </div>
-        <div class="column has-text-centered" style="margin: auto">
-            <div class="card btnShadow">
-                <div class="card-content has-text-black bg">
-                    <p class="title is-2" th:text="${event.title}"></p>
-                    <p class="title is-5" th:text="${#dates.format(event.start, 'MMMM d, yyyy HH:mm')} + ' - ' + ${#dates.format(event.stop, 'HH:mm')}"></p>
-                    <th:block th:if="${event.photo} == null or ${event.photo} == ''">
-                        <img class="btnShadow" th:src="@{/img/eventLocation.jpeg}" alt="event photo"/>
-                    </th:block>
-                    <th:block th:unless="${event.photo} == null or ${event.photo} == ''">
-                        <img class="btnShadow" th:src="@{${event.photo}}" alt="event photo"/>
-                    </th:block>
-                    <p class="is-size-5"><i>Description: </i><span th:text="${event.description}"></span></p>
-                </div>
-            </div>
-        </div>
+
         <div class="column" style="margin: auto">
             <div class="card btnShadow">
-                <div class="card-content has-text-black bg">
+                <div class="card-content has-text-black bg" style="padding-top: 48px; padding-bottom: 50px;">
                     <p class="title is-4">Organizer Contact Information:</p>
                     <p class="title is-4" th:text="${event.organization}"></p>
                     <p class="title is-4" th:text="${event.creator.firstName} + ' ' + ${event.creator.lastName}"></p>
@@ -112,7 +121,7 @@
             <div class="tile is-3 is-parent" style="margin: auto">
                 <div class="tile is-child hero is-info is-bold btnShadow">
                     <h6 class="title is-6 has-text-centered" th:text="${position.title}"></h6>
-                    <h6 class="title is-6 has-text-centered" th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + ${#dates.format(position.end, 'HH:mm')}"></h6>
+                    <h6 class="title is-6 has-text-centered" th:text="${#dates.format(position.start, 'MMMM d, yyyy hh:mm a')} + ' - ' + ${#dates.format(position.end, 'MMMM d, yyyy hh:mm')}"></h6>
                     <th:block th:if="${position.numNeeded} == 0">
                         <h6 class="title is-6 has-text-centered">This position is filled up, contact the event organizer if you are still interested.</h6>
                     </th:block>
@@ -168,7 +177,7 @@
                                     </header>
                                     <section class="modal-card-body">
                                         <div class="content">
-                                            <p th:text="${#dates.format(position.start, 'MMM-dd-yyyy HH:mm')} + ' - ' + ${#dates.format(position.end, 'HH:mm')}"></p>
+                                            <p th:text="${#dates.format(position.start, 'MMMM d, yyyy hh:mm a')} + ' - ' + ${#dates.format(position.end, 'MMMM d, yyyy hh:mm a')}"></p>
                                             <p th:text="${position.numNeeded}"></p>
                                             <p th:text="${position.description}"></p>
                                         </div>
